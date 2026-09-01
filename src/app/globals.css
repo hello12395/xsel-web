@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5fbff;
+  --foreground: #12164a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: #12164a;
+  --color-forest: #1c30be;
+  --color-forest-deep: #10186e;
+  --color-gold: #02abd5;
+  --color-gold-soft: #37ccf8;
+  --color-mark: #f92227;
+  --color-cream: #f5fbff;
+  --color-parchment: #ffffff;
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-fraunces);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.bg-lab-hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 8% 0%, rgba(249, 34, 39, 0.12), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 96% 4%, rgba(55, 204, 248, 0.28), transparent 46%),
+    radial-gradient(ellipse 50% 40% at 70% 100%, rgba(2, 171, 213, 0.12), transparent 48%),
+    radial-gradient(rgba(28, 48, 190, 0.06) 1px, transparent 1px);
+  background-size: auto, auto, auto, 26px 26px;
+}
+
+.card-surface {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(18, 22, 74, 0.08);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 18px 40px -24px rgba(28, 48, 190, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.btn-primary {
+  box-shadow: 0 10px 24px -10px rgba(28, 48, 190, 0.7);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.slide-in {
+  animation: slide-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
