@@ -3,6 +3,11 @@
 :root {
   --background: #f5fbff;
   --foreground: #12164a;
+  --scrollbar-size: 10px;
+  --scrollbar-track: rgba(18, 22, 74, 0.06);
+  --scrollbar-thumb: #02abd5;
+  --scrollbar-thumb-hover: #37ccf8;
+  --scrollbar-thumb-active: #1c30be;
 }
 
 @theme inline {
@@ -22,12 +27,69 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-outfit), system-ui, sans-serif;
+}
+
+/* Custom scrollbar — WebKit (Chrome, Safari, Edge) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-soft) 52%, var(--color-forest) 100%)
+    padding-box;
+  box-shadow: 0 0 12px rgba(2, 171, 213, 0.22);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, var(--color-gold-soft) 0%, #5dd8fa 48%, var(--color-forest-deep) 100%)
+    padding-box;
+  box-shadow: 0 0 16px rgba(55, 204, 248, 0.35);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background:
+    linear-gradient(180deg, var(--color-forest) 0%, var(--color-forest-deep) 100%)
+    padding-box;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Dark surfaces (reviews, location, playlist hero, etc.) */
+.dark-scrollbar,
+.bg-reviews-section,
+.bg-location-section,
+.bg-ink {
+  --scrollbar-track: rgba(255, 255, 255, 0.06);
+  --scrollbar-thumb: #37ccf8;
+  --scrollbar-thumb-hover: #5dd8fa;
+  --scrollbar-thumb-active: #02abd5;
 }
 
 .font-display {
@@ -524,7 +586,8 @@ body {
 
 @media (min-width: 1024px) {
   .location-orbit-stage-earth {
-    translate: 1.25rem 0;
+    translate: 3rem 0;
+    margin-right: -2rem;
   }
 }
 
