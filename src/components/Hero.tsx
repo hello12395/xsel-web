@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowIcon, ChevronDownIcon } from "./Icons";
+
+const googlePlayUrl = "https://play.google.com/store";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const lessons = ["grammar", "speaking", "writing", "exams"];
@@ -42,7 +45,7 @@ function CycleWord() {
 
   return (
     <span
-      className="relative mx-1.5 inline-block h-[1.4em] w-[10rem] overflow-hidden align-middle"
+      className="relative mx-1.5 inline-block h-[1.35em] w-[9.5rem] overflow-hidden align-baseline border-b border-white/40"
       aria-live="polite"
     >
       <AnimatePresence mode="wait">
@@ -80,7 +83,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
       <div className="relative z-10 flex h-full items-center px-6 pt-20 pb-16 sm:px-10 lg:px-16 xl:px-24">
-        <div className="w-full max-w-xl text-left lg:max-w-2xl">
+        <div className="w-full max-w-3xl text-left lg:max-w-4xl xl:max-w-[58rem]">
           <motion.p
             initial={{ opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
@@ -116,7 +119,7 @@ export function Hero() {
             </RevealLine>
             <RevealLine
               delay={0.56}
-              className="mt-6 font-sans text-xl font-medium tracking-tight text-white/85 sm:text-3xl"
+              className="mt-6 font-sans text-xl font-medium tracking-tight text-white/90 sm:text-3xl"
             >
               Then spoken in the room.
             </RevealLine>
@@ -126,7 +129,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.72, ease }}
-            className="mt-8 max-w-xl text-left text-lg leading-9 text-white/75 sm:text-xl sm:leading-[1.75]"
+            className="mt-8 text-left text-xl leading-8 text-white/80 sm:text-[1.375rem] sm:leading-9 lg:text-[1.5rem] lg:leading-10"
           >
             <span className="block">
               A real classroom for
@@ -141,7 +144,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.86, ease }}
-            className="mt-10 flex flex-wrap items-center justify-start gap-4"
+            className="mt-10 flex flex-wrap items-center justify-start gap-3 sm:gap-4"
           >
             <a
               href="#free-stuff"
@@ -151,10 +154,19 @@ export function Hero() {
               <ArrowIcon className="h-4 w-4" />
             </a>
             <a
-              href="#location"
-              className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/8 px-7 py-4 text-base font-semibold text-white backdrop-blur-md transition hover:bg-white/16"
+              href={googlePlayUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex h-[52px] w-[220px] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:h-[56px] sm:w-[238px]"
+              aria-label="Get it on Google Play"
             >
-              Visit the lab
+              <Image
+                src="/google-play-badge.png"
+                alt="Get it on Google Play"
+                width={646}
+                height={250}
+                className="absolute top-1/2 left-1/2 h-[114px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[123px]"
+              />
             </a>
           </motion.div>
 
@@ -162,7 +174,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1, ease }}
-            className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/15 pt-8 text-left"
+            className="mt-12 grid max-w-3xl grid-cols-3 gap-6 border-t border-white/15 pt-8 text-left lg:max-w-4xl"
           >
             {[
               ["2.4k", "Learners"],

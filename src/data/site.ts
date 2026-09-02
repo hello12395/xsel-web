@@ -16,79 +16,25 @@ export const whyCards = [
   },
 ];
 
-export const freeStuff = [
-  {
-    id: "tense-workbook",
-    tag: "Grammar",
-    title: "Tense Mastery Workbook",
-    body: "Twelve pages of timelines, contrast drills, and error-spotting for the tenses students mix up most.",
-  },
-  {
-    id: "academic-words",
-    tag: "Vocabulary",
-    title: "200 Academic Words",
-    body: "High-frequency campus and exam vocabulary with collocations you can drop into essays tomorrow.",
-  },
-  {
-    id: "pronunciation-pack",
-    tag: "Speaking",
-    title: "Pronunciation Audio Pack",
-    body: "Minimal pairs, word stress maps, and shadowing scripts for a clearer, more confident voice.",
-  },
-  {
-    id: "essay-templates",
-    tag: "Writing",
-    title: "Essay Outline Templates",
-    body: "Opinion, discussion, and problem–solution frames with sentence starters that stay natural.",
-  },
-  {
-    id: "ielts-cues",
-    tag: "IELTS",
-    title: "Speaking Cue Cards",
-    body: "Thirty Part 2 prompts with idea banks, timing marks, and follow-up question practice.",
-  },
-  {
-    id: "email-cheat",
-    tag: "Workplace",
-    title: "Email Writing Cheat Sheet",
-    body: "Openings, polite pushbacks, and closings for the messages you send every week.",
-  },
-  {
-    id: "listening-set",
-    tag: "Listening",
-    title: "Listening Practice Set",
-    body: "Short dialogues and lecture clips with gap-fill sheets to train for real-speed English.",
-  },
-  {
-    id: "idioms-week",
-    tag: "Idioms",
-    title: "Idioms of the Week",
-    body: "Twenty everyday expressions with context, not translations — so they sound like you, not a textbook.",
-  },
-  {
-    id: "debate-pack",
-    tag: "Discussion",
-    title: "Debate Starter Pack",
-    body: "Warm-up questions, useful phrases, and two full debate motions for lab night.",
-  },
-];
-
 export const reviews = [
   {
     name: "Ayesha Khan",
     role: "IELTS candidate",
+    avatar: "/reviews/ayesha-khan.jpg",
     quote:
       "My writing jumped a full band in six weeks. The lab is picky in the best way — every sentence gets a reason, not just a red mark.",
   },
   {
     name: "Hassan Malik",
     role: "University student",
+    avatar: "/reviews/hassan-malik.jpg",
     quote:
       "I used to freeze in class. Spoken labs here feel like a workshop, not a test. I leave tired, and I leave better.",
   },
   {
     name: "Sara Ahmed",
     role: "Working professional",
+    avatar: "/reviews/sara-ahmed.jpg",
     quote:
       "Email English finally clicked. Mentors treat workplace language as a craft, not a grammar quiz.",
   },
@@ -118,6 +64,46 @@ export const discussions = [
     replies: 21,
     author: "Hira S.",
     time: "3 days ago",
+  },
+  {
+    title: "Since vs for — which sounds natural?",
+    excerpt:
+      "I have been here since three years sounds wrong to me, but I cannot explain why to my study partner.",
+    replies: 11,
+    author: "Omar T.",
+    time: "4 hours ago",
+  },
+  {
+    title: "Present perfect in job interviews",
+    excerpt:
+      "How do you answer “Tell me about a challenge you faced” without switching tenses halfway through?",
+    replies: 18,
+    author: "Fatima A.",
+    time: "6 hours ago",
+  },
+  {
+    title: "Article errors in academic essays",
+    excerpt:
+      "My mentor keeps marking “research” and “the research.” Is there a rule, or is it just context?",
+    replies: 7,
+    author: "Usman J.",
+    time: "1 day ago",
+  },
+  {
+    title: "How do you practice shadowing at home?",
+    excerpt:
+      "The lab drill works in class, but alone I feel silly repeating to a screen. What do you actually do?",
+    replies: 15,
+    author: "Zainab M.",
+    time: "2 days ago",
+  },
+  {
+    title: "Is “regards” still professional in 2026?",
+    excerpt:
+      "My manager writes “Rgds” and my professor wants “Yours sincerely.” Which camp is the exam board in?",
+    replies: 12,
+    author: "Ali R.",
+    time: "5 days ago",
   },
 ];
 
@@ -156,6 +142,8 @@ export const blogs = [
       "A ten-minute drill we use in lab to quiet the inner translator and start forming sentences in place.",
     date: "12 Aug 2026",
     read: "6 min",
+    playlistId: "spoken-english",
+    height: "tall" as const,
   },
   {
     category: "Writing",
@@ -164,6 +152,8 @@ export const blogs = [
       "Articles, prepositions, and tense pairs — with the exact rewrites we mark on student pages every week.",
     date: "28 Jul 2026",
     read: "8 min",
+    playlistId: "fog",
+    height: "medium" as const,
   },
   {
     category: "Study habit",
@@ -172,6 +162,8 @@ export const blogs = [
       "Shadow, pause, record, compare. The loop that beats another hour of silent highlighting.",
     date: "4 Jul 2026",
     read: "5 min",
+    playlistId: "vocabulary-boost",
+    height: "short" as const,
   },
 ];
 
@@ -181,6 +173,11 @@ export const location = {
   hours: "Mon–Sat · 9:00 AM – 8:00 PM",
   phone: "+92 300 1234567",
   email: "hello@englishsarwarlab.com",
+  coordinates: { lat: 31.5102, lng: 74.3441 },
   mapSrc:
     "https://maps.google.com/maps?q=Liberty%20Market%20Lahore&t=&z=14&ie=UTF8&iwloc=&output=embed",
+  mapSatelliteSrc:
+    "https://maps.google.com/maps?q=31.5102,74.3441&t=k&z=17&ie=UTF8&iwloc=&output=embed",
+  directionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=Liberty+Market+Lahore+Pakistan",
 };

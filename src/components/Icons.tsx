@@ -14,6 +14,34 @@ export function ArrowIcon({ className }: IconProps) {
   );
 }
 
+export function ChevronLeftIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path
+        d="M14 6l-6 6 6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ChevronRightIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path
+        d="M10 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function QuoteIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -93,6 +121,62 @@ export function PhoneIcon({ className }: IconProps) {
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function InstagramIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <defs>
+        <linearGradient id="ig-brand" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#f58529" />
+          <stop offset="45%" stopColor="#dd2a7b" />
+          <stop offset="100%" stopColor="#515bd4" />
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-brand)" />
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="#fff" strokeWidth="1.8" />
+      <circle cx="17.4" cy="6.6" r="1.25" fill="#fff" />
+    </svg>
+  );
+}
+
+export function YoutubeIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <path
+        fill="#FF0000"
+        d="M23.5 7.2a3 3 0 0 0-2.1-2.1C19.5 4.5 12 4.5 12 4.5s-7.5 0-9.4.6A3 3 0 0 0 .5 7.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-4.8Z"
+      />
+      <path fill="#fff" d="M9.75 15.02V8.98L15.5 12l-5.75 3.02Z" />
+    </svg>
+  );
+}
+
+export function FacebookIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <circle cx="12" cy="12" r="10" fill="#1877F2" />
+      <path
+        fill="#fff"
+        d="M13.3 17.5v-5.2h1.75l.26-2.02H13.3V9c0-.58.16-1 .98-1h1.05V6.18C15.15 6.12 14.5 6 13.7 6c-1.88 0-3.16 1.15-3.16 3.26v1.82H8.7v2.02h1.84v5.4h2.76Z"
+      />
+    </svg>
+  );
+}
+
+export function WhatsappIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <path
+        fill="#25D366"
+        d="M12 2.04c-5.46 0-9.9 4.44-9.9 9.9 0 1.74.45 3.39 1.24 4.82L2.06 21.9l5.3-1.39A9.86 9.86 0 0 0 12 21.86c5.46 0 9.9-4.44 9.9-9.9 0-5.47-4.44-9.92-9.9-9.92Z"
+      />
+      <path
+        fill="#fff"
+        d="M17.1 14.48c-.24.68-1.4 1.25-1.93 1.33-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.78-4.17-4.93-4.36-.14-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.45c.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.24.6.82 2.07.89 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.14.17-.3.38-.43.51-.14.14-.29.29-.12.57.16.27.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.25 1.39.28.14.44.12.6-.07.17-.2.7-.81.88-1.09.19-.27.37-.23.63-.14.26.1 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"
       />
     </svg>
   );

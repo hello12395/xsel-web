@@ -6,14 +6,16 @@ export function SectionHeader({
   title,
   copy,
   light = false,
+  className = "",
 }: {
   kicker: string;
   title: string;
   copy: ReactNode;
   light?: boolean;
+  className?: string;
 }) {
   return (
-    <Reveal className="max-w-2xl">
+    <Reveal className={`max-w-2xl text-left ${className}`}>
       <p
         className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${
           light ? "text-gold-soft" : "text-gold"
