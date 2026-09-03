@@ -360,27 +360,13 @@ export function RotatingEarth({
       document.addEventListener("mouseup", handleMouseUp);
     };
 
-    const handleWheel = (event: WheelEvent) => {
-      event.preventDefault();
-      interactionPaused = true;
-      const scaleFactor = event.deltaY > 0 ? 0.92 : 1.08;
-      const newRadius = Math.max(radius * 0.75, Math.min(radius * 2.2, projection.scale() * scaleFactor));
-      projection.scale(newRadius);
-      render();
-      window.setTimeout(() => {
-        interactionPaused = false;
-      }, 1800);
-    };
-
     canvas.addEventListener("mousedown", handleMouseDown);
-    canvas.addEventListener("wheel", handleWheel, { passive: false });
 
     loadWorldData();
 
     return () => {
       rotationTimer.stop();
       canvas.removeEventListener("mousedown", handleMouseDown);
-      canvas.removeEventListener("wheel", handleWheel);
     };
   }, [width, height, marker]);
 
