@@ -180,4 +180,16 @@ export const location = {
     "https://maps.google.com/maps?q=31.5102,74.3441&t=k&z=17&ie=UTF8&iwloc=&output=embed",
   directionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=Liberty+Market+Lahore+Pakistan",
+  studios: [
+    {
+      label: "Studio",
+      name: "English Sarwar Lab",
+      addressLines: ["12-B Canal Road, Near Liberty Market", "Gulberg III, Lahore, Pakistan"],
+    },
+    {
+      label: "Campus",
+      name: "English Sarwar Lab",
+      addressLines: ["Plot 18, University Road", "University Town, Peshawar, Pakistan"],
+    },
+  ],
 };

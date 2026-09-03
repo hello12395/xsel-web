@@ -187,36 +187,26 @@ export function Location() {
             On the map
           </h2>
           <p className="mt-5 max-w-md text-[15px] leading-7 text-white/55 sm:text-base sm:leading-8">
-            English Sarwar Lab sits near Liberty Market on Canal Road.
+            Two rooms on the map — Lahore by Liberty Market, and a Peshawar campus on University Road.
           </p>
 
           <div className="location-contact-grid mt-10">
-            <div className="location-contact-row">
-              <span className="location-contact-icon">
-                <PinIcon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
-                  Studio
-                </p>
-                <p className="font-display mt-1 text-lg text-white">{location.name}</p>
-                <p className="mt-1.5 text-xs leading-6 text-white/55">
-                  {location.addressLines.join(", ")}
-                </p>
+            {location.studios.map((studio) => (
+              <div key={studio.label} className="location-contact-row">
+                <span className="location-contact-icon">
+                  <PinIcon className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
+                    {studio.label}
+                  </p>
+                  <p className="font-display mt-1 text-lg text-white">{studio.name}</p>
+                  <p className="mt-1.5 text-xs leading-6 text-white/55">
+                    {studio.addressLines.join(", ")}
+                  </p>
+                </div>
               </div>
-            </div>
-
-            <div className="location-contact-row">
-              <span className="location-contact-icon">
-                <ClockIcon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
-                  Hours
-                </p>
-                <p className="mt-1 text-sm text-white/70">{location.hours}</p>
-              </div>
-            </div>
+            ))}
 
             <div className="location-contact-row">
               <span className="location-contact-icon">
