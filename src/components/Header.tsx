@@ -36,11 +36,11 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
         <a href="#hero" className="flex items-center gap-3">
-          <BrandLogo size={48} priority className="h-11 w-11 rounded-2xl shadow-sm ring-1 ring-white/20" />
+          <BrandLogo size={56} priority className="h-12 w-12 sm:h-[3.25rem] sm:w-[3.25rem]" />
           <span className="leading-tight">
             <span
               className={`block text-[10px] font-semibold uppercase tracking-[0.24em] ${
-                scrolled || open ? "text-gold" : "text-gold-soft"
+                scrolled || open ? "text-gold" : "text-white"
               }`}
             >
               English

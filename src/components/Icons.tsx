@@ -95,6 +95,59 @@ export function StarIcon({ className }: IconProps) {
   );
 }
 
+export function PremiumIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path
+        d="M5 16.5h14l-1.1 3.2a1.4 1.4 0 0 1-1.3.9H7.4a1.4 1.4 0 0 1-1.3-.9L5 16.5Z"
+        fill="currentColor"
+        opacity="0.9"
+      />
+      <path
+        d="M4.2 8.2 7.8 12l4.2-6.5L16.2 12l3.6-3.8L18.5 15H5.5L4.2 8.2Z"
+        fill="currentColor"
+      />
+      <circle cx="4.2" cy="7.2" r="1.35" fill="currentColor" />
+      <circle cx="12" cy="4.6" r="1.35" fill="currentColor" />
+      <circle cx="19.8" cy="7.2" r="1.35" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function EyeIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path
+        d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="2.6" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+export function EyeOffIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path
+        d="M3 3l18 18M10.5 6.2A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a16 16 0 0 1-3.3 3.5M7.1 7.3C4.4 9 2.5 12 2.5 12S6 18.5 12 18.5c1.3 0 2.5-.3 3.6-.7"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.9 10.2a2.6 2.6 0 0 0 3.8 3.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function ClockIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>

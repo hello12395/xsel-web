@@ -17,7 +17,7 @@ export function Footer() {
       <Reveal>
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.3fr_1fr] md:items-center">
           <div className="flex items-center gap-4">
-            <BrandLogo size={48} className="h-12 w-12 rounded-2xl ring-1 ring-white/20" />
+            <BrandLogo size={56} className="h-12 w-12" />
             <div>
               <p className="font-display text-xl">English Sarwar Lab</p>
               <p className="mt-1 text-sm text-white/55">A living classroom for spoken, written, exam-ready English.</p>

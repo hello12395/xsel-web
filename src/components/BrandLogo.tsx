@@ -6,15 +6,17 @@ type BrandLogoProps = {
   priority?: boolean;
 };
 
+/** Same logo asset as login — original colors, no filters. */
 export function BrandLogo({ className = "", size = 44, priority = false }: BrandLogoProps) {
   return (
     <Image
-      src="/xsel-logo.jpg"
-      alt="Xsel"
+      src="/xsel-web-logo.png"
+      alt="Sarwar English Lab"
       width={size}
       height={size}
-      className={`rounded-xl object-cover ${className}`}
+      className={`object-contain ${className}`}
       priority={priority}
+      unoptimized
     />
   );
 }
