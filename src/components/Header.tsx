@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
+import { createClient } from "@/lib/supabase/client";
 import { BrandLogo } from "./BrandLogo";
 import { CloseIcon, MenuIcon } from "./Icons";
 
@@ -16,8 +18,10 @@ const links = [
 ];
 
 export function Header() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const solid = scrolled || open;
 
   useEffect(() => {
@@ -26,6 +30,30 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.auth.getUser().then(({ data }) => {
+      setIsLoggedIn(Boolean(data.user));
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(Boolean(session?.user));
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  async function handleSignOut() {
+    setOpen(false);
+    setIsLoggedIn(false);
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.refresh();
+  }
 
   return (
     <header
@@ -82,16 +110,30 @@ export function Header() {
             aria-hidden
           />
 
-          <a
-            href="#free-stuff"
-            className={`hidden h-8 items-center rounded-full px-3.5 text-[12.5px] font-semibold tracking-tight transition duration-200 hover:-translate-y-px lg:inline-flex ${
-              solid
-                ? "bg-forest text-white shadow-[0_6px_16px_-8px_rgba(28,48,190,0.65)] hover:bg-forest-deep"
-                : "bg-white text-forest-deep shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] hover:bg-gold-soft"
-            }`}
-          >
-            Start free
-          </a>
+          {isLoggedIn ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className={`hidden h-8 items-center rounded-full border px-3.5 text-[12.5px] font-semibold tracking-tight transition duration-200 hover:-translate-y-px lg:inline-flex ${
+                solid
+                  ? "border-ink/15 bg-white text-ink hover:border-ink/25"
+                  : "border-white/35 bg-white/10 text-white hover:bg-white/20"
+              }`}
+            >
+              Log out
+            </button>
+          ) : (
+            <a
+              href="#free-stuff"
+              className={`hidden h-8 items-center rounded-full px-3.5 text-[12.5px] font-semibold tracking-tight transition duration-200 hover:-translate-y-px lg:inline-flex ${
+                solid
+                  ? "bg-forest text-white shadow-[0_6px_16px_-8px_rgba(28,48,190,0.65)] hover:bg-forest-deep"
+                  : "bg-white text-forest-deep shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] hover:bg-gold-soft"
+              }`}
+            >
+              Start free
+            </a>
+          )}
 
           <button
             type="button"
@@ -127,13 +169,23 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#free-stuff"
-                className="mt-2 mb-1 rounded-full bg-forest px-4 py-2.5 text-center text-sm font-semibold text-white"
-                onClick={() => setOpen(false)}
-              >
-                Start free
-              </a>
+              {isLoggedIn ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="mt-2 mb-1 rounded-full border border-ink/15 bg-white px-4 py-2.5 text-center text-sm font-semibold text-ink"
+                >
+                  Log out
+                </button>
+              ) : (
+                <a
+                  href="#free-stuff"
+                  className="mt-2 mb-1 rounded-full bg-forest px-4 py-2.5 text-center text-sm font-semibold text-white"
+                  onClick={() => setOpen(false)}
+                >
+                  Start free
+                </a>
+              )}
             </div>
           </motion.nav>
         ) : null}

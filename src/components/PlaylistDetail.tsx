@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Playlist } from "@/data/playlists";
-import { premiumCourses } from "@/data/premium-courses";
+import type { PremiumCourse } from "@/data/premium-courses";
 import { ArrowIcon, PremiumIcon } from "./Icons";
 import { Reveal, Stagger, StaggerItem } from "./Reveal";
 
@@ -13,7 +13,7 @@ function PlayIcon({ className }: { className?: string }) {
   );
 }
 
-function PremiumCoursesSidebar() {
+function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
   return (
     <aside className="lg:sticky lg:top-28">
       <Reveal delay={0.08}>
@@ -33,54 +33,62 @@ function PremiumCoursesSidebar() {
             </p>
           </div>
 
-          <ul className="divide-y divide-ink/6 bg-white/70">
-            {premiumCourses.map((course) => (
-              <li key={course.id}>
-                <Link
-                  href={course.href}
-                  className="group flex gap-3.5 px-5 py-4 transition hover:bg-forest/[0.03] sm:px-6"
-                >
-                  <div className="relative h-[4.25rem] w-[4.75rem] shrink-0 overflow-hidden rounded-xl bg-ink/5 ring-1 ring-ink/6">
-                    <Image
-                      src={course.thumbnail}
-                      alt=""
-                      fill
-                      sizes="76px"
-                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
-                    />
-                    <span
-                      className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#f0d060] to-[#c9a227] text-white shadow-[0_2px_6px_rgba(185,134,11,0.45)]"
-                      title="Premium course"
-                      aria-label="Premium course"
-                    >
-                      <PremiumIcon className="h-3 w-3" />
-                    </span>
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-forest/8 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest uppercase">
-                        {course.tag}
-                      </span>
-                      <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-ink tabular-nums">
-                        <PremiumIcon className="h-3.5 w-3.5 text-[#c9a227]" />
-                        {course.price}
+          {courses.length === 0 ? (
+            <p className="px-5 py-8 text-sm text-ink/50 sm:px-6">
+              No premium courses published yet. Check back soon.
+            </p>
+          ) : (
+            <ul className="divide-y divide-ink/6 bg-white/70">
+              {courses.map((course) => (
+                <li key={course.id}>
+                  <Link
+                    href={course.href}
+                    className="group flex gap-3.5 px-5 py-4 transition hover:bg-forest/[0.03] sm:px-6"
+                  >
+                    <div className="relative h-[4.25rem] w-[4.75rem] shrink-0 overflow-hidden rounded-xl bg-ink/5 ring-1 ring-ink/6">
+                      <Image
+                        src={course.thumbnail}
+                        alt=""
+                        fill
+                        sizes="76px"
+                        className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                      />
+                      <span
+                        className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#f0d060] to-[#c9a227] text-white shadow-[0_2px_6px_rgba(185,134,11,0.45)]"
+                        title="Premium course"
+                        aria-label="Premium course"
+                      >
+                        <PremiumIcon className="h-3 w-3" />
                       </span>
                     </div>
-                    <h4 className="mt-1.5 line-clamp-2 text-sm leading-5 font-semibold text-ink transition group-hover:text-forest">
-                      {course.title}
-                    </h4>
-                    <p className="mt-1 text-[11px] text-ink/45">
-                      {course.lessons} lessons · {course.duration}
-                    </p>
-                    <p className="mt-1 text-[10px] font-medium tracking-wide text-ink/35 uppercase">
-                      Sign in required
-                    </p>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="rounded-full bg-forest/8 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest uppercase">
+                          {course.tag}
+                        </span>
+                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-ink tabular-nums">
+                          <PremiumIcon className="h-3.5 w-3.5 text-[#c9a227]" />
+                          {course.price}
+                        </span>
+                      </div>
+                      <h4 className="mt-1.5 line-clamp-2 text-sm leading-5 font-semibold text-ink transition group-hover:text-forest">
+                        {course.title}
+                      </h4>
+                      <p className="mt-1 text-[11px] text-ink/45">
+                        {course.lessons > 0
+                          ? `${course.lessons} lessons · ${course.duration}`
+                          : course.duration}
+                      </p>
+                      <p className="mt-1 text-[10px] font-medium tracking-wide text-ink/35 uppercase">
+                        Sign in required
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div className="border-t border-ink/8 bg-[#f7fbff]/80 px-5 py-4 sm:px-6">
             <a
@@ -97,7 +105,13 @@ function PremiumCoursesSidebar() {
   );
 }
 
-export function PlaylistDetail({ playlist }: { playlist: Playlist }) {
+export function PlaylistDetail({
+  playlist,
+  premiumCourses,
+}: {
+  playlist: Playlist;
+  premiumCourses: PremiumCourse[];
+}) {
   const unit = playlist.isCourse ? "lesson" : "video";
   const countLabel = `${playlist.videos.length} ${unit}${playlist.videos.length === 1 ? "" : "s"}`;
   const sectionTitle = playlist.isCourse ? "Course contents" : "Playlist contents";
@@ -240,7 +254,7 @@ export function PlaylistDetail({ playlist }: { playlist: Playlist }) {
             })}
           </Stagger>
 
-          <PremiumCoursesSidebar />
+          <PremiumCoursesSidebar courses={premiumCourses} />
         </div>
       </div>
     </article>

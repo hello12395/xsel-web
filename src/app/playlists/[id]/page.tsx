@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PlaylistDetail } from "@/components/PlaylistDetail";
+import { mapCoursesToPremium } from "@/data/premium-courses";
 import { getAllPlaylistIds, getPlaylistById } from "@/data/playlists";
+import { getPublishedCourses } from "@/lib/db/courses";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -35,11 +37,18 @@ export default async function PlaylistPage({ params }: PageProps) {
     notFound();
   }
 
+  let premiumCourses: ReturnType<typeof mapCoursesToPremium> = [];
+  try {
+    premiumCourses = mapCoursesToPremium(await getPublishedCourses());
+  } catch {
+    premiumCourses = [];
+  }
+
   return (
     <>
       <Header />
       <main className="flex-1">
-        <PlaylistDetail playlist={playlist} />
+        <PlaylistDetail playlist={playlist} premiumCourses={premiumCourses} />
       </main>
       <Footer />
     </>
