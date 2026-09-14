@@ -5,6 +5,7 @@ import { Reveal } from "./Reveal";
 
 const links = [
   { href: "#why", label: "Why the Lab" },
+  { href: "#premium-courses", label: "Premium" },
   { href: "#free-stuff", label: "Free Stuff" },
   { href: "#reviews", label: "Reviews" },
   { href: "#blogs", label: "Blogs" },

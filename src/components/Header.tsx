@@ -9,6 +9,7 @@ import { CloseIcon, MenuIcon } from "./Icons";
 
 const links = [
   { href: "#why", label: "Why the Lab" },
+  { href: "#premium-courses", label: "Premium" },
   { href: "#free-stuff", label: "Free Stuff" },
   { href: "#reviews", label: "Reviews" },
   { href: "#discussions", label: "Discussions" },

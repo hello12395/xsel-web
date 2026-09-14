@@ -34,7 +34,7 @@ export function FreeStuff() {
     <section id="free-stuff" className="scroll-mt-24 border-b border-ink/8 bg-cream">
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-28">
         <SectionHeader
-          kicker="03 — Open shelf"
+          kicker="04 — Open shelf"
           title="Free Stuff"
           copy="Free YouTube playlists from English with Mahmood Sarwar — grammar, exams, speaking, vocabulary, and more. Watch anytime, no sign-up."
         />

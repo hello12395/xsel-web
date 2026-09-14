@@ -34,7 +34,7 @@ export function SocialMedia() {
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
           <Reveal className="relative z-10">
             <p className="text-[11px] font-semibold tracking-[0.24em] text-[#F5E6D8]/80 uppercase">
-              06 — Outside the room
+              07 — Outside the room
             </p>
             <h2 className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[#FFF8F1] sm:text-5xl lg:text-[3.4rem]">
               Social Media

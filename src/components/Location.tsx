@@ -181,7 +181,7 @@ export function Location() {
       <div className="relative mx-auto grid max-w-6xl gap-14 px-5 py-24 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
         <div>
           <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">
-            08 — Find us
+            09 — Find us
           </p>
           <h2 className="font-display mt-4 text-[2.35rem] leading-[1.08] tracking-tight text-white sm:text-5xl">
             On the map

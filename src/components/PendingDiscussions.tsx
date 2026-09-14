@@ -253,7 +253,7 @@ export function PendingDiscussions() {
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-white/90 uppercase backdrop-blur-md">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mark" />
-              05 — Open floor
+              06 — Open floor
             </span>
             <p className="font-display mt-4 text-2xl text-white sm:text-3xl">Mahmood Sarwar</p>
             <p className="mt-1 text-sm text-white/70">Hosts the open floor every week</p>
@@ -262,7 +262,7 @@ export function PendingDiscussions() {
 
         <div className="relative bg-discussions-floor px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24 xl:px-14">
           <div className="pointer-events-none absolute right-[6%] top-10 font-display text-[8rem] leading-none text-[#5a462d]/[0.06] select-none sm:text-[10rem]">
-            05
+            06
           </div>
 
           <Reveal className="relative text-left">

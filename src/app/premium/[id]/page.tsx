@@ -76,11 +76,11 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
 
         <div className="relative mx-auto max-w-5xl px-5 py-14 pt-28 md:px-8 md:py-16 md:pt-32">
           <Link
-            href="/#free-stuff"
+            href="/#premium-courses"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
           >
             <ArrowIcon className="h-4 w-4 -scale-x-100" />
-            Back to Free Stuff
+            Back to Premium courses
           </Link>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

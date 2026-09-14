@@ -60,7 +60,7 @@ export function Reviews() {
       <div className="relative mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-28 lg:px-12 lg:py-32">
         <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
           <Reveal className="reviews-intro-panel text-left">
-            <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">04 — Voices</p>
+            <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">05 — Voices</p>
             <h2 className="font-display mt-4 text-[2.35rem] leading-[1.1] tracking-tight sm:text-5xl lg:text-[3rem] xl:text-[3.25rem]">
               What learners say
             </h2>
