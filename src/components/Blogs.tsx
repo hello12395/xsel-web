@@ -311,17 +311,17 @@ export function Blogs() {
 
   return (
     <section id="blogs" className="bg-blogs-section relative scroll-mt-24 overflow-x-clip border-b border-[#d9c4b4]/50">
-      <div className="relative mx-auto w-full max-w-[1500px] px-2 pb-20 pt-16 sm:px-4 sm:pb-24 sm:pt-20">
-        <h2 className="blogs-heading font-display mb-8 text-left text-3xl tracking-tight lowercase sm:mb-10 sm:text-4xl md:text-5xl">
+      <div className="relative mx-auto w-full max-w-[1500px] px-3 pb-16 pt-12 sm:px-4 sm:pb-24 sm:pt-20 md:px-6 lg:px-8">
+        <h2 className="blogs-heading font-display mb-6 text-left text-[1.85rem] tracking-tight lowercase sm:mb-10 sm:text-4xl md:text-5xl">
           blogs
         </h2>
 
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12 xl:gap-16">
+        <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12 xl:gap-16">
           <div className="min-w-0">
             <div className="blogs-stage relative w-full overflow-hidden">
               <div className="blogs-stage-glow pointer-events-none" aria-hidden />
 
-              <div className="blogs-stage-inner relative mx-auto h-[22rem] max-w-[1280px] origin-center scale-[0.48] sm:h-[24rem] sm:scale-[0.58] md:h-[25rem] md:scale-[0.68] lg:h-[26rem] lg:scale-[0.78] xl:h-[27rem] xl:scale-[0.88]">
+              <div className="blogs-stage-inner relative mx-auto h-[18rem] max-w-[1280px] origin-center scale-[0.42] sm:h-[24rem] sm:scale-[0.58] md:h-[25rem] md:scale-[0.68] lg:h-[26rem] lg:scale-[0.78] xl:h-[27rem] xl:scale-[0.88]">
                 {visibleSlides.map(({ slide, index, slot }) => {
                   const layout = getCardLayout(slot);
                   const isActive = slot === CENTER_SLOT;

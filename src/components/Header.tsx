@@ -64,23 +64,23 @@ export function Header() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-5 px-5 lg:h-[3.5rem]">
-        <a href="#hero" className="group flex shrink-0 items-center gap-2">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-5 lg:h-[3.5rem] lg:px-8">
+        <a href="#hero" className="group flex min-w-0 shrink-0 items-center gap-2">
           <BrandLogo
             size={32}
             priority
             className="h-8 w-8 transition-transform duration-300 group-hover:scale-[1.03]"
           />
-          <span className="leading-none">
+          <span className="min-w-0 leading-none">
             <span
-              className={`mb-0.5 block text-[9px] font-semibold uppercase tracking-[0.2em] ${
+              className={`mb-0.5 block text-[9px] font-semibold tracking-[0.2em] uppercase ${
                 solid ? "text-gold" : "text-white/75"
               }`}
             >
               English
             </span>
             <span
-              className={`font-display block text-[15px] font-semibold tracking-tight ${
+              className={`font-display block truncate text-[15px] font-semibold tracking-tight ${
                 solid ? "text-ink" : "text-white"
               }`}
             >
@@ -89,17 +89,17 @@ export function Header() {
           </span>
         </a>
 
-        <div className="ml-auto flex items-center gap-2.5 lg:gap-4">
-          <nav className="hidden items-center lg:flex">
+        <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-2.5 lg:gap-4">
+          <nav className="hidden items-center lg:flex lg:max-w-[min(100%,42rem)] lg:overflow-x-auto xl:max-w-none">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-2 py-1 text-[12.5px] font-medium tracking-[-0.01em] transition-colors xl:px-2.5 ${
+                className={`relative shrink-0 px-1.5 py-1 text-[12px] font-medium tracking-[-0.01em] transition-colors xl:px-2.5 xl:text-[12.5px] ${
                   solid
                     ? "text-ink/55 hover:text-ink"
                     : "text-white/72 hover:text-white"
-                } after:absolute after:right-2 after:bottom-0 after:left-2 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 xl:after:right-2.5 xl:after:left-2.5`}
+                } after:absolute after:right-1.5 after:bottom-0 after:left-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 xl:after:right-2.5 xl:after:left-2.5`}
               >
                 {link.label}
               </a>

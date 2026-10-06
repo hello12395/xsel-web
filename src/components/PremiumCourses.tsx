@@ -27,16 +27,17 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
       id="premium-courses"
       className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-b from-white via-[#fbfcff] to-cream"
     >
-      <div className="mx-auto max-w-6xl px-5 py-24 md:py-28">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
         <SectionHeader
           kicker="03 — Studio shelf"
           title="Premium courses"
-          copy="Mentor-led tracks and live cohorts from English with Mahmood Sarwar — structured lessons, marked work, and enrollment when you are ready."
+          copy="Live, mentor-led English courses in Islamabad and online, structured lessons, real correction, and a seat
+                open when you're ready to join."
         />
 
         {courses.length === 0 ? (
-          <Reveal className="mt-14">
-            <div className="card-surface rounded-[28px] px-6 py-14 text-center sm:px-10">
+          <Reveal className="mt-10 sm:mt-14">
+            <div className="card-surface rounded-[22px] px-5 py-12 text-center sm:rounded-[28px] sm:px-10 sm:py-14">
               <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#f0d060]/25 to-[#c9a227]/20 text-[#b8860b]">
                 <PremiumIcon className="h-6 w-6" />
               </span>
@@ -65,7 +66,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
           </Reveal>
         ) : (
           <>
-            <Reveal className="mt-14">
+            <Reveal className="mt-10 sm:mt-14">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={showAll ? "all" : `page-${page}`}
@@ -73,59 +74,59 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid gap-5 md:grid-cols-3"
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
                 >
                   {visible.map((course) => (
                     <Link
                       key={course.id}
                       href={course.href}
-                      className="card-surface group flex flex-col overflow-hidden rounded-[28px] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(185,134,11,0.28)]"
+                      className="card-surface group flex min-w-0 flex-col overflow-hidden rounded-[22px] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(185,134,11,0.28)] sm:rounded-[28px]"
                     >
                       <div className="relative aspect-video overflow-hidden bg-ink/5">
                         <Image
                           src={course.thumbnail}
                           alt=""
                           fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover transition duration-500 group-hover:scale-[1.04]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         <span
-                          className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#f0d060] to-[#c9a227] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white shadow-[0_4px_12px_rgba(185,134,11,0.35)] uppercase"
+                          className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#f0d060] to-[#c9a227] px-2 py-1 text-[10px] font-semibold tracking-wide text-white shadow-[0_4px_12px_rgba(185,134,11,0.35)] uppercase sm:top-3 sm:left-3 sm:px-2.5 sm:text-[11px]"
                           aria-label="Premium course"
                         >
                           <PremiumIcon className="h-3 w-3" />
                           Premium
                         </span>
-                        <span className="absolute right-3 bottom-3 rounded-full bg-black/65 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white tabular-nums">
+                        <span className="absolute right-2.5 bottom-2.5 rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white tabular-nums sm:right-3 sm:bottom-3 sm:px-2.5 sm:text-[11px]">
                           {course.price}
                         </span>
-                        <span className="absolute bottom-3 left-3 rounded-full bg-black/65 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white uppercase">
+                        <span className="absolute bottom-2.5 left-2.5 max-w-[45%] truncate rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase sm:bottom-3 sm:left-3 sm:max-w-none sm:px-2.5 sm:text-[11px]">
                           {course.lessons > 0
                             ? `${course.lessons} lessons`
                             : course.duration}
                         </span>
                       </div>
 
-                      <div className="flex flex-1 flex-col p-6">
+                      <div className="flex flex-1 flex-col p-4 sm:p-6">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="w-fit rounded-full bg-forest/8 px-3 py-1 text-[11px] font-semibold tracking-wide text-forest uppercase">
+                          <span className="w-fit rounded-full bg-forest/8 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-forest uppercase sm:px-3 sm:text-[11px]">
                             {course.tag}
                           </span>
-                          <span className="w-fit rounded-full bg-[#f5e6b8]/70 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#8a6a10] uppercase">
+                          <span className="w-fit rounded-full bg-[#f5e6b8]/70 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#8a6a10] uppercase sm:px-3 sm:text-[11px]">
                             Paid
                           </span>
                         </div>
-                        <h3 className="font-display mt-4 text-[1.45rem] leading-tight text-ink">
+                        <h3 className="font-display mt-3 text-[1.25rem] leading-tight text-ink sm:mt-4 sm:text-[1.45rem]">
                           {course.title}
                         </h3>
-                        <p className="mt-3 line-clamp-3 flex-1 text-[15px] leading-7 text-ink/65">
+                        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-ink/65 sm:mt-3 sm:text-[15px] sm:leading-7">
                           {course.blurb}
                         </p>
-                        <p className="mt-4 text-[12px] font-medium tracking-wide text-ink/40 uppercase">
+                        <p className="mt-3 text-[11px] font-medium tracking-wide text-ink/40 uppercase sm:mt-4 sm:text-[12px]">
                           {course.duration} · Sign in to enroll
                         </p>
-                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-forest">
+                        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-forest sm:mt-5">
                           View course
                           <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
                         </span>

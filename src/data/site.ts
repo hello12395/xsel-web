@@ -1,42 +1,56 @@
 export const whyCards = [
   {
     number: "01",
-    title: "Live language labs",
-    body: "Small groups, spoken drills, and real-time correction — not a lecture you sit through and forget.",
+    title: "Taught by him, not a handoff",
+    body: "Every class, every correction, comes from Sir Mahmood Sarwar himself. No substitute teachers, ever.",
   },
   {
     number: "02",
-    title: "Mentors who mark the work",
-    body: "Every paragraph, pronunciation, and presentation is reviewed so progress is visible week after week.",
+    title: "A room built for speaking",
+    body: "Small groups, real-time correction, and a fear-free space where mistakes are part of getting better, not something to hide.",
   },
   {
     number: "03",
-    title: "A path that actually fits",
-    body: "Conversation, academic writing, and exam tracks (IELTS & beyond) built around the English you need next.",
+    title: "In the room, or on the screen",
+    body: "Join live at our academy in G-11 Markaz, Islamabad, or on Zoom from anywhere. Missed a class? Catch the recording on the app.",
   },
 ];
 
 export const reviews = [
   {
-    name: "Ayesha Khan",
-    role: "IELTS candidate",
-    avatar: "/reviews/ayesha-khan.jpg",
+    name: "Haseeb Ur Rehman",
+    role: "CSS aspirant",
+    avatar: "/reviews/haseeb-ur-rehman.jpg",
     quote:
-      "My writing jumped a full band in six weeks. The lab is picky in the best way — every sentence gets a reason, not just a red mark.",
+      "The best mentor for aspirants. I was stuck on English prep for three years until Fundamentals of Grammar course turned things around.",
   },
   {
-    name: "Hassan Malik",
-    role: "University student",
-    avatar: "/reviews/hassan-malik.jpg",
+    name: "Ayesha Ayaz",
+    role: "Learner",
+    avatar: "/reviews/ayesha-ayaz.jpg",
     quote:
-      "I used to freeze in class. Spoken labs here feel like a workshop, not a test. I leave tired, and I leave better.",
+      "I went in for literature and came out loving grammar too. The way he explains things, it just sticks.",
   },
   {
-    name: "Sara Ahmed",
-    role: "Working professional",
-    avatar: "/reviews/sara-ahmed.jpg",
+    name: "Rahmeen Aslam",
+    role: "Learner",
+    avatar: "/reviews/rahmeen-aslam.jpg",
     quote:
-      "Email English finally clicked. Mentors treat workplace language as a craft, not a grammar quiz.",
+      "He has a rare ability to start from the basics and build all the way up, without leaving anyone behind.",
+  },
+  {
+    name: "Aneela Yaqoub",
+    role: "Spoken English Program",
+    avatar: "/reviews/aneela-yaqoub.jpg",
+    quote:
+      "I couldn't speak a line of English before. Two months later, I speak with confidence and without hesitation.",
+  },
+  {
+    name: "Zulal Kakakhel",
+    role: "CSS aspirant",
+    avatar: "/reviews/zulal-kakakhel.jpg",
+    quote:
+      "I couldn't write a proper precis before this. Now I actually can, and grammar finally makes sense.",
   },
 ];
 

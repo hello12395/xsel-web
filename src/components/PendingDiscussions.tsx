@@ -81,7 +81,7 @@ function ThreadCard3D({
   return (
     <motion.div
       ref={sceneRef}
-      className="thread-card-scene h-full w-[min(78vw,280px)] shrink-0 sm:w-[300px] lg:w-[320px]"
+      className="thread-card-scene h-full w-[min(82vw,260px)] shrink-0 sm:w-[300px] lg:w-[320px]"
       animate={{
         scale: isActive ? 1 : 0.92,
         opacity: isActive ? 1 : 0.72,
@@ -108,7 +108,7 @@ function ThreadCard3D({
         <div className="thread-card-base rounded-[20px]" aria-hidden />
 
         <div
-          className="thread-card-face relative flex min-h-[22rem] flex-col overflow-hidden rounded-[20px] pl-5 pr-6 pt-6 pb-6 sm:min-h-[24rem] sm:pl-6 sm:pr-7 sm:pt-7"
+          className="thread-card-face relative flex min-h-[20rem] flex-col overflow-hidden rounded-[20px] pl-4 pr-5 pt-5 pb-5 sm:min-h-[24rem] sm:pl-6 sm:pr-7 sm:pt-7 sm:pb-6"
           style={{ transform: "translateZ(20px)" }}
         >
           <div className={`thread-card-spine ${theme.spine}`} aria-hidden />
@@ -260,16 +260,16 @@ export function PendingDiscussions() {
           </div>
         </Reveal>
 
-        <div className="relative bg-discussions-floor px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24 xl:px-14">
-          <div className="pointer-events-none absolute right-[6%] top-10 font-display text-[8rem] leading-none text-[#5a462d]/[0.06] select-none sm:text-[10rem]">
+        <div className="relative bg-discussions-floor px-4 py-12 sm:px-8 sm:py-20 lg:px-10 lg:py-24 xl:px-14">
+          <div className="pointer-events-none absolute right-[6%] top-10 font-display text-[6rem] leading-none text-[#5a462d]/[0.06] select-none sm:text-[10rem]">
             06
           </div>
 
-          <Reveal className="relative text-left">
-            <h2 className="font-display text-3xl tracking-tight text-ink sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
+          <Reveal className="relative min-w-0 text-left">
+            <h2 className="font-display text-[1.85rem] tracking-tight text-ink sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl">
               Pending Discussions
             </h2>
-            <div className="mt-5 flex flex-wrap gap-2.5">
+            <div className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-2.5">
               {[
                 `${discussions.length} threads open`,
                 `${totalReplies} replies waiting`,
@@ -277,7 +277,7 @@ export function PendingDiscussions() {
               ].map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full border border-[#5a462d]/15 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink/75 shadow-[0_1px_2px_rgba(70,50,30,0.06)]"
+                  className="rounded-full border border-[#5a462d]/15 bg-white px-3 py-1.5 text-[11px] font-semibold text-ink/75 shadow-[0_1px_2px_rgba(70,50,30,0.06)] sm:px-3.5 sm:text-xs"
                 >
                   {chip}
                 </span>
@@ -285,7 +285,7 @@ export function PendingDiscussions() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1} className="relative mt-10 min-w-0 lg:mt-12">
+          <Reveal delay={0.1} className="relative mt-8 min-w-0 sm:mt-10 lg:mt-12">
             <CarouselArrow
               direction="prev"
               className="left-0 sm:left-1"
@@ -299,7 +299,7 @@ export function PendingDiscussions() {
               disabled={active === count - 1}
             />
 
-            <div className="overflow-hidden px-9 py-4 sm:px-11 md:px-12">
+            <div className="overflow-hidden px-8 py-3 sm:px-11 sm:py-4 md:px-12">
               <motion.div
                 ref={trackRef}
                 className="flex"
@@ -308,7 +308,7 @@ export function PendingDiscussions() {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 {discussions.map((thread, index) => (
-                  <div key={thread.title} data-thread-card>
+                  <div key={thread.title} data-thread-card className="min-w-0">
                     <ThreadCard3D
                       title={thread.title}
                       excerpt={thread.excerpt}

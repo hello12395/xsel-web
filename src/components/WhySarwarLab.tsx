@@ -103,7 +103,7 @@ function MethodCard3D({
         <div className="method-card-base rounded-[24px]" aria-hidden />
 
         <div
-          className={`method-card-face relative flex min-h-[24rem] flex-col overflow-hidden rounded-[24px] p-7 ring-1 ring-inset md:min-h-[27rem] md:p-8 ${accent.ring}`}
+          className={`method-card-face relative flex min-h-[20rem] flex-col overflow-hidden rounded-[20px] p-5 ring-1 ring-inset sm:min-h-[24rem] sm:rounded-[24px] sm:p-7 md:min-h-[27rem] md:p-8 ${accent.ring}`}
           style={{ transform: "translateZ(28px)" }}
         >
           <div className="method-card-edge" aria-hidden />
@@ -168,18 +168,19 @@ function MethodCard3D({
 export function WhySarwarLab() {
   return (
     <section id="why" className="relative scroll-mt-24 overflow-hidden border-b border-ink/8 bg-method-section">
-      <div className="relative mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-28 lg:px-12 lg:py-32">
-        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
-          <div className="method-intro-panel">
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
+        <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
+          <div className="method-intro-panel min-w-0">
             <SectionHeader
               className="max-w-none"
               kicker="02 — The method"
-              title="Why Sarwar Lab?"
-              copy="Because English is not a subject you watch. It is a lab you walk into, speak in, and leave with work in your hands."
+              title="Why Sarwar English Lab?"
+              copy="English isn't something you memorize in a lecture. It's something you work on, like a lab, where you
+                  practice, get corrected, and leave with something better than you walked in with."
             />
           </div>
 
-          <Stagger className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-5">
+          <Stagger className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
             {whyCards.map((card, index) => (
               <StaggerItem key={card.number} className="h-full">
                 <MethodCard3D

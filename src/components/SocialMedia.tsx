@@ -30,19 +30,19 @@ export function SocialMedia() {
       <div className="social-stage-glow" aria-hidden />
       <div className="social-stage-grid" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-5 py-20 sm:py-24 lg:py-28">
-        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
-          <Reveal className="relative z-10">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 lg:py-28">
+        <div className="grid items-end gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
+          <Reveal className="relative z-10 min-w-0">
             <p className="text-[11px] font-semibold tracking-[0.24em] text-[#F5E6D8]/80 uppercase">
               07 — Outside the room
             </p>
-            <h2 className="font-display mt-4 text-4xl leading-[1.05] tracking-tight text-[#FFF8F1] sm:text-5xl lg:text-[3.4rem]">
+            <h2 className="font-display mt-4 text-[2rem] leading-[1.05] tracking-tight text-[#FFF8F1] sm:text-4xl md:text-5xl lg:text-[3.4rem]">
               Social Media
             </h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-[#FFF8F1]/72 sm:text-lg">
+            <p className="mt-4 max-w-md text-[15px] leading-7 text-[#FFF8F1]/72 sm:mt-5 sm:text-base sm:leading-7 md:text-lg">
               Daily prompts, lab clips, and community threads — follow the lab wherever you already scroll.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
               <span className="rounded-full border border-[#FFF8F1]/25 bg-[#FFF8F1]/10 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-[#FFF8F1]/90 backdrop-blur-sm">
                 4 platforms
               </span>
@@ -52,9 +52,9 @@ export function SocialMedia() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.12} className="social-slab-scene relative">
+          <Reveal delay={0.12} className="social-slab-scene relative min-w-0">
             <div className="social-slab-floor" aria-hidden />
-            <Stagger className="relative grid gap-5 sm:grid-cols-2 sm:gap-6">
+            <Stagger className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6">
               {socials.map((social, index) => {
                 const slab = slabs[index % slabs.length];
                 const Icon = slab.Icon;

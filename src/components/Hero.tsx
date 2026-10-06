@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowIcon, ChevronDownIcon } from "./Icons";
 
 const googlePlayUrl = "https://play.google.com/store";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const lessons = ["grammar", "speaking", "writing", "exams"];
 
 function RevealLine({
   children,
@@ -33,42 +31,11 @@ function RevealLine({
   );
 }
 
-function CycleWord() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % lessons.length);
-    }, 2200);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  return (
-    <span
-      className="relative mx-1.5 inline-block h-[1.35em] w-[9.5rem] overflow-hidden align-baseline border-b border-white/40"
-      aria-live="polite"
-    >
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={lessons[index]}
-          initial={{ y: "90%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-90%", opacity: 0 }}
-          transition={{ duration: 0.4, ease }}
-          className="absolute top-0 left-0 font-display whitespace-nowrap italic"
-        >
-          {lessons[index]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
-
 export function Hero() {
   return (
-    <section id="hero" className="relative h-dvh min-h-dvh w-full overflow-hidden bg-black">
+    <section id="hero" className="relative min-h-dvh w-full overflow-hidden bg-black">
       <video
-        className="absolute inset-0 h-full w-full object-cover object-[72%_center]"
+        className="absolute inset-0 h-full w-full object-cover object-[68%_center] sm:object-[72%_center]"
         autoPlay
         muted
         loop
@@ -79,16 +46,16 @@ export function Hero() {
         <source src="/studio-hero.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent sm:from-black/80 sm:via-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20" />
 
-      <div className="relative z-10 flex h-full items-center px-6 pt-20 pb-16 sm:px-10 lg:px-16 xl:px-24">
+      <div className="relative z-10 flex min-h-dvh items-center px-5 pt-20 pb-20 sm:px-8 sm:pb-16 md:px-10 lg:px-16 xl:px-24">
         <div className="w-full max-w-3xl text-left lg:max-w-4xl xl:max-w-[58rem]">
           <motion.p
             initial={{ opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease }}
-            className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/25 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/90 backdrop-blur-md"
+            className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/25 px-3.5 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-white/90 uppercase backdrop-blur-md sm:mb-8 sm:px-4 sm:py-2 sm:text-xs sm:tracking-[0.24em]"
           >
             <motion.span
               className="h-1.5 w-1.5 rounded-full bg-white"
@@ -101,27 +68,27 @@ export function Hero() {
           <h1 className="text-left text-white">
             <RevealLine
               delay={0.12}
-              className="font-sans text-xs font-semibold tracking-[0.4em] text-white/70 uppercase sm:text-sm"
+              className="font-sans text-[10px] font-semibold tracking-[0.32em] text-white/70 uppercase sm:text-xs sm:tracking-[0.4em] md:text-sm"
             >
               On the glass board
             </RevealLine>
             <RevealLine
               delay={0.28}
-              className="font-display mt-5 text-5xl leading-[1.12] font-semibold tracking-tight sm:text-7xl lg:text-[5.25rem]"
+              className="font-display mt-3 text-4xl leading-[1.12] font-semibold tracking-tight sm:mt-5 sm:text-6xl md:text-7xl lg:text-[5.25rem]"
             >
               English,
             </RevealLine>
             <RevealLine
               delay={0.42}
-              className="font-display mt-3 text-[2.75rem] leading-[1.12] font-light tracking-tight italic sm:text-6xl lg:text-[4.75rem]"
+              className="font-display mt-2 text-[2.15rem] leading-[1.12] font-light tracking-tight italic sm:mt-3 sm:text-5xl md:text-6xl lg:text-[4.75rem]"
             >
               taught live.
             </RevealLine>
             <RevealLine
               delay={0.56}
-              className="mt-6 font-sans text-xl font-medium tracking-tight text-white/90 sm:text-3xl"
+              className="mt-4 font-sans text-lg font-medium tracking-tight text-white/90 sm:mt-6 sm:text-2xl md:text-3xl"
             >
-              Then spoken in the room.
+              Then put to work.
             </RevealLine>
           </h1>
 
@@ -129,14 +96,15 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.72, ease }}
-            className="mt-8 text-left text-xl leading-8 text-white/80 sm:text-[1.375rem] sm:leading-9 lg:text-[1.5rem] lg:leading-10"
+            className="mt-5 max-w-xl text-left text-base leading-7 text-white/80 sm:mt-8 sm:max-w-none sm:text-xl sm:leading-8 md:text-[1.375rem] md:leading-9 lg:text-[1.5rem] lg:leading-10"
           >
             <span className="block">
-              A real classroom for
-              <CycleWord />.
+              A real classroom for grammar, writing, and speaking.
             </span>
-            <span className="mt-3 block">
-              The same lesson you see on screen, marked, corrected, and said out loud.
+            <span className="mt-2 block sm:mt-3">
+              The same lesson you see on screen, marked, corrected, and
+              practiced, whether that&apos;s a sentence you write or a sentence
+              you say.
             </span>
           </motion.p>
 
@@ -144,11 +112,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.86, ease }}
-            className="mt-10 flex flex-wrap items-center justify-start gap-3 sm:gap-4"
+            className="mt-7 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           >
             <a
               href="#free-stuff"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-base font-semibold text-black transition hover:-translate-y-0.5 hover:bg-white/90"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-white/90 sm:justify-start sm:px-7 sm:py-4 sm:text-base"
             >
               Browse free stuff
               <ArrowIcon className="h-4 w-4" />
@@ -157,7 +125,7 @@ export function Hero() {
               href={googlePlayUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex h-[52px] w-[220px] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:h-[56px] sm:w-[238px]"
+              className="relative mx-auto inline-flex h-[48px] w-[200px] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:mx-0 sm:h-[56px] sm:w-[238px]"
               aria-label="Get it on Google Play"
             >
               <Image
@@ -165,7 +133,7 @@ export function Hero() {
                 alt="Get it on Google Play"
                 width={646}
                 height={250}
-                className="absolute top-1/2 left-1/2 h-[114px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[123px]"
+                className="absolute top-1/2 left-1/2 h-[105px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[123px]"
               />
             </a>
           </motion.div>
@@ -174,7 +142,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1, ease }}
-            className="mt-12 grid max-w-3xl grid-cols-3 gap-6 border-t border-white/15 pt-8 text-left lg:max-w-4xl"
+            className="mt-8 grid max-w-3xl grid-cols-3 gap-3 border-t border-white/15 pt-6 text-left sm:mt-12 sm:gap-6 sm:pt-8 lg:max-w-4xl"
           >
             {[
               ["2.4k", "Learners"],
@@ -186,9 +154,10 @@ export function Hero() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 1.05 + index * 0.1, ease }}
+                className="min-w-0"
               >
-                <dt className="font-display text-3xl text-white sm:text-4xl">{value}</dt>
-                <dd className="mt-1.5 text-xs tracking-[0.16em] text-white/55 uppercase sm:text-sm">{label}</dd>
+                <dt className="font-display text-2xl text-white sm:text-3xl md:text-4xl">{value}</dt>
+                <dd className="mt-1 text-[10px] tracking-[0.12em] text-white/55 uppercase sm:mt-1.5 sm:text-xs sm:tracking-[0.16em] md:text-sm">{label}</dd>
               </motion.div>
             ))}
           </motion.dl>
@@ -197,7 +166,7 @@ export function Hero() {
 
       <a
         href="#why"
-        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/70"
+        className="absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/70 sm:bottom-7 sm:flex"
       >
         <span className="text-[10px] font-semibold tracking-[0.28em] uppercase">Scroll</span>
         <motion.span

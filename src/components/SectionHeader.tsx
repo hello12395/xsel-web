@@ -24,13 +24,13 @@ export function SectionHeader({
         {kicker}
       </p>
       <h2
-        className={`font-display mt-3 text-3xl leading-[1.15] tracking-tight sm:text-5xl ${
+        className={`font-display mt-3 text-[1.85rem] leading-[1.15] tracking-tight sm:text-4xl md:text-5xl ${
           light ? "text-white" : "text-ink"
         }`}
       >
         {title}
       </h2>
-      <p className={`mt-4 text-base leading-8 sm:text-lg ${light ? "text-white/70" : "text-ink/65"}`}>
+      <p className={`mt-3 text-[15px] leading-7 sm:mt-4 sm:text-base sm:leading-8 md:text-lg ${light ? "text-white/70" : "text-ink/65"}`}>
         {copy}
       </p>
     </Reveal>

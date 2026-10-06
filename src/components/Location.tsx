@@ -178,15 +178,15 @@ function LocationOrbit() {
 export function Location() {
   return (
     <section id="location" className="bg-location-section relative scroll-mt-24 border-t border-white/[0.06]">
-      <div className="relative mx-auto grid max-w-6xl gap-14 px-5 py-24 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
-        <div>
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:gap-14 sm:px-5 sm:py-20 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
+        <div className="min-w-0">
           <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">
             09 — Find us
           </p>
-          <h2 className="font-display mt-4 text-[2.35rem] leading-[1.08] tracking-tight text-white sm:text-5xl">
+          <h2 className="font-display mt-4 text-[2rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem] md:text-5xl">
             On the map
           </h2>
-          <p className="mt-5 max-w-md text-[15px] leading-7 text-white/55 sm:text-base sm:leading-8">
+          <p className="mt-4 max-w-md text-[15px] leading-7 text-white/55 sm:mt-5 sm:text-base sm:leading-8">
             Two rooms on the map — Lahore by Liberty Market, and a Peshawar campus on University Road.
           </p>
 
