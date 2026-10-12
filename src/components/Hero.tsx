@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowIcon, ChevronDownIcon } from "./Icons";
 
-const googlePlayUrl = "https://play.google.com/store";
+const googlePlayUrl = "https://play.google.com/store/apps/details?id=app.xsel";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -51,30 +51,10 @@ export function Hero() {
 
       <div className="relative z-10 flex min-h-dvh items-center px-5 pt-20 pb-20 sm:px-8 sm:pb-16 md:px-10 lg:px-16 xl:px-24">
         <div className="w-full max-w-3xl text-left lg:max-w-4xl xl:max-w-[58rem]">
-          <motion.p
-            initial={{ opacity: 0, x: -18 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/25 px-3.5 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-white/90 uppercase backdrop-blur-md sm:mb-8 sm:px-4 sm:py-2 sm:text-xs sm:tracking-[0.24em]"
-          >
-            <motion.span
-              className="h-1.5 w-1.5 rounded-full bg-white"
-              animate={{ opacity: [1, 0.25, 1] }}
-              transition={{ duration: 1.4, repeat: Infinity }}
-            />
-            Live from the studio
-          </motion.p>
-
           <h1 className="text-left text-white">
             <RevealLine
               delay={0.12}
-              className="font-sans text-[10px] font-semibold tracking-[0.32em] text-white/70 uppercase sm:text-xs sm:tracking-[0.4em] md:text-sm"
-            >
-              On the glass board
-            </RevealLine>
-            <RevealLine
-              delay={0.28}
-              className="font-display mt-3 text-4xl leading-[1.12] font-semibold tracking-tight sm:mt-5 sm:text-6xl md:text-7xl lg:text-[5.25rem]"
+              className="font-display text-4xl leading-[1.12] font-semibold tracking-tight sm:text-6xl md:text-7xl lg:text-[5.25rem]"
             >
               English,
             </RevealLine>
@@ -115,10 +95,10 @@ export function Hero() {
             className="mt-7 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           >
             <a
-              href="#free-stuff"
+              href="#free-lessons"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-white/90 sm:justify-start sm:px-7 sm:py-4 sm:text-base"
             >
-              Browse free stuff
+              Browse free lessons
               <ArrowIcon className="h-4 w-4" />
             </a>
             <a

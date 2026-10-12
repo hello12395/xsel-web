@@ -10,18 +10,24 @@ const cardAccents = [
   {
     numberClass: "text-mark",
     accentBar: "from-mark/80 via-mark/30 to-transparent",
+    border:
+      "linear-gradient(135deg, rgba(249, 34, 39, 0.9) 0%, rgba(249, 34, 39, 0.35) 45%, rgba(249, 34, 39, 0.75) 100%)",
     glow: "rgba(249, 34, 39, 0.16)",
     ring: "ring-mark/10",
   },
   {
     numberClass: "text-forest",
     accentBar: "from-forest/80 via-forest/30 to-transparent",
+    border:
+      "linear-gradient(135deg, rgba(28, 48, 190, 0.9) 0%, rgba(28, 48, 190, 0.35) 45%, rgba(28, 48, 190, 0.75) 100%)",
     glow: "rgba(28, 48, 190, 0.18)",
     ring: "ring-forest/10",
   },
   {
     numberClass: "text-gold",
     accentBar: "from-gold/80 via-gold-soft/40 to-transparent",
+    border:
+      "linear-gradient(135deg, rgba(2, 171, 213, 0.9) 0%, rgba(2, 171, 213, 0.35) 45%, rgba(2, 171, 213, 0.75) 100%)",
     glow: "rgba(2, 171, 213, 0.18)",
     ring: "ring-gold/15",
   },
@@ -44,16 +50,17 @@ function MethodCard3D({
   const shineX = useMotionValue("50%");
   const shineY = useMotionValue("50%");
 
-  const spring = { stiffness: 260, damping: 24, mass: 0.7 };
-  const rotateX = useSpring(useTransform(y, [0, 1], [20, -20]), spring);
-  const rotateY = useSpring(useTransform(x, [0, 1], [-20, 20]), spring);
-  const liftZ = useSpring(useTransform(y, [0, 0.5, 1], [18, 32, 18]), spring);
-  const glareX = useSpring(useTransform(x, [0, 1], [-12, 12]), spring);
-  const glareY = useSpring(useTransform(y, [0, 1], [-12, 12]), spring);
+  const spring = { stiffness: 220, damping: 20, mass: 0.65 };
+  const rotateX = useSpring(useTransform(y, [0, 1], [18, -18]), spring);
+  const rotateY = useSpring(useTransform(x, [0, 1], [-22, 22]), spring);
+  const liftZ = useSpring(useTransform(y, [0, 0.5, 1], [28, 48, 28]), spring);
+  const scale = useSpring(1, spring);
+  const glareX = useSpring(useTransform(x, [0, 1], [-14, 14]), spring);
+  const glareY = useSpring(useTransform(y, [0, 1], [-14, 14]), spring);
   const shineBackground = useTransform(
     [shineX, shineY],
     ([sx, sy]) =>
-      `radial-gradient(circle at ${sx} ${sy}, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.2) 28%, transparent 64%)`,
+      `radial-gradient(circle at ${sx} ${sy}, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.22) 28%, transparent 64%)`,
   );
 
   const accent = cardAccents[index % cardAccents.length];
@@ -69,6 +76,7 @@ function MethodCard3D({
     y.set(py);
     shineX.set(`${px * 100}%`);
     shineY.set(`${py * 100}%`);
+    scale.set(1.045);
   }
 
   function handleMouseLeave() {
@@ -76,6 +84,7 @@ function MethodCard3D({
     y.set(0.5);
     shineX.set("50%");
     shineY.set("50%");
+    scale.set(1);
   }
 
   return (
@@ -91,7 +100,9 @@ function MethodCard3D({
           rotateX,
           rotateY,
           z: liftZ,
+          scale,
           transformStyle: "preserve-3d",
+          ["--method-glow" as string]: accent.glow,
         }}
       >
         <div
@@ -103,8 +114,7 @@ function MethodCard3D({
         <div className="method-card-base rounded-[24px]" aria-hidden />
 
         <div
-          className={`method-card-face relative flex min-h-[20rem] flex-col overflow-hidden rounded-[20px] p-5 ring-1 ring-inset sm:min-h-[24rem] sm:rounded-[24px] sm:p-7 md:min-h-[27rem] md:p-8 ${accent.ring}`}
-          style={{ transform: "translateZ(28px)" }}
+          className={`method-card-face relative flex h-full min-h-[20rem] flex-col overflow-hidden rounded-[20px] p-5 ring-1 ring-inset sm:min-h-[24rem] sm:rounded-[24px] sm:p-7 md:min-h-[27rem] md:p-8 ${accent.ring}`}
         >
           <div className="method-card-edge" aria-hidden />
           <div className="method-card-rim" aria-hidden />
@@ -115,50 +125,45 @@ function MethodCard3D({
           />
 
           <motion.div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-60"
+            className="method-card-glare pointer-events-none absolute inset-0 rounded-[inherit]"
             style={{
               x: glareX,
               y: glareY,
               background:
-                "linear-gradient(115deg, rgba(255,255,255,0.45) 0%, transparent 42%, transparent 100%)",
+                "linear-gradient(115deg, rgba(255,255,255,0.55) 0%, transparent 42%, transparent 100%)",
             }}
             aria-hidden
           />
 
           <div
-            className={`absolute top-0 left-0 h-[3px] w-full bg-gradient-to-r ${accent.accentBar}`}
-            style={{ transform: "translateZ(4px)" }}
+            className="method-card-accent-border"
+            style={{ background: accent.border }}
             aria-hidden
           />
 
           <span
             className="pointer-events-none absolute top-5 right-5 font-display text-[5.5rem] leading-none text-ink/[0.05] select-none"
-            style={{ transform: "translateZ(8px)" }}
             aria-hidden
           >
             {number}
           </span>
 
-          <div className="relative flex items-center gap-3" style={{ transform: "translateZ(42px)" }}>
-            <span className={`font-display text-3xl leading-none drop-shadow-sm ${accent.numberClass}`}>
-              {number}
-            </span>
-            <span className={`h-px flex-1 bg-gradient-to-r ${accent.accentBar}`} />
+          <div className="method-card-copy relative flex min-h-0 flex-1 flex-col">
+            <div className="relative flex items-center gap-3">
+              <span className={`font-display text-3xl leading-none ${accent.numberClass}`}>
+                {number}
+              </span>
+              <span className={`h-px flex-1 bg-gradient-to-r ${accent.accentBar}`} />
+            </div>
+
+            <h3 className="font-display relative mt-8 text-[1.5rem] leading-[1.2] text-ink md:text-[1.65rem]">
+              {title}
+            </h3>
+
+            <p className="relative mt-5 flex-1 text-[0.98rem] leading-[1.7] text-ink/80 md:text-base md:leading-[1.7]">
+              {body}
+            </p>
           </div>
-
-          <h3
-            className="font-display relative mt-8 text-[1.5rem] leading-[1.2] text-ink drop-shadow-[0_1px_0_rgba(255,255,255,0.8)] md:text-[1.65rem]"
-            style={{ transform: "translateZ(56px)" }}
-          >
-            {title}
-          </h3>
-
-          <p
-            className="relative mt-5 flex-1 text-[0.98rem] leading-[1.75] text-ink/62 md:text-base"
-            style={{ transform: "translateZ(36px)" }}
-          >
-            {body}
-          </p>
         </div>
       </motion.article>
     </div>
@@ -173,7 +178,6 @@ export function WhySarwarLab() {
           <div className="method-intro-panel min-w-0">
             <SectionHeader
               className="max-w-none"
-              kicker="02 — The method"
               title="Why Sarwar English Lab?"
               copy="English isn't something you memorize in a lecture. It's something you work on, like a lab, where you
                   practice, get corrected, and leave with something better than you walked in with."

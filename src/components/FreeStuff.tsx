@@ -31,12 +31,14 @@ export function FreeStuff() {
   }, [page, showAll]);
 
   return (
-    <section id="free-stuff" className="scroll-mt-24 border-b border-ink/8 bg-cream">
+    <section
+      id="free-lessons"
+      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fffbf0] via-[#fff3d6] to-[#f5e4b0]"
+    >
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
         <SectionHeader
-          kicker="04 — Open shelf"
-          title="Free Stuff"
-          copy="Free YouTube playlists from English with Mahmood Sarwar — grammar, exams, speaking, vocabulary, and more. Watch anytime, no sign-up."
+          title="Free Lessons"
+          copy="Free YouTube playlists — grammar, exams preparation, speaking, vocabulary, and more. Watch anytime, no sign-up."
         />
 
         <Reveal className="mt-10 sm:mt-14">

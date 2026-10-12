@@ -6,7 +6,7 @@ import { mapCourseToPremium } from "@/data/premium-courses";
 import { getPublishedCourseById } from "@/lib/db/courses";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowIcon, PremiumIcon } from "@/components/Icons";
-import type { LearningOutcome } from "@/types/course";
+import { parseLearningOutcomes } from "@/types/course";
 
 type PremiumCoursePageProps = {
   params: Promise<{ id: string }>;
@@ -21,14 +21,14 @@ export async function generateMetadata({
   const { id } = await params;
   try {
     const row = await getPublishedCourseById(id);
-    if (!row) return { title: "Premium course | English Sarwar Lab" };
+    if (!row) return { title: "Paid course | Sarwar English Lab" };
     const course = mapCourseToPremium(row);
     return {
-      title: `${course.title} | English Sarwar Lab`,
+      title: `${course.title} | Sarwar English Lab`,
       description: course.blurb,
     };
   } catch {
-    return { title: "Premium course | English Sarwar Lab" };
+    return { title: "Paid course | Sarwar English Lab" };
   }
 }
 
@@ -54,14 +54,17 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
   }
 
   const course = mapCourseToPremium(row);
-  const outcomes = (row.learning_outcomes ?? []).filter(
-    (item): item is LearningOutcome =>
-      Boolean(item?.title?.trim() || item?.description?.trim())
-  );
+  const outcomes = parseLearningOutcomes(row.learning_outcomes);
 
   return (
     <main className="min-h-dvh bg-cream">
-      <div className="relative overflow-hidden bg-ink">
+      <div
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(145deg, #020b18 0%, #0a2340 42%, #0c4a66 100%)",
+        }}
+      >
         <div className="absolute inset-0">
           <Image
             src={course.thumbnail}
@@ -69,9 +72,15 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-30 blur-sm"
+            className="object-cover opacity-15 blur-sm"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 to-ink/75" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(145deg, rgba(2,11,24,0.96) 0%, rgba(10,35,64,0.92) 48%, rgba(12,74,102,0.88) 100%)",
+            }}
+          />
         </div>
 
         <div className="relative mx-auto max-w-5xl px-5 py-14 pt-28 md:px-8 md:py-16 md:pt-32">
@@ -80,16 +89,13 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
           >
             <ArrowIcon className="h-4 w-4 -scale-x-100" />
-            Back to Premium courses
+            Back to Paid Courses
           </Link>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-gold-soft uppercase">
-              {course.tag}
-            </span>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#f0d060]/20 to-[#c9a227]/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#f0d060] uppercase">
               <PremiumIcon className="h-3.5 w-3.5" />
-              Premium · Paid
+              Paid
             </span>
           </div>
 
@@ -114,31 +120,39 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
               <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
                 About this course
               </p>
-              <h2 className="font-display mt-2 text-2xl tracking-tight text-ink">
-                What you&apos;ll learn
-              </h2>
               <p className="mt-4 text-[15px] leading-7 whitespace-pre-line text-ink/65">
                 {row.description?.trim() || course.blurb}
               </p>
 
               {outcomes.length > 0 ? (
-                <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {outcomes.map((outcome, index) => (
-                    <li
-                      key={`${outcome.title}-${index}`}
-                      className="rounded-2xl border border-ink/8 bg-cream/50 p-4"
-                    >
-                      <p className="text-sm font-semibold text-ink">
-                        {outcome.title || `Outcome ${index + 1}`}
-                      </p>
-                      {outcome.description ? (
-                        <p className="mt-1.5 text-sm leading-6 text-ink/55">
-                          {outcome.description}
-                        </p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-8">
+                  <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
+                    Learning outcomes
+                  </p>
+                  <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+                    {outcomes.map((outcome, index) => (
+                      <li
+                        key={`${outcome.title}-${index}`}
+                        className="rounded-2xl border border-ink/8 bg-cream/50 p-4"
+                      >
+                        {outcome.title ? (
+                          <p className="text-sm font-semibold text-ink">
+                            {outcome.title}
+                          </p>
+                        ) : null}
+                        {outcome.description ? (
+                          <p
+                            className={`text-sm leading-6 text-ink/55 ${
+                              outcome.title ? "mt-1.5" : ""
+                            }`}
+                          >
+                            {outcome.description}
+                          </p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
             </section>
 
@@ -209,7 +223,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                   <ArrowIcon className="h-3.5 w-3.5" />
                 </Link>
                 <Link
-                  href="/#free-stuff"
+                  href="/#free-lessons"
                   className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-ink/25"
                 >
                   Browse free courses

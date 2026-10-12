@@ -101,7 +101,7 @@ export function LoginPage() {
                 />
               </div>
               <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#d4b45a] uppercase">
-                English Sarwar Lab
+                Sarwar English Lab
               </p>
               <h1 className="font-display mt-3 text-center text-[2.1rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem]">
                 Welcome back
@@ -111,7 +111,7 @@ export function LoginPage() {
             <div className="px-6 py-7 sm:px-8 sm:py-8">
               {loginRequired ? (
                 <p className="mb-5 rounded-[14px] border border-[#e8d59a] bg-[#fff8e6] px-4 py-3 text-[13px] leading-5 text-[#8a6d1a]">
-                  Sign in to view premium courses. New here? Create an account first.
+                  Sign in to view paid courses. New here? Create an account first.
                 </p>
               ) : null}
 

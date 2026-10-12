@@ -57,7 +57,7 @@ function countLessons(course: CourseWithLessons): {
 
 export function mapCourseToPremium(course: CourseWithLessons): PremiumCourse {
   const { lessons, totalSeconds } = countLessons(course);
-  const blurb = course.description?.trim() || "Premium course from English Sarwar Lab.";
+  const blurb = course.description?.trim() || "Paid course from Sarwar English Lab.";
 
   return {
     id: course.id,

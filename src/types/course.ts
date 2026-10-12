@@ -9,6 +9,33 @@ export interface LearningOutcome {
   description: string;
 }
 
+/** Normalize `courses.learning_outcomes` jsonb into a clean list. */
+export function parseLearningOutcomes(value: unknown): LearningOutcome[] {
+  let raw: unknown = value;
+
+  if (typeof raw === "string") {
+    try {
+      raw = JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  }
+
+  if (!Array.isArray(raw)) return [];
+
+  return raw
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const row = item as Record<string, unknown>;
+      const title = typeof row.title === "string" ? row.title.trim() : "";
+      const description =
+        typeof row.description === "string" ? row.description.trim() : "";
+      if (!title && !description) return null;
+      return { title, description };
+    })
+    .filter((item): item is LearningOutcome => item !== null);
+}
+
 export interface Course {
   id: string;
   title: string;

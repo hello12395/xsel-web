@@ -13,7 +13,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "English Sarwar Lab",
+  title: "Sarwar English Lab",
   description:
     "A living classroom for grammar, speaking, writing, and exam-ready English.",
 };

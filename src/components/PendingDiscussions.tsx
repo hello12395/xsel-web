@@ -251,20 +251,12 @@ export function PendingDiscussions() {
             aria-hidden
           />
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-white/90 uppercase backdrop-blur-md">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mark" />
-              06 — Open floor
-            </span>
-            <p className="font-display mt-4 text-2xl text-white sm:text-3xl">Mahmood Sarwar</p>
+            <p className="font-display text-2xl text-white sm:text-3xl">Mahmood Sarwar</p>
             <p className="mt-1 text-sm text-white/70">Hosts the open floor every week</p>
           </div>
         </Reveal>
 
         <div className="relative bg-discussions-floor px-4 py-12 sm:px-8 sm:py-20 lg:px-10 lg:py-24 xl:px-14">
-          <div className="pointer-events-none absolute right-[6%] top-10 font-display text-[6rem] leading-none text-[#5a462d]/[0.06] select-none sm:text-[10rem]">
-            06
-          </div>
-
           <Reveal className="relative min-w-0 text-left">
             <h2 className="font-display text-[1.85rem] tracking-tight text-ink sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl">
               Pending Discussions

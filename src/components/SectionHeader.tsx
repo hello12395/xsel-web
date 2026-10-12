@@ -8,7 +8,7 @@ export function SectionHeader({
   light = false,
   className = "",
 }: {
-  kicker: string;
+  kicker?: string;
   title: string;
   copy: ReactNode;
   light?: boolean;
@@ -16,17 +16,19 @@ export function SectionHeader({
 }) {
   return (
     <Reveal className={`max-w-2xl text-left ${className}`}>
-      <p
-        className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${
-          light ? "text-gold-soft" : "text-gold"
-        }`}
-      >
-        {kicker}
-      </p>
+      {kicker ? (
+        <p
+          className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${
+            light ? "text-gold-soft" : "text-gold"
+          }`}
+        >
+          {kicker}
+        </p>
+      ) : null}
       <h2
-        className={`font-display mt-3 text-[1.85rem] leading-[1.15] tracking-tight sm:text-4xl md:text-5xl ${
-          light ? "text-white" : "text-ink"
-        }`}
+        className={`font-display text-[1.85rem] leading-[1.15] tracking-tight sm:text-4xl md:text-5xl ${
+          kicker ? "mt-3 " : ""
+        }${light ? "text-white" : "text-ink"}`}
       >
         {title}
       </h2>

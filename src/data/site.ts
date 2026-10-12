@@ -2,17 +2,17 @@ export const whyCards = [
   {
     number: "01",
     title: "Taught by him, not a handoff",
-    body: "Every class, every correction, comes from Sir Mahmood Sarwar himself. No substitute teachers, ever.",
+    body: "Every class and every correction come from Sir Mahmood Sarwar himself. No substitutes — you learn directly from him, every session.",
   },
   {
     number: "02",
     title: "A room built for speaking",
-    body: "Small groups, real-time correction, and a fear-free space where mistakes are part of getting better, not something to hide.",
+    body: "Small groups, real-time correction, and a fear-free room where mistakes help you improve. Speak freely, get fixed fast, grow with confidence.",
   },
   {
     number: "03",
     title: "In the room, or on the screen",
-    body: "Join live at our academy in G-11 Markaz, Islamabad, or on Zoom from anywhere. Missed a class? Catch the recording on the app.",
+    body: "Join live in G-11 Markaz, Islamabad, or on Zoom from anywhere. Miss a class and catch the recording on the app whenever you need it.",
   },
 ];
 
@@ -136,7 +136,7 @@ export const socials = [
   },
   {
     name: "Facebook",
-    handle: "English Sarwar Lab",
+    handle: "Sarwar English Lab",
     stat: "Daily prompts",
     href: "https://facebook.com",
   },
@@ -182,7 +182,7 @@ export const blogs = [
 ];
 
 export const location = {
-  name: "English Sarwar Lab",
+  name: "Sarwar English Lab",
   addressLines: ["12-B Canal Road, Near Liberty Market", "Gulberg III, Lahore, Pakistan"],
   hours: "Mon–Sat · 9:00 AM – 8:00 PM",
   phone: "+92 300 1234567",
@@ -197,13 +197,8 @@ export const location = {
   studios: [
     {
       label: "Studio",
-      name: "English Sarwar Lab",
+      name: "Sarwar English Lab",
       addressLines: ["12-B Canal Road, Near Liberty Market", "Gulberg III, Lahore, Pakistan"],
-    },
-    {
-      label: "Campus",
-      name: "English Sarwar Lab",
-      addressLines: ["Plot 18, University Road", "University Town, Peshawar, Pakistan"],
     },
   ],
 };

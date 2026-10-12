@@ -11,44 +11,28 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const slides = [
   {
-    src: "/auth-slides/slide-1.jpg",
+    src: "/auth-slides/lab-1.jpg",
+    alt: "Sarwar English Lab classroom with screen and podium",
+  },
+  {
+    src: "/auth-slides/lab-2.jpg",
+    alt: "Sarwar English Lab seating and teaching setup",
+  },
+  {
+    src: "/auth-slides/lab-3.jpg",
     alt: "Mahmood Sarwar — English instructor portrait",
-    fit: "cover" as const,
   },
   {
-    src: "/auth-slides/slide-2.jpg",
-    alt: "Mahmood Sarwar in studio",
-    fit: "cover" as const,
+    src: "/auth-slides/lab-4.jpg",
+    alt: "Mahmood Sarwar teaching in the classroom",
   },
   {
-    src: "/auth-slides/slide-3.jpg",
-    alt: "Mahmood Sarwar with London backdrop",
-    fit: "cover" as const,
+    src: "/auth-slides/lab-5.jpg",
+    alt: "Mahmood Sarwar at the chalkboard",
   },
   {
-    src: "/auth-slides/slide-4.jpg",
-    alt: "Mahmood Sarwar at desk",
-    fit: "cover" as const,
-  },
-  {
-    src: "/auth-slides/slide-5.jpg",
-    alt: "English with Mahmood Sarwar — confidence and success",
-    fit: "contain" as const,
-  },
-  {
-    src: "/auth-slides/slide-6.jpg",
-    alt: "English with Mahmood Sarwar — lessons and fluency",
-    fit: "contain" as const,
-  },
-  {
-    src: "/auth-slides/slide-7.jpg",
-    alt: "English with Mahmood Sarwar branding",
-    fit: "contain" as const,
-  },
-  {
-    src: "/auth-slides/slide-8.jpg",
-    alt: "Mahmood Sarwar — mentor portrait",
-    fit: "cover" as const,
+    src: "/auth-slides/lab-6.jpg",
+    alt: "Mahmood Sarwar at the studio podium",
   },
 ] as const;
 
@@ -79,23 +63,14 @@ export function AuthSideSlideshow() {
             alt={active.alt}
             fill
             priority={index === 0}
+            unoptimized
             sizes="48vw"
-            className={
-              active.fit === "contain"
-                ? "object-contain object-center"
-                : "object-cover object-center"
-            }
+            className="object-cover object-center"
           />
         </motion.div>
       </AnimatePresence>
 
-      <div
-        className={`pointer-events-none absolute inset-0 ${
-          active.fit === "contain"
-            ? "bg-gradient-to-t from-black/25 via-transparent to-transparent"
-            : "bg-gradient-to-t from-black/45 via-transparent to-black/20"
-        }`}
-      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/20" />
 
       <Link
         href="/"

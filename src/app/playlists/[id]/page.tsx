@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${playlist.title} | English Sarwar Lab`,
+    title: `${playlist.title} | Sarwar English Lab`,
     description: playlist.body,
   };
 }

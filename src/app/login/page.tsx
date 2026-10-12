@@ -4,8 +4,8 @@ import { LoginPage } from "@/components/LoginPage";
 
 
 export const metadata: Metadata = {
-  title: "Sign in | English Sarwar Lab",
-  description: "Sign in to English Sarwar Lab to track lessons and enroll in premium courses.",
+  title: "Sign in | Sarwar English Lab",
+  description: "Sign in to Sarwar English Lab to track lessons and enroll in paid courses.",
 };
 
 export default function LoginRoutePage() {

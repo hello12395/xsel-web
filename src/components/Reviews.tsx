@@ -8,7 +8,7 @@ import { StarIcon } from "./Icons";
 import { Reveal } from "./Reveal";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const AUTOPLAY_MS = 3500;
+const AUTOPLAY_MS = 7000;
 
 const stats = [
   { value: "2.4k+", label: "Learners" },
@@ -53,28 +53,27 @@ export function Reviews() {
   }, [paused, count, active]);
 
   return (
-    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-reviews-section text-white">
-      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-mark/10 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-gold-soft/10 blur-3xl" />
+    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-reviews-section text-ink">
+      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#37ccf8]/25 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#02abd5]/15 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
         <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
           <Reveal className="reviews-intro-panel min-w-0 text-left">
-            <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">05 — Voices</p>
-            <h2 className="font-display mt-4 text-[2rem] leading-[1.1] tracking-tight sm:text-[2.35rem] md:text-5xl lg:text-[3rem] xl:text-[3.25rem]">
+            <h2 className="font-display text-[2rem] leading-[1.1] tracking-tight text-ink sm:text-[2.35rem] md:text-5xl lg:text-[3rem] xl:text-[3.25rem]">
               What learners say
             </h2>
-            <p className="mt-4 text-[15px] leading-7 text-white/60 sm:mt-5 sm:text-base sm:leading-8">
+            <p className="mt-4 text-[15px] leading-7 text-ink/60 sm:mt-5 sm:text-base sm:leading-8">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-5 border-t border-white/10 pt-8 sm:mt-10 sm:gap-8 sm:pt-10">
+            <div className="mt-8 flex flex-wrap items-center gap-5 border-t border-ink/10 pt-8 sm:mt-10 sm:gap-8 sm:pt-10">
               {stats.map((stat, index) => (
                 <Fragment key={stat.label}>
                   {index > 0 ? <div className="reviews-stat-divider hidden sm:block" aria-hidden /> : null}
                   <div className="min-w-0">
-                    <p className="font-display text-2xl text-white sm:text-3xl">{stat.value}</p>
-                    <p className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase sm:text-[11px]">
+                    <p className="font-display text-2xl text-ink sm:text-3xl">{stat.value}</p>
+                    <p className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-ink/45 uppercase sm:text-[11px]">
                       {stat.label}
                     </p>
                   </div>
@@ -176,13 +175,13 @@ export function Reviews() {
                       onClick={() => setActive(index)}
                       className={`group flex min-w-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all duration-300 sm:gap-3 sm:px-3.5 sm:py-3 ${
                         isActive
-                          ? "reviews-selector-active border-gold-soft/35"
-                          : "border-white/8 bg-white/[0.03] hover:border-white/14 hover:bg-white/[0.06]"
+                          ? "reviews-selector-active border-gold/40"
+                          : "border-ink/8 bg-white/70 hover:border-ink/14 hover:bg-white"
                       }`}
                     >
                       <span
                         className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-full transition sm:h-10 sm:w-10 ${
-                          isActive ? "ring-2 ring-gold-soft/50 ring-offset-2 ring-offset-[#2a3688]" : ""
+                          isActive ? "ring-2 ring-gold/50 ring-offset-2 ring-offset-[#e8f4fc]" : ""
                         }`}
                       >
                         <Image src={item.avatar} alt="" fill sizes="40px" className="object-cover" />
@@ -190,12 +189,12 @@ export function Reviews() {
                       <span className="min-w-0 flex-1">
                         <span
                           className={`block truncate text-sm font-semibold transition ${
-                            isActive ? "text-white" : "text-white/75 group-hover:text-white"
+                            isActive ? "text-ink" : "text-ink/70 group-hover:text-ink"
                           }`}
                         >
                           {item.name.split(" ")[0]}
                         </span>
-                        <span className="block truncate text-xs text-white/45">{item.role}</span>
+                        <span className="block truncate text-xs text-ink/45">{item.role}</span>
                       </span>
                     </button>
                   );
@@ -211,7 +210,7 @@ export function Reviews() {
                     aria-current={index === active ? "true" : undefined}
                     onClick={() => setActive(index)}
                     className={`h-1 rounded-full transition-all duration-300 ${
-                      index === active ? "w-7 bg-gold-soft" : "w-1.5 bg-white/20 hover:bg-white/40"
+                      index === active ? "w-7 bg-gold" : "w-1.5 bg-ink/15 hover:bg-ink/30"
                     }`}
                   />
                 ))}

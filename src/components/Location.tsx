@@ -116,7 +116,7 @@ function SatellitePopout({ open, onClose }: { open: boolean; onClose: () => void
 
                 <div className="location-satellite-popout-map">
                   <iframe
-                    title="English Sarwar Lab satellite map"
+                    title="Sarwar English Lab satellite map"
                     src={location.mapSatelliteSrc}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -177,68 +177,67 @@ function LocationOrbit() {
 
 export function Location() {
   return (
-    <section id="location" className="bg-location-section relative scroll-mt-24 border-t border-white/[0.06]">
+    <section id="location" className="bg-method-section relative scroll-mt-24 overflow-hidden border-t border-ink/8">
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:gap-14 sm:px-5 sm:py-20 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold tracking-[0.28em] text-gold-soft uppercase">
-            09 — Find us
-          </p>
-          <h2 className="font-display mt-4 text-[2rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem] md:text-5xl">
+          <h2 className="font-display text-[2rem] leading-[1.08] tracking-tight text-ink sm:text-[2.35rem] md:text-5xl">
             On the map
           </h2>
-          <p className="mt-4 max-w-md text-[15px] leading-7 text-white/55 sm:mt-5 sm:text-base sm:leading-8">
-            Two rooms on the map — Lahore by Liberty Market, and a Peshawar campus on University Road.
+          <p className="mt-4 max-w-md text-[15px] leading-7 text-ink/60 sm:mt-5 sm:text-base sm:leading-8">
+            Find us in Lahore by Liberty Market — walk in, or reach us by phone and email anytime.
           </p>
 
-          <div className="location-contact-grid mt-10">
+          <div className="mt-10 flex flex-col gap-3 sm:gap-4">
             {location.studios.map((studio) => (
               <div key={studio.label} className="location-contact-row">
                 <span className="location-contact-icon">
                   <PinIcon className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
+                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
                     {studio.label}
                   </p>
-                  <p className="font-display mt-1 text-lg text-white">{studio.name}</p>
-                  <p className="mt-1.5 text-xs leading-6 text-white/55">
+                  <p className="font-display mt-1 text-lg text-ink">{studio.name}</p>
+                  <p className="mt-1.5 text-xs leading-6 text-ink/55">
                     {studio.addressLines.join(", ")}
                   </p>
                 </div>
               </div>
             ))}
 
-            <div className="location-contact-row">
-              <span className="location-contact-icon">
-                <PhoneIcon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
-                  Phone
-                </p>
-                <a
-                  href={`tel:${location.phone.replace(/\s/g, "")}`}
-                  className="mt-1 inline-block text-sm text-white/70 transition hover:text-gold-soft"
-                >
-                  {location.phone}
-                </a>
+            <div className="location-contact-grid">
+              <div className="location-contact-row">
+                <span className="location-contact-icon">
+                  <PhoneIcon className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                    Phone
+                  </p>
+                  <a
+                    href={`tel:${location.phone.replace(/\s/g, "")}`}
+                    className="mt-1 inline-block text-sm text-ink/70 transition hover:text-forest"
+                  >
+                    {location.phone}
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <div className="location-contact-row">
-              <span className="location-contact-icon">
-                <MailIcon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold tracking-[0.18em] text-white/35 uppercase">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${location.email}`}
-                  className="mt-1 inline-block text-sm text-white/70 break-all transition hover:text-gold-soft"
-                >
-                  {location.email}
-                </a>
+              <div className="location-contact-row">
+                <span className="location-contact-icon">
+                  <MailIcon className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                    Email
+                  </p>
+                  <a
+                    href={`mailto:${location.email}`}
+                    className="mt-1 inline-block text-sm text-ink/70 break-all transition hover:text-forest"
+                  >
+                    {location.email}
+                  </a>
+                </div>
               </div>
             </div>
           </div>

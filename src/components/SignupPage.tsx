@@ -86,7 +86,7 @@ export function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-dvh w-full bg-[#f7f9fc]">
+    <div className="flex min-h-dvh w-full bg-[#2d261e]">
       <AuthSideSlideshow />
 
       <main className="relative flex flex-1 items-center justify-center overflow-hidden px-5 py-14 sm:px-10 lg:px-14">
@@ -95,7 +95,7 @@ export function SignupPage() {
           aria-hidden
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 70% 20%, rgba(28,48,190,0.05), transparent 60%), radial-gradient(ellipse 50% 40% at 20% 90%, rgba(2,171,213,0.06), transparent 55%)",
+              "radial-gradient(ellipse 80% 60% at 0% 50%, rgba(90,70,45,0.35), transparent 55%), radial-gradient(ellipse 70% 50% at 85% 15%, rgba(180,130,70,0.14), transparent 55%), radial-gradient(ellipse 55% 45% at 70% 90%, rgba(120,70,40,0.12), transparent 50%), linear-gradient(160deg, #3a3128 0%, #2d261e 45%, #241f19 100%)",
           }}
         />
 
@@ -103,14 +103,14 @@ export function SignupPage() {
           <div className="mb-6 lg:hidden">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-ink/45 transition hover:text-ink"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-white/55 transition hover:text-white"
             >
               <ArrowIcon className="h-4 w-4 -scale-x-100" />
               Back to home
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded-[28px] border border-[#e4ebf5] bg-white shadow-[0_24px_60px_-28px_rgba(18,22,74,0.28),0_8px_20px_-12px_rgba(18,22,74,0.08)]">
+          <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#f7f1e8] shadow-[0_28px_64px_-24px_rgba(0,0,0,0.55),0_10px_24px_-12px_rgba(0,0,0,0.35)]">
             <div className="border-b border-[#2a3350] bg-gradient-to-b from-[#24304a] to-[#1a2238] px-6 py-8 sm:px-8 sm:py-9">
               <div className="mb-6 flex justify-center">
                 <Image
@@ -124,7 +124,7 @@ export function SignupPage() {
                 />
               </div>
               <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#d4b45a] uppercase">
-                English Sarwar Lab
+                Sarwar English Lab
               </p>
               <h1 className="font-display mt-3 text-center text-[2.1rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem]">
                 Create account
@@ -304,17 +304,17 @@ export function SignupPage() {
             </div>
           </div>
 
-          <p className="mt-7 text-center text-[15px] leading-6 text-ink/50">
+          <p className="mt-7 text-center text-[15px] leading-6 text-white/55">
             Already have an account?{" "}
             <Link
               href={loginHref}
-              className="font-semibold text-forest underline decoration-forest/25 underline-offset-[3px] transition hover:decoration-forest"
+              className="font-semibold text-[#e0c070] underline decoration-[#e0c070]/30 underline-offset-[3px] transition hover:decoration-[#e0c070]"
             >
               Sign in
             </Link>
           </p>
 
-          <p className="mt-5 text-center text-[12px] leading-5 text-ink/35">
+          <p className="mt-5 text-center text-[12px] leading-5 text-white/35">
             By creating an account you agree to our learning community guidelines.
           </p>
         </div>

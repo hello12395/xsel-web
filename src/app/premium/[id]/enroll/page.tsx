@@ -23,13 +23,13 @@ export async function generateMetadata({
   const { id } = await params;
   try {
     const row = await getPublishedCourseById(id);
-    if (!row) return { title: "Enroll | English Sarwar Lab" };
+    if (!row) return { title: "Enroll | Sarwar English Lab" };
     return {
-      title: `Enroll · ${row.title} | English Sarwar Lab`,
+      title: `Enroll · ${row.title} | Sarwar English Lab`,
       description: `Complete payment to enroll in ${row.title}.`,
     };
   } catch {
-    return { title: "Enroll | English Sarwar Lab" };
+    return { title: "Enroll | Sarwar English Lab" };
   }
 }
 
@@ -97,7 +97,7 @@ export default async function PremiumEnrollPage({
 
   return (
     <main className="min-h-dvh bg-[linear-gradient(180deg,#f7f4ec_0%,#f3efe6_45%,#efe9df_100%)]">
-      <div className="border-b border-white/10 bg-forest">
+      <div className="border-b border-white/10 bg-[#0a2340]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 pt-24 md:px-8 md:pt-28">
           <Link
             href={`/premium/${id}`}
@@ -107,7 +107,7 @@ export default async function PremiumEnrollPage({
             Back to course
           </Link>
           <p className="hidden text-sm font-medium text-white/60 sm:block">
-            Secure enrollment · English Sarwar Lab
+            Secure enrollment · Sarwar English Lab
           </p>
         </div>
       </div>

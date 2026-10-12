@@ -10,6 +10,7 @@ import { Reviews } from "@/components/Reviews";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SocialMedia } from "@/components/SocialMedia";
 import { WhySarwarLab } from "@/components/WhySarwarLab";
+import { features } from "@/config/features";
 import { mapCoursesToPremium } from "@/data/premium-courses";
 import { getPublishedCourses } from "@/lib/db/courses";
 
@@ -31,9 +32,9 @@ export default async function Home() {
         <PremiumCourses courses={premiumCourses} />
         <FreeStuff />
         <Reviews />
-        <PendingDiscussions />
+        {features.pendingDiscussions ? <PendingDiscussions /> : null}
         <SocialMedia />
-        <Blogs />
+        {features.blogs ? <Blogs /> : null}
         <Location />
       </main>
       <Footer />

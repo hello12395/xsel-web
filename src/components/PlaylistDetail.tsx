@@ -24,10 +24,10 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
                 <PremiumIcon className="h-4 w-4" />
               </span>
               <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
-                Premium · Paid
+                Paid
               </p>
             </div>
-            <h3 className="font-display mt-2 text-2xl tracking-tight text-ink">Premium courses</h3>
+            <h3 className="font-display mt-2 text-2xl tracking-tight text-ink">Paid Courses</h3>
             <p className="mt-2 text-sm leading-6 text-ink/55">
               Live cohorts and mentor-marked tracks — not free YouTube playlists.
             </p>
@@ -35,7 +35,7 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
 
           {courses.length === 0 ? (
             <p className="px-5 py-8 text-sm text-ink/50 sm:px-6">
-              No premium courses published yet. Check back soon.
+              No paid courses published yet. Check back soon.
             </p>
           ) : (
             <ul className="divide-y divide-ink/6 bg-white/70">
@@ -55,8 +55,8 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
                       />
                       <span
                         className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#f0d060] to-[#c9a227] text-white shadow-[0_2px_6px_rgba(185,134,11,0.45)]"
-                        title="Premium course"
-                        aria-label="Premium course"
+                        title="Paid course"
+                        aria-label="Paid course"
                       >
                         <PremiumIcon className="h-3 w-3" />
                       </span>
@@ -118,7 +118,13 @@ export function PlaylistDetail({
 
   return (
     <article className="border-b border-ink/8 bg-cream">
-      <div className="relative overflow-hidden bg-ink">
+      <div
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(145deg, #020b18 0%, #0a2340 42%, #0c4a66 100%)",
+        }}
+      >
         <div className="absolute inset-0">
           <Image
             src={playlist.thumbnail}
@@ -126,18 +132,24 @@ export function PlaylistDetail({
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-35 blur-sm"
+            className="object-cover opacity-15 blur-sm"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 to-ink/75" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(145deg, rgba(2,11,24,0.96) 0%, rgba(10,35,64,0.92) 48%, rgba(12,74,102,0.88) 100%)",
+            }}
+          />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-5 py-10 pt-28 md:px-8 md:py-14 md:pt-32">
           <Link
-            href="/#free-stuff"
+            href="/#free-lessons"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
           >
             <ArrowIcon className="h-4 w-4 -scale-x-100" />
-            Back to Free Stuff
+            Back to Free Lessons
           </Link>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-12">
