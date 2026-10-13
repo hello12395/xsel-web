@@ -52,6 +52,12 @@ function batchStartTime(batch: CourseBatch): number {
   return Number.isFinite(time) ? time : Number.NEGATIVE_INFINITY;
 }
 
+function batchCreatedTime(batch: CourseBatch): number {
+  if (!batch.created_at) return Number.NEGATIVE_INFINITY;
+  const time = new Date(batch.created_at).getTime();
+  return Number.isFinite(time) ? time : Number.NEGATIVE_INFINITY;
+}
+
 function isRunningBatch(batch: CourseBatch, now = Date.now()): boolean {
   if (batch.status === "cancelled") return false;
   if (batch.status === "active") return true;
@@ -66,8 +72,8 @@ function isRunningBatch(batch: CourseBatch, now = Date.now()): boolean {
   return now <= end;
 }
 
-/** Latest batch by start_date, preferring one that is currently running/active. */
-export function pickLatestBatchByStartDate(
+/** Latest batch by created_at, preferring one that is currently running/active. */
+export function pickLatestBatchByCreatedAt(
   batches: CourseBatch[],
 ): CourseBatch | null {
   if (batches.length === 0) return null;
@@ -76,5 +82,8 @@ export function pickLatestBatchByStartDate(
   const running = batches.filter((batch) => isRunningBatch(batch, now));
   const pool = running.length > 0 ? running : batches;
 
-  return [...pool].sort((a, b) => batchStartTime(b) - batchStartTime(a))[0] ?? null;
+  return [...pool].sort((a, b) => batchCreatedTime(b) - batchCreatedTime(a))[0] ?? null;
 }
+
+/** @deprecated Use pickLatestBatchByCreatedAt */
+export const pickLatestBatchByStartDate = pickLatestBatchByCreatedAt;

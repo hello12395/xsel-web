@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getPublishedCourseById } from "@/lib/db/courses";
 import {
   getOpenBatchesForCourse,
-  pickLatestBatchByStartDate,
+  pickLatestBatchByCreatedAt,
 } from "@/lib/db/batches";
 import { getUserPurchaseForCourse } from "@/lib/db/purchases";
 import { createClient } from "@/lib/supabase/server";
@@ -73,8 +73,8 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
   }
 
   const batches = await getOpenBatchesForCourse(id);
-  // Always enroll into the latest running batch by start_date (ignore URL batch picker).
-  const selectedBatch = pickLatestBatchByStartDate(batches);
+  // Always enroll into the latest running batch by created_at (ignore URL batch picker).
+  const selectedBatch = pickLatestBatchByCreatedAt(batches);
   const selectedBatchId = selectedBatch?.id ?? "";
 
   let existingPurchase: Purchase | null = null;

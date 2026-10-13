@@ -54,6 +54,23 @@ export async function getCourseReviews(
 ): Promise<CourseReviewCard[]> {
   const supabase = createPublicClient();
 
+  // Prefer the simple select first so rating still loads if the profile join is blocked.
+  const { data, error } = await supabase
+    .from("course_reviews")
+    .select(
+      "id, course_id, user_id, reviewer_name, rating, review, created_at",
+    )
+    .eq("course_id", courseId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  const baseRows = ((data ?? []) as CourseReviewRow[]).filter(
+    (row) => (row.review?.trim() || "").length > 0 || Number(row.rating) > 0,
+  );
+
+  if (baseRows.length === 0) return [];
+
   const withProfile = await supabase
     .from("course_reviews")
     .select(
@@ -74,30 +91,39 @@ export async function getCourseReviews(
     .eq("course_id", courseId)
     .order("created_at", { ascending: false });
 
-  if (!withProfile.error && withProfile.data) {
+  if (!withProfile.error && withProfile.data && withProfile.data.length > 0) {
     return (withProfile.data as CourseReviewRow[])
       .map(mapReviewRow)
       .filter((item) => item.quote.length > 0 || item.rating > 0);
   }
 
-  // Fallback if profile join/columns are unavailable under RLS.
-  const { data, error } = await supabase
-    .from("course_reviews")
-    .select(
-      "id, course_id, user_id, reviewer_name, rating, review, created_at",
-    )
-    .eq("course_id", courseId)
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-
-  return ((data ?? []) as CourseReviewRow[])
-    .map(mapReviewRow)
-    .filter((item) => item.quote.length > 0 || item.rating > 0);
+  return baseRows.map(mapReviewRow);
 }
 
 export function averageCourseRating(reviews: CourseReviewCard[]): number | null {
   if (reviews.length === 0) return null;
   const total = reviews.reduce((sum, review) => sum + review.rating, 0);
   return Math.round((total / reviews.length) * 10) / 10;
+}
+
+/** Average rating for a course from `course_reviews.rating`. */
+export async function getCourseAverageRating(
+  courseId: string,
+): Promise<number | null> {
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("course_reviews")
+    .select("rating")
+    .eq("course_id", courseId);
+
+  if (error) throw error;
+
+  const ratings = (data ?? [])
+    .map((row) => Number((row as { rating: number }).rating))
+    .filter((value) => Number.isFinite(value) && value > 0);
+
+  if (ratings.length === 0) return null;
+
+  const total = ratings.reduce((sum, value) => sum + value, 0);
+  return Math.round((total / ratings.length) * 10) / 10;
 }

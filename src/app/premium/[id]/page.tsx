@@ -4,7 +4,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { mapCourseToPremium } from "@/data/premium-courses";
 import { getPublishedCourseById } from "@/lib/db/courses";
-import { getCourseReviews } from "@/lib/db/course-reviews";
+import {
+  averageCourseRating,
+  getCourseAverageRating,
+  getCourseReviews,
+} from "@/lib/db/course-reviews";
+import { getDisplayedStudentCount } from "@/lib/db/enrollments";
 import { ArrowIcon, PremiumIcon } from "@/components/Icons";
 import { PremiumCourseTabs } from "@/components/PremiumCourseTabs";
 import { parseLearningOutcomes } from "@/types/course";
@@ -48,12 +53,27 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
   const course = mapCourseToPremium(row);
   const outcomes = parseLearningOutcomes(row.learning_outcomes);
   let courseReviews: Awaited<ReturnType<typeof getCourseReviews>> = [];
-  try {
-    courseReviews = await getCourseReviews(id);
-  } catch (error) {
-    console.error("Failed to load course reviews", error);
-    courseReviews = [];
-  }
+  let courseRating: number | null = null;
+  const [studentCount, reviewResult] = await Promise.all([
+    getDisplayedStudentCount(row.fake_enrollments ?? 0, row.batches, id),
+    (async () => {
+      try {
+        const [reviews, avgRating] = await Promise.all([
+          getCourseReviews(id),
+          getCourseAverageRating(id),
+        ]);
+        return {
+          reviews,
+          rating: avgRating ?? averageCourseRating(reviews),
+        };
+      } catch (error) {
+        console.error("Failed to load course reviews", error);
+        return { reviews: [] as Awaited<ReturnType<typeof getCourseReviews>>, rating: null };
+      }
+    })(),
+  ]);
+  courseReviews = reviewResult.reviews;
+  courseRating = reviewResult.rating;
 
   return (
     <main className="min-h-dvh bg-cream">
@@ -112,8 +132,9 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             chapters={row.chapters ?? []}
             duration={course.duration}
             lessons={course.lessons}
-            students={row.fake_enrollments ?? 0}
+            students={studentCount}
             formatLabel={formatCourseType(row.course_type)}
+            rating={courseRating}
             reviews={courseReviews}
           />
 

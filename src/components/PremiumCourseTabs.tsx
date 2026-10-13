@@ -25,6 +25,8 @@ type PremiumCourseTabsProps = {
   lessons: number;
   students: number;
   formatLabel: string;
+  /** Average rating from `course_reviews` (1–5). */
+  rating?: number | null;
   reviews: ReviewItem[];
 };
 
@@ -120,6 +122,7 @@ export function PremiumCourseTabs({
   lessons,
   students,
   formatLabel,
+  rating = null,
   reviews,
 }: PremiumCourseTabsProps) {
   const [tab, setTab] = useState<TabId>("overview");
@@ -152,20 +155,28 @@ export function PremiumCourseTabs({
   const showAbout = aboutText.length > 0 && aboutText.toLowerCase() !== "custom";
 
   const averageRating = useMemo(() => {
+    if (rating != null && Number.isFinite(rating) && rating > 0) {
+      return Math.round(rating * 10) / 10;
+    }
     if (reviews.length === 0) return null;
     const total = reviews.reduce((sum, review) => sum + review.rating, 0);
     return Math.round((total / reviews.length) * 10) / 10;
-  }, [reviews]);
+  }, [rating, reviews]);
 
   const ratingLabel =
-    averageRating != null ? `${averageRating.toFixed(1)} / 5.0` : "New";
+    averageRating != null ? averageRating.toFixed(1) : "0";
 
   const stats = [
     { label: "Rating", value: ratingLabel, icon: StarIcon },
     { label: "Duration", value: duration, icon: ClockIcon },
     {
       label: "Students",
-      value: students > 0 ? `${students.toLocaleString("en-PK")}+` : "Growing",
+      value:
+        students <= 0
+          ? "Growing"
+          : students >= 1000
+            ? "1000+"
+            : students.toLocaleString("en-PK"),
       icon: UsersIcon,
     },
     { label: "Language", value: "English", icon: GlobeIcon },
@@ -414,7 +425,7 @@ export function PremiumCourseTabs({
                 </h3>
                 <p className="inline-flex items-center gap-1 text-sm font-semibold text-ink">
                   <StarIcon className="h-3.5 w-3.5 text-[#c9a227]" />
-                  {averageRating != null ? averageRating.toFixed(1) : "—"}
+                  {averageRating != null ? averageRating.toFixed(1) : "0"}
                   <span className="font-medium text-ink/40">
                     · {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
                   </span>

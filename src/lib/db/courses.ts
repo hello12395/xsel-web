@@ -5,7 +5,7 @@ import type {
   CourseChapterSummary,
   CourseWithLessons,
 } from "@/types/course";
-import { pickLatestBatchByStartDate } from "@/lib/db/batches";
+import { pickLatestBatchByCreatedAt } from "@/lib/db/batches";
 
 const COURSE_LIST_SELECT = `
   id,
@@ -51,7 +51,7 @@ const COURSE_LIST_SELECT = `
   )
 `;
 
-/** Keep chapters for the latest running batch (by start_date); ignore other batches. */
+/** Keep chapters for the latest running batch (by created_at); ignore other batches. */
 export function filterChaptersToLatestBatch(
   course: CourseWithLessons,
 ): CourseWithLessons {
@@ -66,7 +66,7 @@ export function filterChaptersToLatestBatch(
     };
   }
 
-  const latest = pickLatestBatchByStartDate(batches);
+  const latest = pickLatestBatchByCreatedAt(batches);
   if (!latest) {
     return { ...course, chapters: [] };
   }
