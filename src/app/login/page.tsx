@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { LoginPage } from "@/components/LoginPage";
-
+import { AuthPageSkeleton } from "@/components/Shimmer";
 
 export const metadata: Metadata = {
   title: "Sign in | Sarwar English Lab",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function LoginRoutePage() {
   return (
-    <Suspense fallback={<div className="min-h-dvh bg-[#f7f9fc]" />}>
+    <Suspense fallback={<AuthPageSkeleton />}>
       <LoginPage />
     </Suspense>
   );

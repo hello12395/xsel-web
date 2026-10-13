@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { mapCourseToPremium } from "@/data/premium-courses";
 import { getPublishedCourseById } from "@/lib/db/courses";
-import { createClient } from "@/lib/supabase/server";
 import { ArrowIcon, PremiumIcon } from "@/components/Icons";
 import { parseLearningOutcomes } from "@/types/course";
 
@@ -43,15 +42,6 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
 
   const row = await getPublishedCourseById(id);
   if (!row) notFound();
-
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/login?next=${encodeURIComponent(`/premium/${id}`)}&required=1`);
-  }
 
   const course = mapCourseToPremium(row);
   const outcomes = parseLearningOutcomes(row.learning_outcomes);
@@ -168,12 +158,6 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                   <dd className="mt-1 text-sm font-semibold text-ink">
                     {formatCourseType(row.course_type)}
                   </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium tracking-wide text-ink/40 uppercase">
-                    Category
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-ink">{course.tag}</dd>
                 </div>
                 <div>
                   <dt className="text-xs font-medium tracking-wide text-ink/40 uppercase">

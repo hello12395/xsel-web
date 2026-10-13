@@ -99,7 +99,15 @@ const PAYMENT_TABS: { id: PaymentTab; label: string; short: string; icon: ReactN
   { id: "jazzcash", label: "JazzCash", short: "JazzCash", icon: <PhoneIcon className="h-4 w-4" /> },
 ];
 
-function CopyField({ label, value }: { label: string; value: string }) {
+function CopyField({
+  label,
+  value,
+  className,
+}: {
+  label: string;
+  value: string;
+  className?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   async function copy() {
@@ -113,10 +121,15 @@ function CopyField({ label, value }: { label: string; value: string }) {
   }
 
   return (
-    <div className="group flex items-center justify-between gap-3 rounded-xl border border-ink/8 bg-white px-4 py-3.5 transition hover:border-ink/15">
-      <div className="min-w-0">
+    <div
+      className={cn(
+        "group flex items-center justify-between gap-3 rounded-xl border border-ink/8 bg-white px-4 py-3.5 transition hover:border-ink/15",
+        className
+      )}
+    >
+      <div className="min-w-0 flex-1">
         <p className="text-[11px] font-medium tracking-wider text-ink/40 uppercase">{label}</p>
-        <p className="mt-0.5 truncate font-medium text-ink">{value}</p>
+        <p className="mt-0.5 break-all font-medium text-ink">{value}</p>
       </div>
       <button
         type="button"
@@ -133,19 +146,25 @@ function CopyField({ label, value }: { label: string; value: string }) {
 function PaymentMethodsPanel() {
   const [activeTab, setActiveTab] = useState<PaymentTab>("bank");
 
-  const tabContent: Record<PaymentTab, { label: string; value: string }[]> = {
+  const tabContent: Record<
+    PaymentTab,
+    { label: string; value: string; fullWidth?: boolean }[]
+  > = {
     bank: [
       { label: "Bank Name", value: bankDetails.bankName },
-      { label: "Account Holder", value: bankDetails.accountHolder },
-      { label: "Account Number", value: bankDetails.accountNumber },
-      { label: "IBAN Code", value: bankDetails.iban },
+      { label: "Account Title", value: bankDetails.accountHolder },
+      {
+        label: "IBAN / Account Number",
+        value: bankDetails.iban,
+        fullWidth: true,
+      },
     ],
     easypaisa: [
-      { label: "Account Name", value: easyPaisaDetails.accountName },
+      { label: "Account Title", value: easyPaisaDetails.accountName },
       { label: "Account Number", value: easyPaisaDetails.accountNumber },
     ],
     jazzcash: [
-      { label: "Account Name", value: jazzCashDetails.accountName },
+      { label: "Account Title", value: jazzCashDetails.accountName },
       { label: "Account Number", value: jazzCashDetails.accountNumber },
     ],
   };
@@ -194,7 +213,12 @@ function PaymentMethodsPanel() {
         <p className="mb-4 text-sm text-ink/50">{hints[activeTab]}</p>
         <div className="grid gap-3 sm:grid-cols-2">
           {tabContent[activeTab].map((field) => (
-            <CopyField key={field.label} label={field.label} value={field.value} />
+            <CopyField
+              key={field.label}
+              label={field.label}
+              value={field.value}
+              className={field.fullWidth ? "sm:col-span-2" : undefined}
+            />
           ))}
         </div>
       </div>
@@ -587,14 +611,14 @@ export function PaymentVerification({
                   ? "Action needed"
                   : "Complete your enrollment"}
           </h2>
-          <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ink/55">
+          <p className="mt-3 inline-flex max-w-xl rounded-xl bg-[#1f7a38] px-4 py-2.5 text-sm leading-relaxed font-medium text-white shadow-[0_10px_24px_-12px_rgba(31,122,56,0.55)]">
             {status === "approved"
               ? "Your payment was approved and your seat is confirmed."
               : status === "pending"
                 ? "Your receipt is with our team. Check back here for the decision."
                 : status === "rejected"
                   ? "Your previous submission was rejected. Review the reason and upload a new receipt."
-                  : "Pay the course fee, then upload your receipt for verification within 24–48 hours."}
+                  : "Wait for verification by admins (Might take up to 24 hours)."}
           </p>
         </div>
         {batches.length > 1 && showPaymentSteps ? (

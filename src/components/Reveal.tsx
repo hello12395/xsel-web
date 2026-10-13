@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "motion/react";
-import type { ReactNode } from "react";
+import { motion, useInView, type HTMLMotionProps } from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -11,13 +11,28 @@ type RevealProps = HTMLMotionProps<"div"> & {
   y?: number;
 };
 
-export function Reveal({ children, delay = 0, y = 32, className, ...props }: RevealProps) {
+/**
+ * Fade/slide-in when visible. Falls back to visible after a short timeout
+ * so remounts / Suspense client switches never leave sections blank.
+ */
+export function Reveal({ children, delay = 0, y = 24, className, ...props }: RevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.08, margin: "80px 0px" });
+  const [forceShow, setForceShow] = useState(false);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setForceShow(true), 700);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  const show = inView || forceShow;
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18, margin: "0px 0px -40px 0px" }}
-      transition={{ duration: 0.75, delay, ease }}
+      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ duration: 0.65, delay: show ? delay : 0, ease }}
       className={className}
       {...props}
     >
@@ -35,16 +50,27 @@ export function Stagger({
   className?: string;
   delay?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.06, margin: "100px 0px" });
+  const [forceShow, setForceShow] = useState(false);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setForceShow(true), 700);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  const show = inView || forceShow;
+
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.12, margin: "0px 0px -60px 0px" }}
+      animate={show ? "show" : "hidden"}
       variants={{
         hidden: {},
         show: {
-          transition: { staggerChildren: delay, delayChildren: 0.08 },
+          transition: { staggerChildren: delay, delayChildren: 0.06 },
         },
       }}
     >
@@ -64,11 +90,11 @@ export function StaggerItem({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 28 },
+        hidden: { opacity: 0, y: 22 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.7, ease },
+          transition: { duration: 0.55, ease },
         },
       }}
     >

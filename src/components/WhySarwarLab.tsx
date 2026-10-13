@@ -5,6 +5,8 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { whyCards } from "@/data/site";
 import { Stagger, StaggerItem } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
+import { WhyCardsSkeleton } from "./Shimmer";
+import { ShimmerGate } from "./ShimmerGate";
 
 const cardAccents = [
   {
@@ -184,18 +186,20 @@ export function WhySarwarLab() {
             />
           </div>
 
-          <Stagger className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
-            {whyCards.map((card, index) => (
-              <StaggerItem key={card.number} className="h-full">
-                <MethodCard3D
-                  number={card.number}
-                  title={card.title}
-                  body={card.body}
-                  index={index}
-                />
-              </StaggerItem>
-            ))}
-          </Stagger>
+          <ShimmerGate minMs={450} skeleton={<WhyCardsSkeleton />}>
+            <Stagger className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
+              {whyCards.map((card, index) => (
+                <StaggerItem key={card.number} className="h-full">
+                  <MethodCard3D
+                    number={card.number}
+                    title={card.title}
+                    body={card.body}
+                    index={index}
+                  />
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </ShimmerGate>
         </div>
       </div>
     </section>

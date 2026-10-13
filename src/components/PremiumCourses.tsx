@@ -8,6 +8,8 @@ import type { PremiumCourse } from "@/data/premium-courses";
 import { ArrowIcon, PremiumIcon } from "./Icons";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
+import { CourseCardsSkeleton } from "./Shimmer";
+import { ShimmerGate } from "./ShimmerGate";
 
 const PAGE_SIZE = 3;
 
@@ -98,6 +100,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
         ) : (
           <>
             <Reveal className="mt-10 sm:mt-14">
+              <ShimmerGate minMs={550} skeleton={<CourseCardsSkeleton />}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={showAll ? "all" : `page-${page}`}
@@ -167,6 +170,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                   })}
                 </motion.div>
               </AnimatePresence>
+              </ShimmerGate>
             </Reveal>
 
             {courses.length > PAGE_SIZE ? (

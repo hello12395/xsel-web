@@ -36,13 +36,15 @@ export async function updateSession(request: NextRequest) {
 
   const path = request.nextUrl.pathname;
   const isAuthPage = path === "/login" || path === "/signup";
-  const isPremiumRoute = path.startsWith("/premium");
+  // Auth only for enroll checkout — course detail pages stay public
+  const isPremiumEnrollRoute = /^\/premium\/[^/]+\/enroll\/?$/.test(path);
 
-  if (!user && isPremiumRoute) {
+  if (!user && isPremiumEnrollRoute) {
+    const nextPath = `${path}${request.nextUrl.search}`;
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.search = "";
-    url.searchParams.set("next", path);
+    url.searchParams.set("next", nextPath);
     url.searchParams.set("required", "1");
     return NextResponse.redirect(url);
   }
@@ -50,8 +52,9 @@ export async function updateSession(request: NextRequest) {
   if (user && isAuthPage) {
     const next = safeNextPath(request.nextUrl.searchParams.get("next"));
     const url = request.nextUrl.clone();
-    url.pathname = next;
-    url.search = "";
+    const [pathname, search = ""] = next.split("?");
+    url.pathname = pathname;
+    url.search = search ? `?${search}` : "";
     return NextResponse.redirect(url);
   }
 

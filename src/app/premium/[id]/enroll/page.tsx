@@ -69,9 +69,11 @@ export default async function PremiumEnrollPage({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(
-      `/login?next=${encodeURIComponent(`/premium/${id}/enroll`)}&required=1`
-    );
+    const enrollPath =
+      batchIdParam && UUID_RE.test(batchIdParam)
+        ? `/premium/${id}/enroll?batchId=${batchIdParam}`
+        : `/premium/${id}/enroll`;
+    redirect(`/login?next=${encodeURIComponent(enrollPath)}&required=1`);
   }
 
   const batches = await getOpenBatchesForCourse(id);

@@ -113,14 +113,13 @@ const playlistMeta = [
   },
   {
     id: "css-mpt",
-    tag: "Course",
-    title: "CSS MPT Preparation",
+    tag: "Exam Prep",
+    title: "CSS MPT Exam Prep",
     body: "CSS MPT English — mocks, past papers, and MCQ practice for competitive tracks.",
     videoCount: 19,
     listId: "PLQPKw6ae4dlZL0vtW2oagpik40uK8yLXL",
     href: "https://www.youtube.com/playlist?list=PLQPKw6ae4dlZL0vtW2oagpik40uK8yLXL",
     thumbnail: "https://i.ytimg.com/vi/FmZvmztTP70/hqdefault.jpg",
-    isCourse: true,
   },
   {
     id: "spoken-english",

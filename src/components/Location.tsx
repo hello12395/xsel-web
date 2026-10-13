@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { location } from "@/data/site";
 import { ClockIcon, CloseIcon, MailIcon, PhoneIcon, PinIcon, ArrowIcon } from "./Icons";
 import { RotatingEarth } from "./RotatingEarth";
+import { Shimmer } from "./Shimmer";
+import { ShimmerGate } from "./ShimmerGate";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -127,7 +129,7 @@ function SatellitePopout({ open, onClose }: { open: boolean; onClose: () => void
 
               <div className="location-satellite-popout-footer">
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${location.coordinates.lat},${location.coordinates.lng}`}
+                  href={location.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="location-satellite-maps-link"
@@ -177,70 +179,90 @@ function LocationOrbit() {
 
 export function Location() {
   return (
-    <section id="location" className="bg-method-section relative scroll-mt-24 overflow-hidden border-t border-ink/8">
+    <section id="location" className="bg-location-section relative scroll-mt-24 overflow-hidden border-t border-ink/8">
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:gap-14 sm:px-5 sm:py-20 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
         <div className="min-w-0">
-          <h2 className="font-display text-[2rem] leading-[1.08] tracking-tight text-ink sm:text-[2.35rem] md:text-5xl">
+          <h2 className="font-display text-[2rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem] md:text-5xl">
             On the map
           </h2>
-          <p className="mt-4 max-w-md text-[15px] leading-7 text-ink/60 sm:mt-5 sm:text-base sm:leading-8">
-            Find us in Lahore by Liberty Market — walk in, or reach us by phone and email anytime.
+          <p className="mt-4 max-w-md text-[15px] leading-7 text-white/65 sm:mt-5 sm:text-base sm:leading-8">
+            Find us in G-11 Markaz, Islamabad — walk in, or reach us by phone and email anytime.
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:gap-4">
-            {location.studios.map((studio) => (
-              <div key={studio.label} className="location-contact-row">
-                <span className="location-contact-icon">
-                  <PinIcon className="h-4 w-4" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
-                    {studio.label}
-                  </p>
-                  <p className="font-display mt-1 text-lg text-ink">{studio.name}</p>
-                  <p className="mt-1.5 text-xs leading-6 text-ink/55">
-                    {studio.addressLines.join(", ")}
-                  </p>
+          <ShimmerGate
+            minMs={450}
+            className="mt-10"
+            skeleton={
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <Shimmer className="h-28 w-full rounded-2xl bg-white/90" />
+                <div className="grid grid-cols-2 gap-3">
+                  <Shimmer className="h-24 rounded-2xl bg-white/90" />
+                  <Shimmer className="h-24 rounded-2xl bg-white/90" />
                 </div>
               </div>
-            ))}
+            }
+          >
+            <div className="flex flex-col gap-3 sm:gap-4">
+              {location.studios.map((studio) => (
+                <a
+                  key={studio.label}
+                  href={location.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="location-contact-row transition hover:-translate-y-0.5"
+                >
+                  <span className="location-contact-icon">
+                    <PinIcon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                      {studio.label}
+                    </p>
+                    <p className="font-display mt-1 text-lg text-ink">{studio.name}</p>
+                    <p className="mt-1.5 text-xs leading-6 text-ink/55">
+                      {studio.addressLines.join(", ")}
+                    </p>
+                  </div>
+                </a>
+              ))}
 
-            <div className="location-contact-grid">
-              <div className="location-contact-row">
-                <span className="location-contact-icon">
-                  <PhoneIcon className="h-4 w-4" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
-                    Phone
-                  </p>
-                  <a
-                    href={`tel:${location.phone.replace(/\s/g, "")}`}
-                    className="mt-1 inline-block text-sm text-ink/70 transition hover:text-forest"
-                  >
-                    {location.phone}
-                  </a>
+              <div className="location-contact-grid">
+                <div className="location-contact-row">
+                  <span className="location-contact-icon">
+                    <PhoneIcon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                      Phone
+                    </p>
+                    <a
+                      href={`tel:${location.phone.replace(/\s/g, "")}`}
+                      className="mt-1 inline-block text-sm text-ink/70 transition hover:text-forest"
+                    >
+                      {location.phone}
+                    </a>
+                  </div>
                 </div>
-              </div>
 
-              <div className="location-contact-row">
-                <span className="location-contact-icon">
-                  <MailIcon className="h-4 w-4" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
-                    Email
-                  </p>
-                  <a
-                    href={`mailto:${location.email}`}
-                    className="mt-1 inline-block text-sm text-ink/70 break-all transition hover:text-forest"
-                  >
-                    {location.email}
-                  </a>
+                <div className="location-contact-row">
+                  <span className="location-contact-icon">
+                    <MailIcon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                      Email
+                    </p>
+                    <a
+                      href={`mailto:${location.email}`}
+                      className="mt-1 inline-block text-sm text-ink/70 break-all transition hover:text-forest"
+                    >
+                      {location.email}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ShimmerGate>
         </div>
 
         <LocationOrbit />

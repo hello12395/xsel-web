@@ -111,7 +111,7 @@ export function LoginPage() {
             <div className="px-6 py-7 sm:px-8 sm:py-8">
               {loginRequired ? (
                 <p className="mb-5 rounded-[14px] border border-[#e8d59a] bg-[#fff8e6] px-4 py-3 text-[13px] leading-5 text-[#8a6d1a]">
-                  Sign in to view paid courses. New here? Create an account first.
+                  Sign in to enroll in paid courses. New here? Create an account first.
                 </p>
               ) : null}
 

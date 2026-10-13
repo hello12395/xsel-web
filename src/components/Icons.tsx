@@ -234,3 +234,25 @@ export function WhatsappIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function TiktokIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <rect x="2" y="2" width="20" height="20" rx="5.5" fill="#111111" />
+      <path
+        fill="#25F4EE"
+        d="M14.7 6.2c.5 1.5 1.6 2.7 3.1 3.1v2.05a5.2 5.2 0 0 1-3.1-1.05v4.55a4.35 4.35 0 1 1-4.35-4.35c.24 0 .48.02.7.07v2.15a2.25 2.25 0 1 0 1.55 2.14V5.5h2.1v.7Z"
+      />
+      <path
+        fill="#FE2C55"
+        d="M14.2 6.7c.5 1.5 1.6 2.7 3.1 3.1v2.05a5.2 5.2 0 0 1-3.1-1.05v4.55a4.35 4.35 0 1 1-4.35-4.35c.24 0 .48.02.7.07v2.15a2.25 2.25 0 1 0 1.55 2.14V6h2.1v.7Z"
+        opacity="0.85"
+        transform="translate(0.35 0.35)"
+      />
+      <path
+        fill="#fff"
+        d="M13.85 6.35c.5 1.5 1.6 2.7 3.1 3.1v2.05a5.2 5.2 0 0 1-3.1-1.05v4.55a4.35 4.35 0 1 1-4.35-4.35c.24 0 .48.02.7.07v2.15a2.25 2.25 0 1 0 1.55 2.14V5.65h2.1v.7Z"
+      />
+    </svg>
+  );
+}

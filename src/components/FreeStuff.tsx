@@ -8,8 +8,41 @@ import { playlists } from "@/data/playlists";
 import { ArrowIcon } from "./Icons";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
+import { CourseCardsSkeleton } from "./Shimmer";
+import { ShimmerGate } from "./ShimmerGate";
 
 const PAGE_SIZE = 3;
+
+const CARD_COLORS = [
+  {
+    bg: "#e11d2e",
+    badge: "bg-white/20 text-white",
+    title: "text-white",
+    body: "text-white/85",
+    link: "text-white",
+  },
+  {
+    bg: "#f5c518",
+    badge: "bg-black/10 text-ink",
+    title: "text-ink",
+    body: "text-ink/75",
+    link: "text-ink",
+  },
+  {
+    bg: "#1c30be",
+    badge: "bg-white/20 text-white",
+    title: "text-white",
+    body: "text-white/85",
+    link: "text-white",
+  },
+  {
+    bg: "#1f7a38",
+    badge: "bg-white/20 text-white",
+    title: "text-white",
+    body: "text-white/85",
+    link: "text-white",
+  },
+] as const;
 
 function PlayIcon({ className }: { className?: string }) {
   return (
@@ -42,6 +75,10 @@ export function FreeStuff() {
         />
 
         <Reveal className="mt-10 sm:mt-14">
+          <ShimmerGate
+            minMs={500}
+            skeleton={<CourseCardsSkeleton tones={["red", "yellow", "blue"]} />}
+          >
           <AnimatePresence mode="wait">
             <motion.div
               key={showAll ? "all" : `page-${page}`}
@@ -51,46 +88,66 @@ export function FreeStuff() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
             >
-              {visible.map((playlist) => (
-                <Link
-                  key={playlist.id}
-                  href={`/playlists/${playlist.id}`}
-                  className="card-surface group flex min-w-0 flex-col overflow-hidden rounded-[22px] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(28,48,190,0.28)] sm:rounded-[28px]"
-                >
-                  <div className="relative aspect-video overflow-hidden bg-ink/5">
-                    <Image
-                      src={playlist.thumbnail}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-forest shadow-lg">
-                        <PlayIcon className="ml-0.5 h-5 w-5" />
+              {visible.map((playlist) => {
+                const absoluteIndex = playlists.findIndex((item) => item.id === playlist.id);
+                const color = CARD_COLORS[(absoluteIndex >= 0 ? absoluteIndex : 0) % CARD_COLORS.length];
+                return (
+                  <Link
+                    key={playlist.id}
+                    href={`/playlists/${playlist.id}`}
+                    style={{ backgroundColor: color.bg }}
+                    className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-ink/8 shadow-[0_18px_40px_-24px_rgba(18,22,74,0.28)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(18,22,74,0.32)] sm:rounded-[28px]"
+                  >
+                    <div className="relative aspect-video overflow-hidden bg-ink/5">
+                      <Image
+                        src={playlist.thumbnail}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-ink shadow-lg">
+                          <PlayIcon className="ml-0.5 h-5 w-5" />
+                        </span>
+                      </div>
+                      <span className="absolute bottom-2.5 left-2.5 rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase sm:bottom-3 sm:left-3 sm:px-2.5 sm:text-[11px]">
+                        {playlist.isCourse
+                          ? `${playlist.videoCount} lessons`
+                          : `${playlist.videoCount} videos`}
                       </span>
                     </div>
-                    <span className="absolute bottom-2.5 left-2.5 rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase sm:bottom-3 sm:left-3 sm:px-2.5 sm:text-[11px]">
-                      {playlist.isCourse ? `${playlist.videoCount} lessons` : `${playlist.videoCount} videos`}
-                    </span>
-                  </div>
 
-                  <div className="flex flex-1 flex-col p-4 sm:p-6">
-                    <span className="w-fit rounded-full bg-forest/8 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-forest uppercase sm:px-3 sm:text-[11px]">
-                      {playlist.tag}
-                    </span>
-                    <h3 className="font-display mt-3 text-[1.25rem] leading-tight text-ink sm:mt-4 sm:text-[1.45rem]">{playlist.title}</h3>
-                    <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-ink/65 sm:mt-3 sm:text-[15px] sm:leading-7">{playlist.body}</p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-forest sm:mt-6">
-                      View course
-                      <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
+                    <div className="flex flex-1 flex-col p-4 sm:p-6">
+                      <span
+                        className={`w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px] ${color.badge}`}
+                      >
+                        {playlist.tag}
+                      </span>
+                      <h3
+                        className={`font-display mt-3 text-[1.25rem] leading-tight sm:mt-4 sm:text-[1.45rem] ${color.title}`}
+                      >
+                        {playlist.title}
+                      </h3>
+                      <p
+                        className={`mt-2 line-clamp-3 flex-1 text-sm leading-6 sm:mt-3 sm:text-[15px] sm:leading-7 ${color.body}`}
+                      >
+                        {playlist.body}
+                      </p>
+                      <span
+                        className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold sm:mt-6 ${color.link}`}
+                      >
+                        {playlist.isCourse ? "View course" : "View playlist"}
+                        <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </motion.div>
           </AnimatePresence>
+          </ShimmerGate>
         </Reveal>
 
         <Reveal delay={0.12} className="mt-10 flex flex-col items-center gap-5 sm:flex-row sm:justify-between">

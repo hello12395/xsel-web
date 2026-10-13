@@ -26,6 +26,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authReady, setAuthReady] = useState(false);
   const solid = scrolled || open;
 
   useEffect(() => {
@@ -40,12 +41,14 @@ export function Header() {
 
     supabase.auth.getUser().then(({ data }) => {
       setIsLoggedIn(Boolean(data.user));
+      setAuthReady(true);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsLoggedIn(Boolean(session?.user));
+      setAuthReady(true);
     });
 
     return () => subscription.unsubscribe();
@@ -99,7 +102,14 @@ export function Header() {
 
           <div className="hidden h-3.5 w-px shrink-0 bg-white/25 lg:block" aria-hidden />
 
-          {isLoggedIn ? (
+          {!authReady ? (
+            <span
+              className="hidden h-8 w-24 overflow-hidden rounded-full bg-white/15 lg:inline-flex"
+              aria-hidden
+            >
+              <span className="shimmer-block h-full w-full rounded-full bg-transparent" />
+            </span>
+          ) : isLoggedIn ? (
             <button
               type="button"
               onClick={handleSignOut}

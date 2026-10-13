@@ -121,30 +121,70 @@ export const discussions = [
   },
 ];
 
+export const whatsappLinks = [
+  {
+    label: "WhatsApp Channel",
+    description: "Updates & announcements",
+    href: "https://whatsapp.com/channel/0029VaOFixGDTkKAGpDqZK2L",
+  },
+  {
+    label: "WhatsApp Community",
+    description: "Join the learner circle",
+    href: "https://chat.whatsapp.com/HYJBs1XhXsi6mCDyFwCmSc",
+  },
+] as const;
+
 export const socials = [
   {
     name: "Instagram",
-    handle: "@englishsarwarlab",
-    stat: "18.4k learners",
-    href: "https://instagram.com",
-  },
-  {
-    name: "YouTube",
-    handle: "Sarwar Lab Sessions",
-    stat: "312 lessons",
-    href: "https://youtube.com",
+    handle: "Two lab accounts",
+    stat: "Daily clips",
+    icon: "instagram" as const,
+    links: [
+      {
+        label: "English with Mahmood Sarwar",
+        href: "https://www.instagram.com/english.with.mahmood.sarwar/",
+      },
+      {
+        label: "xSEL",
+        href: "https://www.instagram.com/sarwar.english.lab/",
+      },
+    ],
   },
   {
     name: "Facebook",
-    handle: "Sarwar English Lab",
+    handle: "Pages & updates",
     stat: "Daily prompts",
-    href: "https://facebook.com",
+    icon: "facebook" as const,
+    links: [
+      {
+        label: "English with Mahmood Sarwar",
+        href: "https://www.facebook.com/EnglishWithMahmoodSarwar",
+      },
+      {
+        label: "xSEL",
+        href: "https://www.facebook.com/share/1LT3AyUubh/",
+      },
+    ],
   },
   {
     name: "WhatsApp",
-    handle: "Community circle",
-    stat: "Open cohort",
-    href: "https://whatsapp.com",
+    handle: "Channel & community",
+    stat: "Open Chats",
+    icon: "whatsapp" as const,
+    links: whatsappLinks.map(({ label, href }) => ({ label, href })),
+  },
+  {
+    name: "TikTok",
+    handle: "@english_with_mahmood",
+    stat: "Short lessons",
+    icon: "tiktok" as const,
+    links: [
+      {
+        label: "English with Mahmood",
+        href: "https://www.tiktok.com/@english_with_mahmood",
+      },
+    ],
   },
 ];
 
@@ -183,22 +223,22 @@ export const blogs = [
 
 export const location = {
   name: "Sarwar English Lab",
-  addressLines: ["12-B Canal Road, Near Liberty Market", "Gulberg III, Lahore, Pakistan"],
+  addressLines: ["G-11 Markaz", "Islamabad, Pakistan"],
   hours: "Mon–Sat · 9:00 AM – 8:00 PM",
-  phone: "+92 300 1234567",
+  phone: "+92 301 5095042",
   email: "hello@englishsarwarlab.com",
-  coordinates: { lat: 31.5102, lng: 74.3441 },
+  coordinates: { lat: 33.66943, lng: 73.000109 },
+  mapUrl: "https://share.google/MFcGPe8XDTitAVMVg",
   mapSrc:
-    "https://maps.google.com/maps?q=Liberty%20Market%20Lahore&t=&z=14&ie=UTF8&iwloc=&output=embed",
+    "https://maps.google.com/maps?q=G-11%20Markaz%20Islamabad&t=&z=15&ie=UTF8&iwloc=&output=embed",
   mapSatelliteSrc:
-    "https://maps.google.com/maps?q=31.5102,74.3441&t=k&z=17&ie=UTF8&iwloc=&output=embed",
-  directionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Liberty+Market+Lahore+Pakistan",
+    "https://maps.google.com/maps?q=33.66943,73.000109&t=k&z=17&ie=UTF8&iwloc=&output=embed",
+  directionsUrl: "https://share.google/MFcGPe8XDTitAVMVg",
   studios: [
     {
       label: "Studio",
       name: "Sarwar English Lab",
-      addressLines: ["12-B Canal Road, Near Liberty Market", "Gulberg III, Lahore, Pakistan"],
+      addressLines: ["G-11 Markaz", "Islamabad, Pakistan"],
     },
   ],
 };
