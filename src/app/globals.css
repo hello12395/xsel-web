@@ -327,16 +327,17 @@ body {
 
 .bg-reviews-section {
   background:
-    radial-gradient(ellipse 70% 55% at 100% 0%, rgba(55, 204, 248, 0.28), transparent 52%),
-    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(2, 171, 213, 0.12), transparent 48%),
-    linear-gradient(165deg, #f5fbff 0%, #e8f4fc 45%, #d6eef8 100%);
+    radial-gradient(ellipse 75% 60% at 100% 0%, rgba(55, 204, 248, 0.55), transparent 58%),
+    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(2, 171, 213, 0.38), transparent 55%),
+    radial-gradient(ellipse 50% 45% at 45% 40%, rgba(28, 48, 190, 0.12), transparent 60%),
+    linear-gradient(165deg, #dff4ff 0%, #bfe6f8 42%, #8fd4ef 100%);
 }
 
 .bg-reviews-section::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(2, 171, 213, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(2, 171, 213, 0.14) 1px, transparent 1px);
   background-size: 30px 30px;
   mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
   pointer-events: none;
@@ -1027,16 +1028,17 @@ body {
 
 .bg-social-stage {
   background:
-    radial-gradient(ellipse 80% 60% at 12% 18%, rgba(249, 34, 39, 0.14) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 55% at 92% 88%, rgba(200, 40, 50, 0.1) 0%, transparent 50%),
-    linear-gradient(165deg, #fff5f5 0%, #ffe8e8 48%, #ffd6d6 100%);
+    radial-gradient(ellipse 80% 60% at 12% 18%, rgba(249, 34, 39, 0.32) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 55% at 92% 88%, rgba(200, 40, 50, 0.26) 0%, transparent 52%),
+    radial-gradient(ellipse 50% 40% at 55% 45%, rgba(255, 120, 90, 0.14) 0%, transparent 60%),
+    linear-gradient(165deg, #ffe0e0 0%, #ffc8c8 45%, #f5a8a8 100%);
 }
 
 .social-stage-glow {
   position: absolute;
   inset: -20% -10% auto;
   height: 55%;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.55), transparent 65%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.4), transparent 65%);
   pointer-events: none;
 }
 
@@ -1044,8 +1046,8 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(180, 40, 50, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180, 40, 50, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(180, 40, 50, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 40, 50, 0.12) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 75% 70% at 70% 55%, black 15%, transparent 72%);
   pointer-events: none;

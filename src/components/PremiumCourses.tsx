@@ -22,10 +22,10 @@ const CARD_THEMES = [
     hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(10,35,64,0.65)]",
   },
   {
-    // Green — logo "s" / "l"
+    // Green — logo "s" / "l" (#449c09)
     background:
-      "linear-gradient(155deg, #1f7a38 0%, #145a28 48%, #0a3316 100%)",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(20,90,40,0.6)]",
+      "linear-gradient(155deg, #449c09 0%, #2d7006 48%, #1a4504 100%)",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(68,156,9,0.55)]",
   },
   {
     // Red — logo "e"
@@ -59,7 +59,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
   return (
     <section
       id="premium-courses"
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#f4faf6] via-[#e6f2ea] to-[#dceee3]"
+      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#eef8e0] via-[#c5e890] to-[#449c09]"
     >
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
         <SectionHeader

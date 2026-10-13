@@ -189,24 +189,38 @@ function PaymentMethodsPanel() {
         </div>
       </div>
 
-      <div className="flex gap-1 border-b border-ink/8 bg-cream/50 p-1.5 sm:px-2">
-        {PAYMENT_TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              "flex flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2.5 text-xs font-medium transition sm:text-sm",
-              activeTab === tab.id
-                ? "bg-white text-ink shadow-sm ring-1 ring-ink/8"
-                : "text-ink/45 hover:text-ink/70"
-            )}
-          >
-            {tab.icon}
-            <span className="hidden sm:inline">{tab.label}</span>
-            <span className="sm:hidden">{tab.short}</span>
-          </button>
-        ))}
+      <div className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#f4f7fb] p-2 sm:gap-2.5 sm:p-2.5">
+        {PAYMENT_TABS.map((tab) => {
+          const active = activeTab === tab.id;
+          const tone =
+            tab.id === "bank"
+              ? active
+                ? "bg-[#1c30be] text-white shadow-[0_10px_22px_-12px_rgba(28,48,190,0.7)]"
+                : "bg-[#e8ecff] text-[#1c30be] hover:bg-[#dce3ff]"
+              : tab.id === "easypaisa"
+                ? active
+                  ? "bg-[#14804a] text-white shadow-[0_10px_22px_-12px_rgba(20,128,74,0.7)]"
+                  : "bg-[#e6f6ec] text-[#14804a] hover:bg-[#d7f0e0]"
+                : active
+                  ? "bg-[#b42318] text-white shadow-[0_10px_22px_-12px_rgba(180,35,24,0.7)]"
+                  : "bg-[#fde8e6] text-[#b42318] hover:bg-[#f9d7d3]";
+
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                "flex items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 text-xs font-semibold transition sm:py-3 sm:text-sm",
+                tone,
+              )}
+            >
+              {tab.icon}
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className="sm:hidden">{tab.short}</span>
+            </button>
+          );
+        })}
       </div>
 
       <div className="p-5 sm:p-6">
@@ -569,7 +583,6 @@ export function PaymentVerification({
   selectedBatchId: string;
   existingPurchase: Purchase | null;
 }) {
-  const router = useRouter();
   const selectedBatch =
     batches.find((b) => b.id === selectedBatchId) ?? batches[0] ?? null;
   const batchId = selectedBatch?.id ?? selectedBatchId;
@@ -595,51 +608,78 @@ export function PaymentVerification({
     );
   }
 
+  const heading =
+    status === "approved"
+      ? "Enrollment confirmed"
+      : status === "pending"
+        ? "Verification in progress"
+        : status === "rejected"
+          ? "Action needed"
+          : "Complete your enrollment";
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-[11px] font-semibold tracking-[0.24em] text-gold uppercase">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-stretch lg:gap-5">
+        <div className="relative overflow-hidden rounded-[22px] border border-[#0a2340]/10 bg-gradient-to-br from-[#0a2340] via-[#122a4a] to-[#0c4a66] p-5 shadow-[0_20px_40px_-24px_rgba(10,35,64,0.55)] sm:rounded-[24px] sm:p-6">
+          <div
+            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#37ccf8]/15 blur-2xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-12 left-8 h-28 w-28 rounded-full bg-white/10 blur-2xl"
+            aria-hidden
+          />
+          <p className="relative text-[11px] font-semibold tracking-[0.24em] text-[#37ccf8]/90 uppercase">
             Enrollment checkout
           </p>
-          <h2 className="font-display mt-1.5 text-2xl tracking-tight text-ink sm:text-3xl">
-            {status === "approved"
-              ? "Enrollment confirmed"
-              : status === "pending"
-                ? "Verification in progress"
-                : status === "rejected"
-                  ? "Action needed"
-                  : "Complete your enrollment"}
+          <h2 className="font-display relative mt-3 text-2xl leading-tight tracking-tight text-white sm:text-[2rem]">
+            {heading}
           </h2>
-          <p className="mt-3 inline-flex max-w-xl rounded-xl bg-[#1f7a38] px-4 py-2.5 text-sm leading-relaxed font-medium text-white shadow-[0_10px_24px_-12px_rgba(31,122,56,0.55)]">
+          <p className="relative mt-3 max-w-md text-sm leading-6 text-white/65">
+            Secure your seat with a quick payment and receipt upload.
+          </p>
+        </div>
+
+        {!status ? (
+          <div className="rounded-[22px] bg-[#1f7a38] px-4 py-4 text-sm leading-relaxed font-medium text-white shadow-[0_16px_32px_-18px_rgba(31,122,56,0.55)] sm:rounded-[24px] sm:px-5 sm:py-5">
+            <p className="text-[10px] font-semibold tracking-[0.18em] text-white/75 uppercase">
+              How to enroll
+            </p>
+            <ol className="mt-3 space-y-2">
+              <li className="flex gap-2.5">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                  1
+                </span>
+                <span>Pay the course fee</span>
+              </li>
+              <li className="flex gap-2.5">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                  2
+                </span>
+                <span>Upload the receipt</span>
+              </li>
+              <li className="flex gap-2.5">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                  3
+                </span>
+                <span>
+                  Wait for verification by admins
+                  <span className="mt-0.5 block text-[12px] font-normal text-white/85">
+                    (Might take up to 24 hours)
+                  </span>
+                </span>
+              </li>
+            </ol>
+          </div>
+        ) : (
+          <div className="flex items-center rounded-[22px] bg-[#1f7a38] px-4 py-4 text-sm leading-relaxed font-medium text-white shadow-[0_16px_32px_-18px_rgba(31,122,56,0.55)] sm:rounded-[24px] sm:px-5">
             {status === "approved"
               ? "Your payment was approved and your seat is confirmed."
               : status === "pending"
                 ? "Your receipt is with our team. Check back here for the decision."
-                : status === "rejected"
-                  ? "Your previous submission was rejected. Review the reason and upload a new receipt."
-                  : "Wait for verification by admins (Might take up to 24 hours)."}
-          </p>
-        </div>
-        {batches.length > 1 && showPaymentSteps ? (
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="text-xs font-medium tracking-wide text-ink/45 uppercase">Batch</span>
-            <select
-              value={batchId}
-              onChange={(e) => {
-                const next = e.target.value;
-                router.push(`/premium/${course.id}/enroll?batchId=${next}`);
-              }}
-              className="rounded-full border border-ink/15 bg-white px-4 py-2.5 text-sm font-medium text-ink outline-none focus:border-forest"
-            >
-              {batches.map((batch) => (
-                <option key={batch.id} value={batch.id}>
-                  {batch.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        ) : null}
+                : "Your previous submission was rejected. Review the reason and upload a new receipt."}
+          </div>
+        )}
       </div>
 
       <CourseSummaryBar course={course} batchName={selectedBatch.name} />

@@ -114,13 +114,13 @@ export function SignupPage() {
             <div className="border-b border-[#2a3350] bg-gradient-to-b from-[#24304a] to-[#1a2238] px-6 py-8 sm:px-8 sm:py-9">
               <div className="mb-6 flex justify-center">
                 <Image
-                  src="/xsel-web-logo.png"
+                  src="/app_logo.png"
                   alt="Sarwar English Lab"
                   width={200}
                   height={200}
                   priority
                   unoptimized
-                  className="h-[7.25rem] w-auto object-contain sm:h-36"
+                  className="h-[7.25rem] w-auto rounded-2xl object-contain sm:h-36"
                 />
               </div>
               <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#d4b45a] uppercase">

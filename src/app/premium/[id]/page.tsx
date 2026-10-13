@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { mapCourseToPremium } from "@/data/premium-courses";
 import { getPublishedCourseById } from "@/lib/db/courses";
+import { getCourseReviews } from "@/lib/db/course-reviews";
 import { ArrowIcon, PremiumIcon } from "@/components/Icons";
+import { PremiumCourseTabs } from "@/components/PremiumCourseTabs";
 import { parseLearningOutcomes } from "@/types/course";
 
 type PremiumCoursePageProps = {
@@ -45,6 +47,13 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
 
   const course = mapCourseToPremium(row);
   const outcomes = parseLearningOutcomes(row.learning_outcomes);
+  let courseReviews: Awaited<ReturnType<typeof getCourseReviews>> = [];
+  try {
+    courseReviews = await getCourseReviews(id);
+  } catch (error) {
+    console.error("Failed to load course reviews", error);
+    courseReviews = [];
+  }
 
   return (
     <main className="min-h-dvh bg-cream">
@@ -62,18 +71,18 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-15 blur-sm"
+            className="object-cover opacity-25"
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(145deg, rgba(2,11,24,0.96) 0%, rgba(10,35,64,0.92) 48%, rgba(12,74,102,0.88) 100%)",
+                "linear-gradient(145deg, rgba(2,11,24,0.88) 0%, rgba(10,35,64,0.82) 48%, rgba(12,74,102,0.78) 100%)",
             }}
           />
         </div>
 
-        <div className="relative mx-auto max-w-5xl px-5 py-14 pt-28 md:px-8 md:py-16 md:pt-32">
+        <div className="relative mx-auto max-w-6xl px-5 py-14 pt-28 md:px-8 md:py-16 md:pt-32">
           <Link
             href="/#premium-courses"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
@@ -92,92 +101,23 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           <h1 className="font-display mt-5 text-3xl leading-tight text-white sm:text-5xl">
             {course.title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
-            {course.blurb}
-          </p>
-          <p className="mt-4 text-sm font-semibold tracking-wide text-white/55 uppercase">
-            {course.lessons > 0
-              ? `${course.lessons} lessons · ${course.duration} · ${course.price}`
-              : `${course.duration} · ${course.price}`}
-          </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:items-start lg:gap-10">
-          <div className="space-y-8">
-            <section className="card-surface rounded-[24px] p-6 sm:p-8">
-              <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
-                About this course
-              </p>
-              <p className="mt-4 text-[15px] leading-7 whitespace-pre-line text-ink/65">
-                {row.description?.trim() || course.blurb}
-              </p>
+      <div className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-16">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start lg:gap-8">
+          <PremiumCourseTabs
+            description={row.description?.trim() || ""}
+            outcomes={outcomes}
+            chapters={row.chapters ?? []}
+            duration={course.duration}
+            lessons={course.lessons}
+            students={row.fake_enrollments ?? 0}
+            formatLabel={formatCourseType(row.course_type)}
+            reviews={courseReviews}
+          />
 
-              {outcomes.length > 0 ? (
-                <div className="mt-8">
-                  <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
-                    Learning outcomes
-                  </p>
-                  <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-                    {outcomes.map((outcome, index) => (
-                      <li
-                        key={`${outcome.title}-${index}`}
-                        className="rounded-2xl border border-ink/8 bg-cream/50 p-4"
-                      >
-                        {outcome.title ? (
-                          <p className="text-sm font-semibold text-ink">
-                            {outcome.title}
-                          </p>
-                        ) : null}
-                        {outcome.description ? (
-                          <p
-                            className={`text-sm leading-6 text-ink/55 ${
-                              outcome.title ? "mt-1.5" : ""
-                            }`}
-                          >
-                            {outcome.description}
-                          </p>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </section>
-
-            <section className="card-surface rounded-[24px] p-6 sm:p-8">
-              <p className="text-[11px] font-semibold tracking-[0.24em] text-gold uppercase">
-                Course details
-              </p>
-              <dl className="mt-5 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <dt className="text-xs font-medium tracking-wide text-ink/40 uppercase">
-                    Format
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-ink">
-                    {formatCourseType(row.course_type)}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium tracking-wide text-ink/40 uppercase">
-                    Lessons
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-ink">
-                    {course.lessons > 0 ? `${course.lessons} lessons` : "Curriculum updating"}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium tracking-wide text-ink/40 uppercase">
-                    Duration
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-ink">{course.duration}</dd>
-                </div>
-              </dl>
-            </section>
-          </div>
-
-          <aside className="lg:sticky lg:top-28">
+          <aside className="self-start lg:sticky lg:top-24 lg:z-20">
             <div className="card-surface overflow-hidden rounded-[24px]">
               <div className="relative aspect-video bg-ink/5">
                 <Image
@@ -210,7 +150,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                   href="/#free-lessons"
                   className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-ink/25"
                 >
-                  Browse free courses
+                  Browse free lessons
                 </Link>
               </div>
             </div>

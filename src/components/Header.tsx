@@ -10,7 +10,7 @@ import { CloseIcon, MenuIcon } from "./Icons";
 
 const links = [
   { href: "#why", label: "Why Xsel" },
-  { href: "#premium-courses", label: "Paid" },
+  { href: "#premium-courses", label: "Paid Courses" },
   { href: "#free-lessons", label: "Free Lessons" },
   { href: "#reviews", label: "Reviews" },
   ...(features.pendingDiscussions
@@ -78,7 +78,7 @@ export function Header() {
             className="h-8 w-8 transition-transform duration-300 group-hover:scale-[1.03]"
           />
           <span className="min-w-0 leading-none">
-            <span className="mb-0.5 block text-[9px] font-semibold tracking-[0.2em] text-[#37ccf8] uppercase">
+            <span className="mb-0.5 block text-[9px] font-semibold tracking-[0.2em] text-white uppercase">
               Sarwar
             </span>
             <span className="font-display block truncate text-[15px] font-semibold tracking-tight text-white">

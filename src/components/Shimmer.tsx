@@ -112,7 +112,7 @@ export function PremiumCoursesSkeleton() {
 export function FreeLessonsSkeleton() {
   return (
     <section
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fffbf0] via-[#fff3d6] to-[#f5e4b0]"
+      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fff3d0] via-[#ffe08a] to-[#f0c84a]"
       aria-busy="true"
       aria-label="Loading free lessons"
     >

@@ -11,6 +11,12 @@ import { ShimmerGate } from "./ShimmerGate";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const AUTOPLAY_MS = 7000;
+/** Facebook-style placeholder avatar background */
+const DEFAULT_AVATAR_BG = "#E4E6EB";
+
+function isDefaultAvatar(src: string) {
+  return src.includes("default-user");
+}
 
 const stats = [
   { value: "2.4k+", label: "Learners" },
@@ -109,8 +115,8 @@ export function Reviews() {
 
   return (
     <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-reviews-section text-ink">
-      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#37ccf8]/25 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#02abd5]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#37ccf8]/45 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#02abd5]/35 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
         <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
@@ -178,13 +184,21 @@ export function Reviews() {
                         }}
                         aria-hidden
                       />
-                      <div className="relative h-20 w-20 overflow-hidden rounded-full border-[3px] border-white/25 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.55)] sm:h-28 sm:w-28">
+                      <div
+                        className="relative h-20 w-20 overflow-hidden rounded-full border-[3px] border-white/25 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.55)] sm:h-28 sm:w-28"
+                        style={
+                          isDefaultAvatar(review.avatar)
+                            ? { backgroundColor: DEFAULT_AVATAR_BG }
+                            : undefined
+                        }
+                      >
                         <Image
                           src={review.avatar}
                           alt={review.name}
                           fill
                           sizes="112px"
-                          className="object-cover"
+                          className="object-cover object-center"
+                          unoptimized={isDefaultAvatar(review.avatar)}
                           priority
                         />
                       </div>
@@ -256,8 +270,20 @@ export function Reviews() {
                         className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-full transition sm:h-10 sm:w-10 ${
                           isActive ? `ring-2 ${itemColor.ring} ring-offset-2 ring-offset-transparent` : ""
                         }`}
+                        style={
+                          isDefaultAvatar(item.avatar)
+                            ? { backgroundColor: DEFAULT_AVATAR_BG }
+                            : undefined
+                        }
                       >
-                        <Image src={item.avatar} alt="" fill sizes="40px" className="object-cover" />
+                        <Image
+                          src={item.avatar}
+                          alt=""
+                          fill
+                          sizes="40px"
+                          className="object-cover object-center"
+                          unoptimized={isDefaultAvatar(item.avatar)}
+                        />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span

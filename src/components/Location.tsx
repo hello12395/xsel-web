@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { location } from "@/data/site";
-import { ClockIcon, CloseIcon, MailIcon, PhoneIcon, PinIcon, ArrowIcon } from "./Icons";
+import { CloseIcon, MailIcon, PhoneIcon, PinIcon, ArrowIcon } from "./Icons";
 import { RotatingEarth } from "./RotatingEarth";
 import { Shimmer } from "./Shimmer";
 import { ShimmerGate } from "./ShimmerGate";
@@ -106,10 +106,6 @@ function SatellitePopout({ open, onClose }: { open: boolean; onClose: () => void
 
               <div className="location-satellite-popout-body">
                 <div className="location-satellite-popout-meta">
-                  <span className="location-satellite-meta-chip">
-                    <ClockIcon className="h-3.5 w-3.5 shrink-0" />
-                    {location.hours}
-                  </span>
                   <span className="location-satellite-meta-chip">
                     <PinIcon className="h-3.5 w-3.5 shrink-0" />
                     {location.addressLines[1]}

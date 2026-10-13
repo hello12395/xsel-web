@@ -13,35 +13,11 @@ import { ShimmerGate } from "./ShimmerGate";
 
 const PAGE_SIZE = 3;
 
-const CARD_COLORS = [
-  {
-    bg: "#e11d2e",
-    badge: "bg-white/20 text-white",
-    title: "text-white",
-    body: "text-white/85",
-    link: "text-white",
-  },
-  {
-    bg: "#f5c518",
-    badge: "bg-black/10 text-ink",
-    title: "text-ink",
-    body: "text-ink/75",
-    link: "text-ink",
-  },
-  {
-    bg: "#1c30be",
-    badge: "bg-white/20 text-white",
-    title: "text-white",
-    body: "text-white/85",
-    link: "text-white",
-  },
-  {
-    bg: "#1f7a38",
-    badge: "bg-white/20 text-white",
-    title: "text-white",
-    body: "text-white/85",
-    link: "text-white",
-  },
+const LABEL_COLORS = [
+  { bg: "#e11d2e", text: "#ffffff" },
+  { bg: "#f5c518", text: "#12164a" },
+  { bg: "#1c30be", text: "#ffffff" },
+  { bg: "#1f7a38", text: "#ffffff" },
 ] as const;
 
 function PlayIcon({ className }: { className?: string }) {
@@ -66,7 +42,7 @@ export function FreeStuff() {
   return (
     <section
       id="free-lessons"
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fffbf0] via-[#fff3d6] to-[#f5e4b0]"
+      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fff3d0] via-[#ffe08a] to-[#f0c84a]"
     >
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
         <SectionHeader
@@ -90,13 +66,13 @@ export function FreeStuff() {
             >
               {visible.map((playlist) => {
                 const absoluteIndex = playlists.findIndex((item) => item.id === playlist.id);
-                const color = CARD_COLORS[(absoluteIndex >= 0 ? absoluteIndex : 0) % CARD_COLORS.length];
+                const label =
+                  LABEL_COLORS[(absoluteIndex >= 0 ? absoluteIndex : 0) % LABEL_COLORS.length];
                 return (
                   <Link
                     key={playlist.id}
                     href={`/playlists/${playlist.id}`}
-                    style={{ backgroundColor: color.bg }}
-                    className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-ink/8 shadow-[0_18px_40px_-24px_rgba(18,22,74,0.28)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(18,22,74,0.32)] sm:rounded-[28px]"
+                    className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-ink/8 bg-white shadow-[0_18px_40px_-24px_rgba(18,22,74,0.28)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(18,22,74,0.32)] sm:rounded-[28px]"
                   >
                     <div className="relative aspect-video overflow-hidden bg-ink/5">
                       <Image
@@ -121,23 +97,18 @@ export function FreeStuff() {
 
                     <div className="flex flex-1 flex-col p-4 sm:p-6">
                       <span
-                        className={`w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px] ${color.badge}`}
+                        style={{ backgroundColor: label.bg, color: label.text }}
+                        className="w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px]"
                       >
                         {playlist.tag}
                       </span>
-                      <h3
-                        className={`font-display mt-3 text-[1.25rem] leading-tight sm:mt-4 sm:text-[1.45rem] ${color.title}`}
-                      >
+                      <h3 className="font-display mt-3 text-[1.25rem] leading-tight text-ink sm:mt-4 sm:text-[1.45rem]">
                         {playlist.title}
                       </h3>
-                      <p
-                        className={`mt-2 line-clamp-3 flex-1 text-sm leading-6 sm:mt-3 sm:text-[15px] sm:leading-7 ${color.body}`}
-                      >
+                      <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-ink/70 sm:mt-3 sm:text-[15px] sm:leading-7">
                         {playlist.body}
                       </p>
-                      <span
-                        className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold sm:mt-6 ${color.link}`}
-                      >
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink sm:mt-6">
                         {playlist.isCourse ? "View course" : "View playlist"}
                         <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
                       </span>

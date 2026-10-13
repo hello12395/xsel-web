@@ -2,7 +2,10 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getPublishedCourseById } from "@/lib/db/courses";
-import { getOpenBatchesForCourse, pickDefaultBatch } from "@/lib/db/batches";
+import {
+  getOpenBatchesForCourse,
+  pickLatestBatchByStartDate,
+} from "@/lib/db/batches";
 import { getUserPurchaseForCourse } from "@/lib/db/purchases";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowIcon } from "@/components/Icons";
@@ -11,7 +14,6 @@ import type { Course, Purchase } from "@/types/course";
 
 type EnrollPageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ batchId?: string }>;
 };
 
 const UUID_RE =
@@ -33,12 +35,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function PremiumEnrollPage({
-  params,
-  searchParams,
-}: EnrollPageProps) {
+export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
   const { id } = await params;
-  const { batchId: batchIdParam } = await searchParams;
 
   if (!UUID_RE.test(id)) notFound();
 
@@ -69,19 +67,14 @@ export default async function PremiumEnrollPage({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    const enrollPath =
-      batchIdParam && UUID_RE.test(batchIdParam)
-        ? `/premium/${id}/enroll?batchId=${batchIdParam}`
-        : `/premium/${id}/enroll`;
-    redirect(`/login?next=${encodeURIComponent(enrollPath)}&required=1`);
+    redirect(
+      `/login?next=${encodeURIComponent(`/premium/${id}/enroll`)}&required=1`,
+    );
   }
 
   const batches = await getOpenBatchesForCourse(id);
-  const requestedBatch =
-    batchIdParam && UUID_RE.test(batchIdParam)
-      ? batches.find((b) => b.id === batchIdParam)
-      : undefined;
-  const selectedBatch = requestedBatch ?? pickDefaultBatch(batches);
+  // Always enroll into the latest running batch by start_date (ignore URL batch picker).
+  const selectedBatch = pickLatestBatchByStartDate(batches);
   const selectedBatchId = selectedBatch?.id ?? "";
 
   let existingPurchase: Purchase | null = null;

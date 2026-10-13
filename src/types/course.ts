@@ -54,17 +54,6 @@ export interface Course {
   updated_at: string;
 }
 
-export type CourseWithLessons = Course & {
-  chapters?: Array<{
-    id: string;
-    lessons?: Array<{
-      id: string;
-      duration_seconds: number | null;
-      status: string;
-    }>;
-  }>;
-};
-
 export interface CourseBatch {
   id: string;
   course_id: string;
@@ -77,6 +66,28 @@ export interface CourseBatch {
   created_at: string;
   updated_at: string;
 }
+
+export type CourseLessonSummary = {
+  id: string;
+  title?: string | null;
+  duration_seconds: number | null;
+  status: string;
+  lesson_type?: string | null;
+  sort_order?: number | null;
+};
+
+export type CourseChapterSummary = {
+  id: string;
+  title?: string | null;
+  batch_id?: string | null;
+  sort_order?: number | null;
+  lessons?: CourseLessonSummary[];
+};
+
+export type CourseWithLessons = Course & {
+  chapters?: CourseChapterSummary[];
+  batches?: CourseBatch[];
+};
 
 export interface Purchase {
   id: string;

@@ -10,11 +10,11 @@ type BrandLogoProps = {
 export function BrandLogo({ className = "", size = 44, priority = false }: BrandLogoProps) {
   return (
     <Image
-      src="/xsel-web-logo.png"
+      src="/app_logo.png"
       alt="Sarwar English Lab"
       width={size}
       height={size}
-      className={`object-contain ${className}`}
+      className={`rounded-xl object-contain ${className}`}
       priority={priority}
       unoptimized
     />

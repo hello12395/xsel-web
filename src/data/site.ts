@@ -27,7 +27,7 @@ export const reviews = [
   {
     name: "Ayesha Ayaz",
     role: "Learner",
-    avatar: "/reviews/ayesha-ayaz.jpg",
+    avatar: "/default-user.png",
     quote:
       "I went in for literature and came out loving grammar too. The way he explains things, it just sticks.",
   },
@@ -48,7 +48,7 @@ export const reviews = [
   {
     name: "Zulal Kakakhel",
     role: "CSS aspirant",
-    avatar: "/reviews/zulal-kakakhel.jpg",
+    avatar: "/default-user.png",
     quote:
       "I couldn't write a proper precis before this. Now I actually can, and grammar finally makes sense.",
   },
@@ -224,9 +224,8 @@ export const blogs = [
 export const location = {
   name: "Sarwar English Lab",
   addressLines: ["G-11 Markaz", "Islamabad, Pakistan"],
-  hours: "Mon–Sat · 9:00 AM – 8:00 PM",
-  phone: "+92 301 5095042",
-  email: "hello@englishsarwarlab.com",
+  phone: "+92 371 4059245",
+  email: "xselsarwarenglishlab@gmail.com",
   coordinates: { lat: 33.66943, lng: 73.000109 },
   mapUrl: "https://share.google/MFcGPe8XDTitAVMVg",
   mapSrc:
