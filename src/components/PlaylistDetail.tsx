@@ -18,17 +18,17 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
     <aside className="lg:sticky lg:top-28">
       <Reveal delay={0.08}>
         <div className="card-surface overflow-hidden rounded-[24px]">
-          <div className="border-b border-ink/8 bg-gradient-to-br from-[#f7fbff] via-white to-[#eef6ff] px-5 py-5 sm:px-6">
+          <div className="border-b border-[#152F29]/10 bg-gradient-to-br from-[#F3F7F0] via-[#F7FAF5] to-[#EAF1E6] px-5 py-5 sm:px-6">
             <div className="flex items-center gap-2">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#f5e6b8] text-[#b8860b]">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#EFAA93]/30 text-[#B86B52]">
                 <PremiumIcon className="h-4 w-4" />
               </span>
-              <p className="text-[11px] font-semibold tracking-[0.24em] text-[#b8860b] uppercase">
+              <p className="text-[11px] font-semibold tracking-[0.24em] text-[#B86B52] uppercase">
                 Paid
               </p>
             </div>
-            <h3 className="font-display mt-2 text-2xl tracking-tight text-ink">Paid Courses</h3>
-            <p className="mt-2 text-sm leading-6 text-ink/55">
+            <h3 className="font-display mt-2 text-2xl tracking-tight text-[#152F29]">Paid Courses</h3>
+            <p className="mt-2 text-sm leading-6 text-[#152F29]/55">
               Live cohorts and mentor-marked tracks — not free YouTube playlists.
             </p>
           </div>
@@ -38,14 +38,14 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
               No paid courses published yet. Check back soon.
             </p>
           ) : (
-            <ul className="divide-y divide-ink/6 bg-white/70">
+            <ul className="divide-y divide-[#152F29]/8 bg-[#F7FAF5]">
               {courses.map((course) => (
                 <li key={course.id}>
                   <Link
                     href={course.href}
-                    className="group flex gap-3.5 px-5 py-4 transition hover:bg-forest/[0.03] sm:px-6"
+                    className="group flex gap-3.5 px-5 py-4 transition hover:bg-[#EAF1E6] sm:px-6"
                   >
-                    <div className="relative h-[4.25rem] w-[4.75rem] shrink-0 overflow-hidden rounded-xl bg-ink/5 ring-1 ring-ink/6">
+                    <div className="relative h-[4.25rem] w-[4.75rem] shrink-0 overflow-hidden rounded-xl bg-[#152F29]/5 ring-1 ring-[#152F29]/10">
                       <Image
                         src={course.thumbnail}
                         alt=""
@@ -54,7 +54,7 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
                         className="object-cover transition duration-500 group-hover:scale-[1.04]"
                       />
                       <span
-                        className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-md bg-gradient-to-br from-[#f0d060] to-[#c9a227] text-white shadow-[0_2px_6px_rgba(185,134,11,0.45)]"
+                        className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-md bg-[#EFAA93] text-[#152F29] shadow-[0_2px_6px_rgba(184,107,82,0.35)]"
                         title="Paid course"
                         aria-label="Paid course"
                       >
@@ -64,23 +64,23 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="rounded-full bg-forest/8 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest uppercase">
+                        <span className="rounded-full bg-[#152F29]/8 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-[#1D6B56] uppercase">
                           {course.tag}
                         </span>
-                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-ink tabular-nums">
-                          <PremiumIcon className="h-3.5 w-3.5 text-[#c9a227]" />
+                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[#152F29] tabular-nums">
+                          <PremiumIcon className="h-3.5 w-3.5 text-[#B86B52]" />
                           {course.price}
                         </span>
                       </div>
-                      <h4 className="mt-1.5 line-clamp-2 text-sm leading-5 font-semibold text-ink transition group-hover:text-forest">
+                      <h4 className="mt-1.5 line-clamp-2 text-sm leading-5 font-semibold text-[#152F29] transition group-hover:text-[#1D6B56]">
                         {course.title}
                       </h4>
-                      <p className="mt-1 text-[11px] text-ink/45">
+                      <p className="mt-1 text-[11px] text-[#152F29]/45">
                         {course.lessons > 0
                           ? `${course.lessons} lessons · ${course.duration}`
                           : course.duration}
                       </p>
-                      <p className="mt-1 text-[10px] font-medium tracking-wide text-ink/35 uppercase">
+                      <p className="mt-1 text-[10px] font-medium tracking-wide text-[#152F29]/35 uppercase">
                         Sign in required
                       </p>
                     </div>
@@ -90,10 +90,10 @@ function PremiumCoursesSidebar({ courses }: { courses: PremiumCourse[] }) {
             </ul>
           )}
 
-          <div className="border-t border-ink/8 bg-[#f7fbff]/80 px-5 py-4 sm:px-6">
+          <div className="border-t border-[#152F29]/10 bg-[#EAF1E6] px-5 py-4 sm:px-6">
             <a
               href="#location"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-forest px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest-deep"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#152F29] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#1a3d35]"
             >
               Ask about enrollment
               <ArrowIcon className="h-3.5 w-3.5" />
@@ -122,7 +122,7 @@ export function PlaylistDetail({
         className="relative overflow-hidden"
         style={{
           background:
-            "linear-gradient(145deg, #020b18 0%, #0a2340 42%, #0c4a66 100%)",
+            "linear-gradient(145deg, #0a1a16 0%, #152F29 42%, #234f44 100%)",
         }}
       >
         <div className="absolute inset-0">
@@ -138,7 +138,7 @@ export function PlaylistDetail({
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(145deg, rgba(2,11,24,0.96) 0%, rgba(10,35,64,0.92) 48%, rgba(12,74,102,0.88) 100%)",
+                "linear-gradient(145deg, rgba(10,26,22,0.94) 0%, rgba(21,47,41,0.9) 48%, rgba(35,79,68,0.86) 100%)",
             }}
           />
         </div>
@@ -154,7 +154,7 @@ export function PlaylistDetail({
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-12">
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.24em] text-gold-soft uppercase">
+              <p className="text-[11px] font-semibold tracking-[0.24em] text-[#EFAA93] uppercase">
                 {playlist.tag}
               </p>
               <h1 className="font-display mt-3 text-3xl leading-tight text-white sm:text-5xl">
@@ -227,7 +227,7 @@ export function PlaylistDetail({
                     href={video.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="card-surface group relative flex h-full flex-col overflow-hidden rounded-[22px] transition duration-300 hover:-translate-y-1 hover:border-forest/20 hover:shadow-[0_22px_44px_-22px_rgba(28,48,190,0.32)]"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-[#152F29]/10 bg-[#F3F7F0] transition duration-300 hover:-translate-y-1 hover:border-[#152F29]/20 hover:bg-[#EAF1E6] hover:shadow-[0_22px_44px_-22px_rgba(21,47,41,0.28)]"
                   >
                     <div className="relative aspect-video overflow-hidden bg-ink/5">
                       <Image

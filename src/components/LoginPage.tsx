@@ -10,7 +10,7 @@ import { AuthSideSlideshow } from "./AuthSideSlideshow";
 import { ArrowIcon, EyeIcon, EyeOffIcon } from "./Icons";
 
 const fieldClass =
-  "w-full rounded-[14px] border border-[#d7e0f0] bg-[#eef3fb] px-[18px] py-[15px] text-[15px] leading-none text-ink outline-none transition-all duration-200 placeholder:text-ink/30 hover:border-[#c5d1e6] focus:border-forest/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(28,48,190,0.1)]";
+  "w-full rounded-[14px] border border-[#d9e2d8] bg-[#F3F7F0] px-[18px] py-[15px] text-[15px] leading-none text-ink outline-none transition-all duration-200 placeholder:text-ink/30 hover:border-[#c5d4c4] focus:border-[#152F29]/40 focus:bg-white focus:shadow-[0_0_0_4px_rgba(21,47,41,0.1)]";
 
 export function LoginPage() {
   const router = useRouter();
@@ -63,7 +63,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-dvh w-full bg-[#f7f9fc]">
+    <div className="flex min-h-dvh w-full bg-[#FFFCF6]">
       <AuthSideSlideshow />
 
       <main className="relative flex flex-1 items-center justify-center overflow-hidden px-5 py-14 sm:px-10 lg:px-14">
@@ -72,7 +72,7 @@ export function LoginPage() {
           aria-hidden
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 70% 20%, rgba(28,48,190,0.05), transparent 60%), radial-gradient(ellipse 50% 40% at 20% 90%, rgba(2,171,213,0.06), transparent 55%)",
+              "radial-gradient(ellipse 70% 55% at 70% 20%, rgba(21,47,41,0.06), transparent 60%), radial-gradient(ellipse 50% 40% at 20% 90%, rgba(239,170,147,0.1), transparent 55%)",
           }}
         />
 
@@ -87,8 +87,8 @@ export function LoginPage() {
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded-[28px] border border-[#e4ebf5] bg-white shadow-[0_24px_60px_-28px_rgba(18,22,74,0.28),0_8px_20px_-12px_rgba(18,22,74,0.08)]">
-            <div className="border-b border-[#2a3350] bg-gradient-to-b from-[#24304a] to-[#1a2238] px-6 py-8 sm:px-8 sm:py-9">
+          <div className="overflow-hidden rounded-[28px] border border-[#e6e6d9] bg-white shadow-[0_24px_60px_-28px_rgba(21,47,41,0.28),0_8px_20px_-12px_rgba(21,47,41,0.08)]">
+            <div className="border-b border-white/10 bg-gradient-to-b from-[#1a3d35] to-[#152F29] px-6 py-8 sm:px-8 sm:py-9">
               <div className="mb-6 flex justify-center">
                 <Image
                   src="/app_logo.png"
@@ -100,7 +100,7 @@ export function LoginPage() {
                   className="h-[7.25rem] w-auto rounded-2xl object-contain sm:h-36"
                 />
               </div>
-              <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#d4b45a] uppercase">
+              <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#EFAA93] uppercase">
                 Sarwar English Lab
               </p>
               <h1 className="font-display mt-3 text-center text-[2.1rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem]">
@@ -228,7 +228,7 @@ export function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 flex h-[52px] w-full items-center justify-center rounded-full bg-ink text-[15px] font-semibold tracking-[0.01em] text-white shadow-[0_14px_30px_-14px_rgba(18,22,74,0.65)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-forest hover:shadow-[0_18px_36px_-14px_rgba(28,48,190,0.5)] active:translate-y-0 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60"
+                  className="mt-2 flex h-[52px] w-full items-center justify-center rounded-full bg-[#152F29] text-[15px] font-semibold tracking-[0.01em] text-white shadow-[0_14px_30px_-14px_rgba(21,47,41,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1a3d35] hover:shadow-[0_18px_36px_-14px_rgba(21,47,41,0.5)] active:translate-y-0 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60"
                 >
                   {loading ? "Signing in…" : "Sign in"}
                 </button>

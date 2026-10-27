@@ -24,31 +24,31 @@ const stats = [
   { value: "96%", label: "Return rate" },
 ] as const;
 
-/** Solid Red, Blue, Yellow, Green — cycles across reviews */
+/** Cream, cream, yellow, green — cycles across reviews */
 const REVIEW_COLORS = [
   {
-    bg: "#e11d2e",
-    text: "text-white",
-    muted: "text-white/55",
-    quote: "text-white",
-    star: "text-[#f0d060]",
-    badge: "border-white/15 bg-white/10 text-[#f0d060]",
-    glow: "rgba(255,255,255,0.28)",
-    ring: "ring-white/40",
-    selector: "border-red-300/60 bg-[#e11d2e] text-white",
-    selectorMuted: "text-white/70",
+    bg: "#F7F3EA",
+    text: "text-ink",
+    muted: "text-ink/55",
+    quote: "text-ink",
+    star: "text-[#c45c3a]",
+    badge: "border-ink/15 bg-black/8 text-[#c45c3a]",
+    glow: "rgba(0,0,0,0.1)",
+    ring: "ring-ink/25",
+    selector: "border-[#e6e0d4] bg-[#F7F3EA] text-ink",
+    selectorMuted: "text-ink/60",
   },
   {
-    bg: "#1c30be",
-    text: "text-white",
-    muted: "text-white/55",
-    quote: "text-white",
-    star: "text-[#37ccf8]",
-    badge: "border-white/15 bg-white/10 text-[#37ccf8]",
-    glow: "rgba(55,204,248,0.35)",
-    ring: "ring-[#37ccf8]/50",
-    selector: "border-blue-300/60 bg-[#1c30be] text-white",
-    selectorMuted: "text-white/70",
+    bg: "#F7F3EA",
+    text: "text-ink",
+    muted: "text-ink/55",
+    quote: "text-ink",
+    star: "text-[#1d6b56]",
+    badge: "border-ink/15 bg-black/8 text-[#1d6b56]",
+    glow: "rgba(0,0,0,0.1)",
+    ring: "ring-ink/25",
+    selector: "border-[#e6e0d4] bg-[#F7F3EA] text-ink",
+    selectorMuted: "text-ink/60",
   },
   {
     bg: "#f5c518",
@@ -114,27 +114,27 @@ export function Reviews() {
   }, [paused, count, active]);
 
   return (
-    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-reviews-section text-ink">
-      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#37ccf8]/45 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#02abd5]/35 blur-3xl" />
+    <section id="reviews" className="relative section-anchor overflow-hidden bg-reviews-section text-white">
+      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#3d5a52]/40 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
-        <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
+      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        <div className="grid items-start gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
           <Reveal className="reviews-intro-panel min-w-0 text-left">
-            <h2 className="font-display text-[2rem] leading-[1.1] tracking-tight text-ink sm:text-[2.35rem] md:text-5xl lg:text-[3rem] xl:text-[3.25rem]">
+            <h2 className="font-display text-[clamp(1.85rem,6vw,4.875rem)] leading-[1.08] tracking-[-0.055em] text-white sm:leading-[1.03]">
               What learners say
             </h2>
-            <p className="mt-4 text-[15px] leading-7 text-ink/60 sm:mt-5 sm:text-base sm:leading-8">
+            <p className="mt-4 max-w-prose text-[15px] leading-[1.75] text-[#cbd5df] sm:mt-5 sm:text-base">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-5 border-t border-ink/10 pt-8 sm:mt-10 sm:gap-8 sm:pt-10">
+            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8 sm:mt-10 sm:gap-8 sm:pt-10">
               {stats.map((stat, index) => (
                 <Fragment key={stat.label}>
                   {index > 0 ? <div className="reviews-stat-divider hidden sm:block" aria-hidden /> : null}
                   <div className="min-w-0">
-                    <p className="font-display text-2xl text-ink sm:text-3xl">{stat.value}</p>
-                    <p className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-ink/45 uppercase sm:text-[11px]">
+                    <p className="font-display text-2xl text-white sm:text-3xl">{stat.value}</p>
+                    <p className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase sm:text-[11px]">
                       {stat.label}
                     </p>
                   </div>
@@ -171,7 +171,7 @@ export function Reviews() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.45, ease }}
                   style={{ backgroundColor: color.bg }}
-                  className="relative overflow-hidden rounded-[22px] border border-black/10 p-5 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.35)] sm:rounded-[32px] sm:p-8 lg:p-9"
+                  className="relative overflow-hidden rounded-[20px] border border-black/10 p-4 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:p-7 md:rounded-[32px] md:p-8 lg:p-9"
                 >
                   <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
@@ -219,7 +219,7 @@ export function Reviews() {
                       </div>
 
                       <blockquote
-                        className={`font-display mt-3 text-pretty text-lg leading-snug sm:mt-4 sm:text-[1.35rem] lg:text-[1.5rem] ${color.quote}`}
+                        className={`em-serif mt-3 text-pretty text-lg leading-[1.32] sm:mt-4 sm:text-[1.35rem] lg:text-[1.875rem] ${color.quote}`}
                       >
                         {review.quote}
                       </blockquote>
@@ -247,7 +247,11 @@ export function Reviews() {
             </Reveal>
 
             <Reveal delay={0.14} className="mt-5">
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5" role="tablist" aria-label="Select a review">
+              <div
+                className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 md:grid-cols-3 xl:grid-cols-5"
+                role="tablist"
+                aria-label="Select a review"
+              >
                 {reviews.map((item, index) => {
                   const isActive = index === active;
                   const itemColor = REVIEW_COLORS[index % REVIEW_COLORS.length];
@@ -260,10 +264,10 @@ export function Reviews() {
                       aria-label={`Review from ${item.name}`}
                       onClick={() => setActive(index)}
                       style={isActive ? { backgroundColor: itemColor.bg } : undefined}
-                      className={`group flex min-w-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all duration-300 sm:gap-3 sm:px-3.5 sm:py-3 ${
+                      className={`group flex min-w-[11.5rem] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all duration-300 sm:min-w-0 sm:gap-3 sm:px-3.5 sm:py-3 ${
                         isActive
                           ? itemColor.selector
-                          : "border-ink/8 bg-white/70 hover:border-ink/14 hover:bg-white"
+                          : "border-white/10 bg-white/8 hover:border-white/20 hover:bg-white/12"
                       }`}
                     >
                       <span
@@ -288,14 +292,14 @@ export function Reviews() {
                       <span className="min-w-0 flex-1">
                         <span
                           className={`block truncate text-sm font-semibold transition ${
-                            isActive ? itemColor.text : "text-ink/70 group-hover:text-ink"
+                            isActive ? itemColor.text : "text-white/70 group-hover:text-white"
                           }`}
                         >
                           {item.name.split(" ")[0]}
                         </span>
                         <span
                           className={`block truncate text-xs ${
-                            isActive ? itemColor.selectorMuted : "text-ink/45"
+                            isActive ? itemColor.selectorMuted : "text-white/45"
                           }`}
                         >
                           {item.role}
@@ -315,7 +319,7 @@ export function Reviews() {
                     aria-current={index === active ? "true" : undefined}
                     onClick={() => setActive(index)}
                     className={`h-1 rounded-full transition-all duration-300 ${
-                      index === active ? "w-7 bg-gold" : "w-1.5 bg-ink/15 hover:bg-ink/30"
+                      index === active ? "w-7 bg-gold" : "w-1.5 bg-white/20 hover:bg-white/35"
                     }`}
                   />
                 ))}

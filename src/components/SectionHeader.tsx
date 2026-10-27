@@ -18,21 +18,21 @@ export function SectionHeader({
     <Reveal className={`max-w-2xl text-left ${className}`}>
       {kicker ? (
         <p
-          className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${
-            light ? "text-gold-soft" : "text-gold"
+          className={`text-[11px] font-extrabold tracking-[0.2em] uppercase ${
+            light ? "text-gold-soft" : "text-forest"
           }`}
         >
           {kicker}
         </p>
       ) : null}
       <h2
-        className={`font-display text-[1.85rem] leading-[1.15] tracking-tight sm:text-4xl md:text-5xl ${
+        className={`font-display text-[clamp(1.75rem,5.5vw,4rem)] leading-[1.08] tracking-[-0.055em] sm:leading-[1.03] ${
           kicker ? "mt-3 " : ""
-        }${light ? "text-white" : "text-ink"}`}
+        }${light ? "text-white" : "text-heading"}`}
       >
         {title}
       </h2>
-      <p className={`mt-3 text-[15px] leading-7 sm:mt-4 sm:text-base sm:leading-8 md:text-lg ${light ? "text-white/70" : "text-ink/65"}`}>
+      <p className={`mt-3 max-w-prose text-[15px] leading-[1.75] sm:mt-4 sm:text-base md:text-lg ${light ? "text-white/70" : "text-muted"}`}>
         {copy}
       </p>
     </Reveal>

@@ -89,7 +89,7 @@ export function ReviewPanelSkeleton() {
 export function PremiumCoursesSkeleton() {
   return (
     <section
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#f4faf6] via-[#e6f2ea] to-[#dceee3]"
+      className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
       aria-busy="true"
       aria-label="Loading paid courses"
     >
@@ -112,7 +112,7 @@ export function PremiumCoursesSkeleton() {
 export function FreeLessonsSkeleton() {
   return (
     <section
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fff3d0] via-[#ffe08a] to-[#f0c84a]"
+      className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
       aria-busy="true"
       aria-label="Loading free lessons"
     >
@@ -134,7 +134,7 @@ export function FreeLessonsSkeleton() {
 export function ReviewsSkeleton() {
   return (
     <section
-      className="relative scroll-mt-24 overflow-hidden bg-reviews-section"
+      className="relative section-anchor overflow-hidden bg-reviews-section"
       aria-busy="true"
       aria-label="Loading reviews"
     >
@@ -167,7 +167,7 @@ export function ReviewsSkeleton() {
 export function SocialSkeleton() {
   return (
     <section
-      className="relative scroll-mt-24 overflow-hidden border-b border-ink/8 bg-social-stage"
+      className="relative section-anchor overflow-hidden border-b border-ink/8 bg-social-stage"
       aria-busy="true"
       aria-label="Loading social media"
     >
@@ -195,7 +195,7 @@ export function SocialSkeleton() {
 export function LocationSkeleton() {
   return (
     <section
-      className="bg-location-section relative scroll-mt-24 overflow-hidden border-t border-ink/8"
+      className="bg-location-section relative section-anchor overflow-hidden border-t border-ink/8"
       aria-busy="true"
       aria-label="Loading location"
     >

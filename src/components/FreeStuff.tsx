@@ -14,11 +14,51 @@ import { ShimmerGate } from "./ShimmerGate";
 const PAGE_SIZE = 3;
 
 const LABEL_COLORS = [
-  { bg: "#e11d2e", text: "#ffffff" },
-  { bg: "#f5c518", text: "#12164a" },
-  { bg: "#1c30be", text: "#ffffff" },
-  { bg: "#1f7a38", text: "#ffffff" },
+  { bg: "#152F29", text: "#ffffff" },
+  { bg: "#EFAA93", text: "#152F29" },
+  { bg: "#1D6B56", text: "#ffffff" },
+  { bg: "#214F42", text: "#ffffff" },
 ] as const;
+
+const CARD_THEMES = [
+  {
+    background: "#214F42",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(33,79,66,0.55)]",
+    border: "border-white/10",
+    title: "text-white",
+    blurb: "text-[#E8F0E4]",
+    cta: "text-[#F7DFC7]",
+    ring: "rgba(255,255,255,0.16)",
+    ringSoft: "rgba(255,255,255,0.08)",
+    ringFaint: "rgba(255,255,255,0.04)",
+  },
+  {
+    background: "#C2D7BA",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(194,215,186,0.65)]",
+    border: "border-[#152F29]/12",
+    title: "text-[#152F29]",
+    blurb: "text-[#1c3530]",
+    cta: "text-[#152F29]",
+    ring: "rgba(255,255,255,0.45)",
+    ringSoft: "rgba(255,255,255,0.28)",
+    ringFaint: "rgba(255,255,255,0.14)",
+  },
+  {
+    background: "#DF937F",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(223,147,127,0.55)]",
+    border: "border-[#152F29]/12",
+    title: "text-[#152F29]",
+    blurb: "text-[#1c3530]",
+    cta: "text-[#152F29]",
+    ring: "rgba(255,255,255,0.42)",
+    ringSoft: "rgba(255,255,255,0.24)",
+    ringFaint: "rgba(255,255,255,0.12)",
+  },
+] as const;
+
+function getCardTheme(index: number) {
+  return CARD_THEMES[index % CARD_THEMES.length];
+}
 
 function PlayIcon({ className }: { className?: string }) {
   return (
@@ -42,9 +82,9 @@ export function FreeStuff() {
   return (
     <section
       id="free-lessons"
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#fff3d0] via-[#ffe08a] to-[#f0c84a]"
+      className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
     >
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
         <SectionHeader
           title="Free Lessons"
           copy="Free YouTube playlists — grammar, exams preparation, speaking, vocabulary, and more. Watch anytime, no sign-up."
@@ -62,19 +102,26 @@ export function FreeStuff() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3"
             >
-              {visible.map((playlist) => {
+              {visible.map((playlist, index) => {
                 const absoluteIndex = playlists.findIndex((item) => item.id === playlist.id);
+                const themeIndex = showAll
+                  ? index
+                  : absoluteIndex >= 0
+                    ? absoluteIndex
+                    : page * PAGE_SIZE + index;
+                const theme = getCardTheme(themeIndex);
                 const label =
                   LABEL_COLORS[(absoluteIndex >= 0 ? absoluteIndex : 0) % LABEL_COLORS.length];
                 return (
                   <Link
                     key={playlist.id}
                     href={`/playlists/${playlist.id}`}
-                    className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-ink/8 bg-white shadow-[0_18px_40px_-24px_rgba(18,22,74,0.28)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgba(18,22,74,0.32)] sm:rounded-[28px]"
+                    style={{ background: theme.background }}
+                    className={`group flex min-w-0 flex-col overflow-hidden rounded-[22px] border transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
                   >
-                    <div className="relative aspect-video overflow-hidden bg-ink/5">
+                    <div className="relative aspect-video overflow-hidden bg-black/20">
                       <Image
                         src={playlist.thumbnail}
                         alt=""
@@ -95,20 +142,28 @@ export function FreeStuff() {
                       </span>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-4 sm:p-6">
+                    <div className="relative flex flex-1 flex-col overflow-hidden p-4 sm:p-6">
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute top-[18%] -right-[28%] h-[14rem] w-[14rem] rounded-full sm:h-[16rem] sm:w-[16rem]"
+                        style={{
+                          border: `1px solid ${theme.ring}`,
+                          boxShadow: `0 0 0 1.75rem ${theme.ringSoft}, 0 0 0 3.75rem ${theme.ringFaint}`,
+                        }}
+                      />
                       <span
                         style={{ backgroundColor: label.bg, color: label.text }}
-                        className="w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px]"
+                        className="relative z-[1] w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px]"
                       >
                         {playlist.tag}
                       </span>
-                      <h3 className="font-display mt-3 text-[1.25rem] leading-tight text-ink sm:mt-4 sm:text-[1.45rem]">
+                      <h3 className={`relative z-[1] font-display mt-3 text-[1.25rem] leading-tight sm:mt-4 sm:text-[1.45rem] ${theme.title}`}>
                         {playlist.title}
                       </h3>
-                      <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-ink/70 sm:mt-3 sm:text-[15px] sm:leading-7">
+                      <p className={`relative z-[1] mt-2 line-clamp-3 flex-1 text-sm leading-6 sm:mt-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
                         {playlist.body}
                       </p>
-                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink sm:mt-6">
+                      <span className={`relative z-[1] mt-5 inline-flex items-center gap-2 text-sm font-semibold sm:mt-6 ${theme.cta}`}>
                         {playlist.isCourse ? "View course" : "View playlist"}
                         <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
                       </span>

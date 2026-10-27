@@ -66,61 +66,61 @@ export function Header() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         solid
-          ? "border-b border-white/10 bg-[#0a2340] shadow-[0_12px_32px_-18px_rgba(10,35,64,0.55)]"
+          ? "border-b border-white/10 bg-[#152F29] shadow-[0_12px_32px_-18px_rgba(21,47,41,0.55)]"
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-5 lg:h-[3.5rem] lg:px-8">
-        <a href="#hero" className="group flex min-w-0 shrink-0 items-center gap-2">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-5 md:gap-6 lg:h-[4.5rem] lg:px-8">
+        <a href="#hero" className="group flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3">
           <BrandLogo
-            size={32}
+            size={40}
             priority
-            className="h-8 w-8 transition-transform duration-300 group-hover:scale-[1.03]"
+            className="h-9 w-9 rounded-[10px] transition-transform duration-300 group-hover:scale-[1.03] sm:h-10 sm:w-10"
           />
           <span className="min-w-0 leading-none">
-            <span className="mb-0.5 block text-[9px] font-semibold tracking-[0.2em] text-white uppercase">
+            <span className="mb-1 hidden text-[10px] font-extrabold tracking-[0.18em] text-white/70 uppercase sm:block">
               Sarwar
             </span>
-            <span className="font-display block truncate text-[15px] font-semibold tracking-tight text-white">
+            <span className="font-display block max-w-[9.5rem] truncate text-[15px] font-extrabold tracking-[-0.035em] text-white sm:max-w-none sm:text-[17px]">
               English Lab
             </span>
           </span>
         </a>
 
-        <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-2.5 lg:gap-4">
-          <nav className="hidden items-center lg:flex lg:max-w-[min(100%,42rem)] lg:overflow-x-auto xl:max-w-none">
+        <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-5">
+          <nav className="hidden items-center gap-0.5 xl:flex xl:gap-1">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="relative shrink-0 px-1.5 py-1 text-[12px] font-medium tracking-[-0.01em] text-white/72 transition-colors hover:text-white after:absolute after:right-1.5 after:bottom-0 after:left-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 xl:px-2.5 xl:text-[12.5px] xl:after:right-2.5 xl:after:left-2.5"
+                className="relative shrink-0 px-2.5 py-2 text-[13.5px] font-bold tracking-[-0.01em] text-white/75 transition-colors hover:text-white after:absolute after:right-2.5 after:bottom-1 after:left-2.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 xl:px-3 xl:text-[14px]"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden h-3.5 w-px shrink-0 bg-white/25 lg:block" aria-hidden />
+          <div className="hidden h-4 w-px shrink-0 bg-white/20 xl:block" aria-hidden />
 
           {!authReady ? (
             <span
-              className="hidden h-8 w-24 overflow-hidden rounded-full bg-white/15 lg:inline-flex"
+              className="hidden h-10 w-28 overflow-hidden rounded-[8px] bg-white/15 md:inline-flex"
               aria-hidden
             >
-              <span className="shimmer-block h-full w-full rounded-full bg-transparent" />
+              <span className="shimmer-block h-full w-full rounded-[8px] bg-transparent" />
             </span>
           ) : isLoggedIn ? (
             <button
               type="button"
               onClick={handleSignOut}
-              className="hidden h-8 items-center rounded-full border border-white/30 bg-white/10 px-3.5 text-[12.5px] font-semibold tracking-tight text-white transition duration-200 hover:-translate-y-px hover:bg-white/20 lg:inline-flex"
+              className="hidden h-9 items-center rounded-[8px] border border-white/25 bg-white/10 px-3.5 text-[13px] font-bold tracking-tight text-white transition duration-200 hover:-translate-y-px hover:bg-white/18 sm:h-10 sm:px-4 sm:text-[13.5px] md:inline-flex"
             >
               Log out
             </button>
           ) : (
             <a
               href="#free-lessons"
-              className="hidden h-8 items-center rounded-full bg-white px-3.5 text-[12.5px] font-semibold tracking-tight text-[#0a2340] shadow-[0_6px_16px_-10px_rgba(0,0,0,0.35)] transition duration-200 hover:-translate-y-px hover:bg-[#37ccf8] lg:inline-flex"
+              className="hidden h-9 items-center rounded-[8px] bg-white px-3.5 text-[13px] font-extrabold tracking-tight text-[#152F29] shadow-[0_8px_18px_-10px_rgba(0,0,0,0.35)] transition duration-200 hover:-translate-y-px hover:bg-[#F7DFC7] sm:h-10 sm:px-4 sm:text-[13.5px] md:inline-flex"
             >
               Start free
             </a>
@@ -128,7 +128,7 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/25 bg-white/10 text-white transition-colors sm:h-10 sm:w-10 xl:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
@@ -143,16 +143,16 @@ export function Header() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className={`overflow-hidden border-t border-white/10 lg:hidden ${
-              solid ? "bg-[#0a2340]" : "bg-[#0a2340]/95 backdrop-blur-md"
+            className={`overflow-hidden border-t border-white/10 xl:hidden ${
+              solid ? "bg-[#152F29]" : "bg-[#152F29]/95 backdrop-blur-md"
             }`}
           >
-            <div className="flex flex-col gap-0.5 px-5 py-3">
+            <div className="flex flex-col gap-0.5 px-5 py-4">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+                  className="rounded-lg px-3 py-3 text-[16px] font-bold text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -162,14 +162,14 @@ export function Header() {
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="mt-2 mb-1 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-center text-sm font-semibold text-white"
+                  className="mt-2 mb-1 rounded-[8px] border border-white/25 bg-white/10 px-4 py-3 text-center text-[15px] font-bold text-white"
                 >
                   Log out
                 </button>
               ) : (
                 <a
                   href="#free-lessons"
-                  className="mt-2 mb-1 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-[#0a2340]"
+                  className="mt-2 mb-1 rounded-[8px] bg-white px-4 py-3 text-center text-[15px] font-extrabold text-[#152F29]"
                   onClick={() => setOpen(false)}
                 >
                   Start free

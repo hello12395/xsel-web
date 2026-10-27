@@ -81,7 +81,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
         className="relative overflow-hidden"
         style={{
           background:
-            "linear-gradient(145deg, #020b18 0%, #0a2340 42%, #0c4a66 100%)",
+            "linear-gradient(145deg, #0a1a16 0%, #152F29 42%, #234f44 100%)",
         }}
       >
         <div className="absolute inset-0">
@@ -97,7 +97,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(145deg, rgba(2,11,24,0.88) 0%, rgba(10,35,64,0.82) 48%, rgba(12,74,102,0.78) 100%)",
+                "linear-gradient(145deg, rgba(10,26,22,0.92) 0%, rgba(21,47,41,0.88) 48%, rgba(35,79,68,0.82) 100%)",
             }}
           />
         </div>
@@ -112,7 +112,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           </Link>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#f0d060]/20 to-[#c9a227]/20 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#f0d060] uppercase">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EFAA93]/18 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#EFAA93] uppercase">
               <PremiumIcon className="h-3.5 w-3.5" />
               Paid
             </span>
@@ -162,14 +162,14 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                 </p>
                 <Link
                   href={`/premium/${course.id}/enroll`}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-forest px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-forest-deep"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#152F29] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1a3d35]"
                 >
                   Enroll
                   <ArrowIcon className="h-3.5 w-3.5" />
                 </Link>
                 <Link
                   href="/#free-lessons"
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-ink/25"
+                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#152F29]/15 bg-white px-6 py-3.5 text-sm font-semibold text-[#152F29] transition hover:border-[#152F29]/30 hover:bg-[#F3F7F0]"
                 >
                   Browse free lessons
                 </Link>

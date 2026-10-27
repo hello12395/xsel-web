@@ -13,31 +13,45 @@ import { ShimmerGate } from "./ShimmerGate";
 
 const PAGE_SIZE = 3;
 
-/** Dark professional gradients from the Xsel logo palette (navy, green, red, cyan). */
 const CARD_THEMES = [
   {
-    // Dark blue — true navy (no purple cast)
-    background:
-      "linear-gradient(155deg, #0c4a66 0%, #0a2340 48%, #020b18 100%)",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(10,35,64,0.65)]",
+    background: "#214F42",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(33,79,66,0.55)]",
+    border: "border-white/10",
+    badge: "bg-white/18 text-white",
+    title: "text-white",
+    blurb: "text-[#E8F0E4]",
+    meta: "text-[#C2D7BA]",
+    cta: "text-[#F7DFC7]",
+    ring: "rgba(255,255,255,0.16)",
+    ringSoft: "rgba(255,255,255,0.08)",
+    ringFaint: "rgba(255,255,255,0.04)",
   },
   {
-    // Green — logo "s" / "l" (#449c09)
-    background:
-      "linear-gradient(155deg, #449c09 0%, #2d7006 48%, #1a4504 100%)",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(68,156,9,0.55)]",
+    background: "#C2D7BA",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(194,215,186,0.65)]",
+    border: "border-[#152F29]/12",
+    badge: "bg-[#152F29] text-white",
+    title: "text-[#152F29]",
+    blurb: "text-[#1c3530]",
+    meta: "text-[#3d524a]",
+    cta: "text-[#152F29]",
+    ring: "rgba(255,255,255,0.45)",
+    ringSoft: "rgba(255,255,255,0.28)",
+    ringFaint: "rgba(255,255,255,0.14)",
   },
   {
-    // Red — logo "e"
-    background:
-      "linear-gradient(155deg, #a01a22 0%, #6b1218 48%, #3d0a0e 100%)",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(107,18,24,0.6)]",
-  },
-  {
-    // Cyan — logo pencil / splash
-    background:
-      "linear-gradient(155deg, #0d6f88 0%, #0a4a5c 48%, #06303c 100%)",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(10,74,92,0.6)]",
+    background: "#DF937F",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(223,147,127,0.55)]",
+    border: "border-[#152F29]/12",
+    badge: "bg-[#152F29] text-white",
+    title: "text-[#152F29]",
+    blurb: "text-[#1c3530]",
+    meta: "text-[#3f3530]",
+    cta: "text-[#152F29]",
+    ring: "rgba(255,255,255,0.42)",
+    ringSoft: "rgba(255,255,255,0.24)",
+    ringFaint: "rgba(255,255,255,0.12)",
   },
 ] as const;
 
@@ -59,9 +73,9 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
   return (
     <section
       id="premium-courses"
-      className="scroll-mt-24 border-b border-ink/8 bg-gradient-to-br from-[#eef8e0] via-[#c5e890] to-[#449c09]"
+      className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
     >
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 md:py-28 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
         <SectionHeader
           title="Paid Courses"
           copy="Live, mentor-led English courses in Islamabad and online, structured lessons, real correction, and a seat
@@ -108,7 +122,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3"
                 >
                   {visible.map((course, index) => {
                     const theme = getCardTheme(showAll ? index : page * PAGE_SIZE + index);
@@ -117,7 +131,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                       key={course.id}
                       href={course.href}
                       style={{ background: theme.background }}
-                      className={`group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.hoverShadow}`}
+                      className={`group flex min-w-0 flex-col overflow-hidden rounded-[22px] border transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
                     >
                       <div className="relative aspect-video overflow-hidden bg-black/20">
                         <Image
@@ -145,22 +159,30 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                         </span>
                       </div>
 
-                      <div className="flex flex-1 flex-col p-4 sm:p-6">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="w-fit rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white uppercase sm:px-3 sm:text-[11px]">
+                      <div className="relative flex flex-1 flex-col overflow-hidden p-4 sm:p-6">
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute top-[18%] -right-[28%] h-[14rem] w-[14rem] rounded-full sm:h-[16rem] sm:w-[16rem]"
+                          style={{
+                            border: `1px solid ${theme.ring}`,
+                            boxShadow: `0 0 0 1.75rem ${theme.ringSoft}, 0 0 0 3.75rem ${theme.ringFaint}`,
+                          }}
+                        />
+                        <div className="relative z-[1] flex flex-wrap items-center gap-2">
+                          <span className={`w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px] ${theme.badge}`}>
                             Paid
                           </span>
                         </div>
-                        <h3 className="font-display mt-3 text-[1.25rem] leading-tight text-white sm:mt-4 sm:text-[1.45rem]">
+                        <h3 className={`relative z-[1] font-display mt-3 text-[1.25rem] leading-tight sm:mt-4 sm:text-[1.45rem] ${theme.title}`}>
                           {course.title}
                         </h3>
-                        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-white/70 sm:mt-3 sm:text-[15px] sm:leading-7">
+                        <p className={`relative z-[1] mt-2 line-clamp-3 flex-1 text-sm leading-6 sm:mt-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
                           {course.blurb}
                         </p>
-                        <p className="mt-3 text-[11px] font-medium tracking-wide text-white/45 uppercase sm:mt-4 sm:text-[12px]">
+                        <p className={`relative z-[1] mt-3 text-[11px] font-medium tracking-wide uppercase sm:mt-4 sm:text-[12px] ${theme.meta}`}>
                           {course.duration} · Sign in to enroll
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#37ccf8] sm:mt-5">
+                        <span className={`relative z-[1] mt-4 inline-flex items-center gap-2 text-sm font-semibold sm:mt-5 ${theme.cta}`}>
                           View course
                           <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
                         </span>

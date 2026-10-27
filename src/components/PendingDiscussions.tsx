@@ -235,7 +235,7 @@ export function PendingDiscussions() {
   const slideOffset = active * (cardWidth + CARD_GAP);
 
   return (
-    <section id="discussions" className="relative scroll-mt-24 overflow-hidden border-b border-ink/8">
+    <section id="discussions" className="relative section-anchor overflow-hidden border-b border-ink/8">
       <div className="grid lg:min-h-[720px] lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] xl:grid-cols-[minmax(0,44%)_minmax(0,1fr)]">
         <Reveal className="relative min-h-[22rem] sm:min-h-[28rem] lg:min-h-full">
           <Image

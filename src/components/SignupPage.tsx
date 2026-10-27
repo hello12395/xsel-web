@@ -111,7 +111,7 @@ export function SignupPage() {
           </div>
 
           <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#f7f1e8] shadow-[0_28px_64px_-24px_rgba(0,0,0,0.55),0_10px_24px_-12px_rgba(0,0,0,0.35)]">
-            <div className="border-b border-[#2a3350] bg-gradient-to-b from-[#24304a] to-[#1a2238] px-6 py-8 sm:px-8 sm:py-9">
+            <div className="border-b border-white/10 bg-gradient-to-b from-[#1a3d35] to-[#152F29] px-6 py-8 sm:px-8 sm:py-9">
               <div className="mb-6 flex justify-center">
                 <Image
                   src="/app_logo.png"
@@ -123,7 +123,7 @@ export function SignupPage() {
                   className="h-[7.25rem] w-auto rounded-2xl object-contain sm:h-36"
                 />
               </div>
-              <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#d4b45a] uppercase">
+              <p className="text-center text-[11px] font-semibold tracking-[0.22em] text-[#EFAA93] uppercase">
                 Sarwar English Lab
               </p>
               <h1 className="font-display mt-3 text-center text-[2.1rem] leading-[1.08] tracking-tight text-white sm:text-[2.35rem]">

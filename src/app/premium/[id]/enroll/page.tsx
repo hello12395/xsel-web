@@ -92,7 +92,7 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
 
   return (
     <main className="min-h-dvh bg-[linear-gradient(180deg,#f7f4ec_0%,#f3efe6_45%,#efe9df_100%)]">
-      <div className="border-b border-white/10 bg-[#0a2340]">
+      <div className="border-b border-white/10 bg-[#152F29]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 pt-24 md:px-8 md:pt-28">
           <Link
             href={`/premium/${id}`}

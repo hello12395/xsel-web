@@ -30,45 +30,54 @@ const themes: Record<
     title: string;
     handle: string;
     cta: string;
+    watermark: string;
     menuHover: string;
     menuIconBg: string;
   }
 > = {
+  /* Soft warm tile — sits cleanly on cream */
   instagram: {
-    card: "border-2 border-[#dd2a7b]/50 bg-gradient-to-br from-[#4a0a2e] via-[#6b1040] to-[#880e4f] shadow-[0_8px_24px_-6px_rgba(136,14,79,0.5),0_2px_8px_-2px_rgba(0,0,0,0.35)] hover:border-[#dd2a7b] hover:shadow-[0_16px_36px_-8px_rgba(221,42,123,0.45),0_4px_12px_-2px_rgba(0,0,0,0.4)]",
-    badge: "bg-black/35 text-white",
-    title: "text-white",
-    handle: "text-white/60",
-    cta: "text-white/90 group-hover:text-white",
-    menuHover: "hover:bg-[#fce4ec]",
-    menuIconBg: "bg-[#fce4ec]",
+    card: "border border-[#e6e6d9] bg-[#FFFEF9] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)] hover:border-[#d9d9cc] hover:shadow-[0_16px_34px_-16px_rgba(21,47,41,0.22)]",
+    badge: "bg-[#f7dfc7] text-[#5c4033]",
+    title: "text-heading",
+    handle: "text-muted",
+    cta: "text-[#1d6b56] group-hover:text-[#152F29]",
+    watermark: "text-[#152F29]/[0.06]",
+    menuHover: "hover:bg-[#fff6ef]",
+    menuIconBg: "bg-[#f7dfc7]",
   },
+  /* Soft sage tile */
   facebook: {
-    card: "border-2 border-[#1877F2]/50 bg-gradient-to-br from-[#0a2a5c] via-[#0d4a9e] to-[#1877F2] shadow-[0_8px_24px_-6px_rgba(24,119,242,0.45),0_2px_8px_-2px_rgba(0,0,0,0.35)] hover:border-[#4a9af5] hover:shadow-[0_16px_36px_-8px_rgba(24,119,242,0.5),0_4px_12px_-2px_rgba(0,0,0,0.4)]",
-    badge: "bg-black/35 text-white",
-    title: "text-white",
-    handle: "text-white/60",
-    cta: "text-white/90 group-hover:text-white",
-    menuHover: "hover:bg-[#e3effd]",
-    menuIconBg: "bg-[#e3effd]",
+    card: "border border-[#e6e6d9] bg-[#F3F7F0] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)] hover:border-[#d9d9cc] hover:shadow-[0_16px_34px_-16px_rgba(21,47,41,0.22)]",
+    badge: "bg-[#d7e5d3] text-[#214F42]",
+    title: "text-heading",
+    handle: "text-muted",
+    cta: "text-[#1d6b56] group-hover:text-[#152F29]",
+    watermark: "text-[#152F29]/[0.06]",
+    menuHover: "hover:bg-[#eaf1e6]",
+    menuIconBg: "bg-[#d7e5d3]",
   },
+  /* Deep brand green */
   whatsapp: {
-    card: "border-2 border-[#25D366]/45 bg-gradient-to-br from-[#053d36] via-[#075E54] to-[#128C7E] shadow-[0_8px_24px_-6px_rgba(7,94,84,0.5),0_2px_8px_-2px_rgba(0,0,0,0.35)] hover:border-[#25D366] hover:shadow-[0_16px_36px_-8px_rgba(37,211,102,0.4),0_4px_12px_-2px_rgba(0,0,0,0.4)]",
-    badge: "bg-black/35 text-white",
+    card: "border border-[#214F42]/20 bg-[#214F42] shadow-[0_12px_30px_-16px_rgba(33,79,66,0.45)] hover:shadow-[0_18px_36px_-14px_rgba(33,79,66,0.55)]",
+    badge: "bg-white/12 text-[#E8F0E4]",
     title: "text-white",
     handle: "text-white/60",
-    cta: "text-white/90 group-hover:text-white",
-    menuHover: "hover:bg-[#e0f7e8]",
-    menuIconBg: "bg-[#e0f7e8]",
+    cta: "text-[#C2D7BA] group-hover:text-white",
+    watermark: "text-white/[0.08]",
+    menuHover: "hover:bg-[#eaf1e6]",
+    menuIconBg: "bg-[#eaf1e6]",
   },
+  /* Primary dark green */
   tiktok: {
-    card: "border-2 border-white/20 bg-gradient-to-br from-[#111111] via-[#1a1a1a] to-[#2a1018] shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5),0_2px_8px_-2px_rgba(254,44,85,0.25)] hover:border-[#FE2C55]/60 hover:shadow-[0_16px_36px_-8px_rgba(0,0,0,0.55),0_4px_12px_-2px_rgba(254,44,85,0.3)]",
-    badge: "bg-white/15 text-white",
+    card: "border border-[#152F29]/20 bg-[#152F29] shadow-[0_12px_30px_-16px_rgba(21,47,41,0.45)] hover:shadow-[0_18px_36px_-14px_rgba(21,47,41,0.55)]",
+    badge: "bg-white/12 text-[#E8F0E4]",
     title: "text-white",
     handle: "text-white/60",
-    cta: "text-white/90 group-hover:text-[#FE2C55]",
-    menuHover: "hover:bg-[#f0f0f2]",
-    menuIconBg: "bg-[#f0f0f2]",
+    cta: "text-[#DF937F] group-hover:text-white",
+    watermark: "text-white/[0.08]",
+    menuHover: "hover:bg-[#f5f0ea]",
+    menuIconBg: "bg-[#f5f0ea]",
   },
 };
 
@@ -102,20 +111,20 @@ function SocialCard({ social }: { social: Social }) {
     };
   }, [open]);
 
-  const cardClassName = `group relative flex h-full min-h-[14.5rem] w-full flex-col overflow-hidden rounded-[20px] p-5 text-left transition duration-300 hover:-translate-y-1 sm:min-h-[16rem] sm:p-6 ${theme.card}`;
+  const cardClassName = `group relative flex h-full min-h-[13.5rem] w-full flex-col overflow-hidden rounded-[20px] p-4 text-left transition duration-300 hover:-translate-y-1 sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${theme.card}`;
 
   const cardBody = (
     <>
       <span
-        className="pointer-events-none absolute -right-1 -bottom-2 opacity-[0.35] transition duration-500 group-hover:scale-105 group-hover:opacity-[0.48]"
+        className={`pointer-events-none absolute -right-2 -bottom-3 transition duration-500 group-hover:scale-105 ${theme.watermark}`}
         aria-hidden
       >
         <Icon className="h-32 w-32 sm:h-36 sm:w-36" />
       </span>
 
       <span className="relative z-10 flex items-start justify-between gap-3">
-        <span className="inline-flex h-10 w-10 items-center justify-center">
-          <Icon className="h-8 w-8" />
+        <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 shadow-[0_4px_14px_-8px_rgba(21,47,41,0.25)] ring-1 ring-[#152F29]/6">
+          <Icon className="h-6 w-6" />
         </span>
         <span
           className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] uppercase ${theme.badge}`}
@@ -126,11 +135,11 @@ function SocialCard({ social }: { social: Social }) {
 
       <div className="relative z-10 mt-5 flex-1">
         <h3
-          className={`font-display text-[1.45rem] leading-tight sm:text-[1.6rem] ${theme.title}`}
+          className={`font-display text-[1.45rem] leading-tight tracking-[-0.04em] sm:text-[1.6rem] ${theme.title}`}
         >
           {social.name}
         </h3>
-        <p className={`mt-1.5 text-sm ${theme.handle}`}>{social.handle}</p>
+        <p className={`mt-1.5 text-sm leading-6 ${theme.handle}`}>{social.handle}</p>
       </div>
 
       <span
@@ -226,18 +235,18 @@ export function SocialMedia() {
   return (
     <section
       id="social"
-      className="relative scroll-mt-24 overflow-hidden border-b border-ink/8 bg-social-stage"
+      className="relative section-anchor overflow-hidden border-b border-ink/8 bg-social-stage"
     >
       <div className="social-stage-glow" aria-hidden />
       <div className="social-stage-grid" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 lg:py-28">
-        <div className="grid items-end gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
+      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 lg:py-28">
+        <div className="grid items-end gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
           <Reveal className="relative z-10 min-w-0">
-            <h2 className="font-display text-[2rem] leading-[1.05] tracking-tight text-ink sm:text-4xl md:text-5xl lg:text-[3.4rem]">
+            <h2 className="font-display text-[clamp(1.85rem,6vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
               Social Media
             </h2>
-            <p className="mt-4 max-w-md text-[15px] leading-7 text-ink/60 sm:mt-5 sm:text-base sm:leading-7 md:text-lg">
+            <p className="mt-4 max-w-md text-[15px] leading-[1.75] text-muted sm:mt-5 sm:text-base md:text-lg">
               Daily prompts, lab clips, and community threads — follow the lab
               wherever you already scroll.
             </p>

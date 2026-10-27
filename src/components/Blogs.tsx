@@ -310,7 +310,7 @@ export function Blogs() {
   const current = slides[active];
 
   return (
-    <section id="blogs" className="bg-blogs-section relative scroll-mt-24 overflow-x-clip border-b border-[#d9c4b4]/50">
+    <section id="blogs" className="bg-blogs-section relative section-anchor overflow-x-clip border-b border-[#d9c4b4]/50">
       <div className="relative mx-auto w-full max-w-[1500px] px-3 pb-16 pt-12 sm:px-4 sm:pb-24 sm:pt-20 md:px-6 lg:px-8">
         <h2 className="blogs-heading font-display mb-6 text-left text-[1.85rem] tracking-tight lowercase sm:mb-10 sm:text-4xl md:text-5xl">
           blogs

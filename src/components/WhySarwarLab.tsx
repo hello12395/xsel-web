@@ -174,9 +174,9 @@ function MethodCard3D({
 
 export function WhySarwarLab() {
   return (
-    <section id="why" className="relative scroll-mt-24 overflow-hidden border-b border-ink/8 bg-method-section">
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20 md:px-10 md:py-28 lg:px-12 lg:py-32">
-        <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
+    <section id="why" className="relative section-anchor overflow-hidden border-b border-ink/8 bg-method-section">
+      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        <div className="grid items-start gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
           <div className="method-intro-panel min-w-0">
             <SectionHeader
               className="max-w-none"

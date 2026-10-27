@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
-import { Fraunces, Outfit } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -19,14 +14,20 @@ export const metadata: Metadata = {
     "A living classroom for grammar, speaking, writing, and exam-ready English.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-cream text-ink" suppressHydrationWarning>
+      <body className="flex min-h-full flex-col overflow-x-hidden bg-cream text-ink" suppressHydrationWarning>
         {children}
         <WhatsAppFloat />
       </body>

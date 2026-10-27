@@ -123,18 +123,18 @@ function CopyField({
   return (
     <div
       className={cn(
-        "group flex items-center justify-between gap-3 rounded-xl border border-ink/8 bg-white px-4 py-3.5 transition hover:border-ink/15",
+        "group flex items-center justify-between gap-3 rounded-xl border border-[#152F29]/10 bg-[#F3F7F0] px-4 py-3.5 transition hover:border-[#152F29]/20 hover:bg-[#EAF1E6]",
         className
       )}
     >
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-medium tracking-wider text-ink/40 uppercase">{label}</p>
-        <p className="mt-0.5 break-all font-medium text-ink">{value}</p>
+        <p className="text-[11px] font-medium tracking-wider text-[#152F29]/45 uppercase">{label}</p>
+        <p className="mt-0.5 break-all font-semibold text-[#152F29]">{value}</p>
       </div>
       <button
         type="button"
         onClick={copy}
-        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-ink/40 transition hover:bg-forest/10 hover:text-forest"
+        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-[#152F29]/40 transition hover:bg-[#152F29]/10 hover:text-[#152F29]"
         aria-label={copied ? `${label} copied` : `Copy ${label}`}
       >
         {copied ? <CheckIcon className="h-3.5 w-3.5 text-forest" /> : <CopyIcon className="h-3.5 w-3.5" />}
@@ -189,21 +189,9 @@ function PaymentMethodsPanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#f4f7fb] p-2 sm:gap-2.5 sm:p-2.5">
+      <div className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#F3F7F0] p-2 sm:gap-2.5 sm:p-2.5">
         {PAYMENT_TABS.map((tab) => {
           const active = activeTab === tab.id;
-          const tone =
-            tab.id === "bank"
-              ? active
-                ? "bg-[#1c30be] text-white shadow-[0_10px_22px_-12px_rgba(28,48,190,0.7)]"
-                : "bg-[#e8ecff] text-[#1c30be] hover:bg-[#dce3ff]"
-              : tab.id === "easypaisa"
-                ? active
-                  ? "bg-[#14804a] text-white shadow-[0_10px_22px_-12px_rgba(20,128,74,0.7)]"
-                  : "bg-[#e6f6ec] text-[#14804a] hover:bg-[#d7f0e0]"
-                : active
-                  ? "bg-[#b42318] text-white shadow-[0_10px_22px_-12px_rgba(180,35,24,0.7)]"
-                  : "bg-[#fde8e6] text-[#b42318] hover:bg-[#f9d7d3]";
 
           return (
             <button
@@ -212,7 +200,9 @@ function PaymentMethodsPanel() {
               onClick={() => setActiveTab(tab.id)}
               className={cn(
                 "flex items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 text-xs font-semibold transition sm:py-3 sm:text-sm",
-                tone,
+                active
+                  ? "bg-primary text-white shadow-[0_10px_22px_-12px_rgba(21,47,41,0.65)]"
+                  : "bg-white/90 text-heading hover:bg-[#EAF1E6]",
               )}
             >
               {tab.icon}
@@ -620,16 +610,16 @@ export function PaymentVerification({
   return (
     <div className="space-y-6">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-stretch lg:gap-5">
-        <div className="relative overflow-hidden rounded-[22px] border border-[#0a2340]/10 bg-gradient-to-br from-[#0a2340] via-[#122a4a] to-[#0c4a66] p-5 shadow-[0_20px_40px_-24px_rgba(10,35,64,0.55)] sm:rounded-[24px] sm:p-6">
+        <div className="relative overflow-hidden rounded-[22px] border border-[#152F29]/10 bg-gradient-to-br from-[#152F29] via-[#1a3d35] to-[#234f44] p-5 shadow-[0_20px_40px_-24px_rgba(21,47,41,0.55)] sm:rounded-[24px] sm:p-6">
           <div
-            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#37ccf8]/15 blur-2xl"
+            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#EFAA93]/18 blur-2xl"
             aria-hidden
           />
           <div
             className="pointer-events-none absolute -bottom-12 left-8 h-28 w-28 rounded-full bg-white/10 blur-2xl"
             aria-hidden
           />
-          <p className="relative text-[11px] font-semibold tracking-[0.24em] text-[#37ccf8]/90 uppercase">
+          <p className="relative text-[11px] font-semibold tracking-[0.24em] text-[#EFAA93] uppercase">
             Enrollment checkout
           </p>
           <h2 className="font-display relative mt-3 text-2xl leading-tight tracking-tight text-white sm:text-[2rem]">
@@ -641,44 +631,67 @@ export function PaymentVerification({
         </div>
 
         {!status ? (
-          <div className="rounded-[22px] bg-[#1f7a38] px-4 py-4 text-sm leading-relaxed font-medium text-white shadow-[0_16px_32px_-18px_rgba(31,122,56,0.55)] sm:rounded-[24px] sm:px-5 sm:py-5">
-            <p className="text-[10px] font-semibold tracking-[0.18em] text-white/75 uppercase">
-              How to enroll
+          <aside className="rounded-[22px] border border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] px-4 py-4 shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)] sm:rounded-[24px] sm:px-5 sm:py-5">
+            <p className="text-[10px] font-bold tracking-[0.2em] text-[#5C4033] uppercase">
+              Important note · How to enroll
             </p>
-            <ol className="mt-3 space-y-2">
+            <ol className="mt-3.5 space-y-2.5 text-sm leading-relaxed text-[#152F29]">
               <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
                   1
                 </span>
-                <span>Pay the course fee</span>
+                <span className="font-bold">Pay the course fee</span>
               </li>
               <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
                   2
                 </span>
-                <span>Upload the receipt</span>
+                <span className="font-bold">Upload the receipt</span>
               </li>
               <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 text-[11px] font-bold">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
                   3
                 </span>
                 <span>
-                  Wait for verification by admins
-                  <span className="mt-0.5 block text-[12px] font-normal text-white/85">
-                    (Might take up to 24 hours)
+                  <span className="font-bold">Wait for verification by admins</span>
+                  <span className="mt-0.5 block text-[12px] font-semibold text-[#5C4033]/85">
+                    Might take up to 24 hours
                   </span>
                 </span>
               </li>
             </ol>
-          </div>
+          </aside>
         ) : (
-          <div className="flex items-center rounded-[22px] bg-[#1f7a38] px-4 py-4 text-sm leading-relaxed font-medium text-white shadow-[0_16px_32px_-18px_rgba(31,122,56,0.55)] sm:rounded-[24px] sm:px-5">
-            {status === "approved"
-              ? "Your payment was approved and your seat is confirmed."
-              : status === "pending"
-                ? "Your receipt is with our team. Check back here for the decision."
-                : "Your previous submission was rejected. Review the reason and upload a new receipt."}
-          </div>
+          <aside
+            className={`flex items-start rounded-[22px] border px-4 py-4 sm:rounded-[24px] sm:px-5 sm:py-5 ${
+              status === "approved"
+                ? "border-[#1D6B56]/30 bg-[#EAF1E6] shadow-[0_14px_28px_-20px_rgba(21,47,41,0.28)]"
+                : status === "pending"
+                  ? "border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)]"
+                  : "border-[#d06a55] bg-gradient-to-br from-[#F0A090] via-[#E88975] to-[#DE7460] shadow-[0_18px_36px_-16px_rgba(180,83,60,0.55)]"
+            }`}
+          >
+            <div className="min-w-0">
+              <p
+                className={`text-[10px] font-bold tracking-[0.2em] uppercase ${
+                  status === "approved" ? "text-[#1D6B56]" : "text-[#5C4033]"
+                }`}
+              >
+                {status === "approved"
+                  ? "Confirmed"
+                  : status === "pending"
+                    ? "Important note"
+                    : "Important · Action needed"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed font-bold text-[#152F29]">
+                {status === "approved"
+                  ? "Your payment was approved and your seat is confirmed."
+                  : status === "pending"
+                    ? "Your receipt is with our team. Check back here for the decision."
+                    : "Your previous submission was rejected. Review the reason and upload a new receipt."}
+              </p>
+            </div>
+          </aside>
         )}
       </div>
 

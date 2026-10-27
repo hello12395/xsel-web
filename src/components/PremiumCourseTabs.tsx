@@ -37,10 +37,10 @@ const TABS: { id: TabId; label: string }[] = [
 ];
 
 const OUTCOME_TONES = [
-  "bg-[#1c30be] text-white",
-  "bg-[#e8f6ee] text-[#145a28]",
-  "bg-[#eef0fb] text-[#1c30be]",
-  "bg-[#e8f7fc] text-[#0a4a5c]",
+  "bg-primary text-white",
+  "bg-[#EAF1E6] text-[#214F42]",
+  "bg-[#F7DFC7] text-[#5C4033]",
+  "bg-[#C2D7BA]/45 text-[#152F29]",
 ] as const;
 
 function formatLessonDuration(seconds: number | null | undefined) {
@@ -185,24 +185,12 @@ export function PremiumCourseTabs({
   return (
     <div className="card-surface overflow-hidden rounded-[24px]">
       <div
-        className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#f4f7fb] p-2 sm:gap-2.5 sm:p-2.5"
+        className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#F3F7F0] p-2 sm:gap-2.5 sm:p-2.5"
         role="tablist"
         aria-label="Course sections"
       >
         {TABS.map((item) => {
           const active = tab === item.id;
-          const tone =
-            item.id === "overview"
-              ? active
-                ? "bg-[#1c30be] text-white shadow-[0_10px_22px_-12px_rgba(28,48,190,0.7)]"
-                : "bg-[#e8ecff] text-[#1c30be] hover:bg-[#dce3ff]"
-              : item.id === "content"
-                ? active
-                  ? "bg-[#14804a] text-white shadow-[0_10px_22px_-12px_rgba(20,128,74,0.7)]"
-                  : "bg-[#e6f6ec] text-[#14804a] hover:bg-[#d7f0e0]"
-                : active
-                  ? "bg-[#b42318] text-white shadow-[0_10px_22px_-12px_rgba(180,35,24,0.7)]"
-                  : "bg-[#fde8e6] text-[#b42318] hover:bg-[#f9d7d3]";
 
           return (
             <button
@@ -211,7 +199,11 @@ export function PremiumCourseTabs({
               role="tab"
               aria-selected={active}
               onClick={() => selectTab(item.id)}
-              className={`rounded-xl px-2 py-2.5 text-center text-[13px] font-semibold transition sm:py-3 sm:text-sm ${tone}`}
+              className={`rounded-xl px-2 py-2.5 text-center text-[13px] font-semibold transition sm:py-3 sm:text-sm ${
+                active
+                  ? "bg-primary text-white shadow-[0_10px_22px_-12px_rgba(21,47,41,0.65)]"
+                  : "bg-white/90 text-heading hover:bg-[#EAF1E6]"
+              }`}
             >
               {item.label}
             </button>
@@ -236,13 +228,13 @@ export function PremiumCourseTabs({
                   return (
                     <div
                       key={stat.label}
-                      className="rounded-2xl border border-ink/8 bg-cream/60 px-3.5 py-3.5 sm:px-4 sm:py-4"
+                      className="rounded-2xl border border-[#152F29]/10 bg-[#F7FAF5] px-3.5 py-3.5 sm:px-4 sm:py-4"
                     >
-                      <Icon className="h-4 w-4 text-forest" />
-                      <p className="mt-2.5 text-sm font-semibold tracking-tight text-ink sm:text-[15px]">
+                      <Icon className="h-4 w-4 text-[#1D6B56]" />
+                      <p className="mt-2.5 text-sm font-semibold tracking-tight text-[#152F29] sm:text-[15px]">
                         {stat.value}
                       </p>
-                      <p className="mt-0.5 text-[11px] font-medium tracking-wide text-ink/40 uppercase">
+                      <p className="mt-0.5 text-[11px] font-medium tracking-wide text-[#152F29]/40 uppercase">
                         {stat.label}
                       </p>
                     </div>
@@ -318,12 +310,15 @@ export function PremiumCourseTabs({
               </div>
 
               {sortedChapters.length > 0 ? (
-                <div className="mt-5 divide-y divide-ink/8 overflow-hidden rounded-2xl border border-ink/8">
+                <div className="mt-5 space-y-3">
                   {sortedChapters.map((chapter, chapterIndex) => {
                     const open = openChapterId === chapter.id;
                     const lessonCount = chapter.lessons?.length ?? 0;
                     return (
-                      <div key={chapter.id} className="bg-white">
+                      <div
+                        key={chapter.id}
+                        className="overflow-hidden rounded-2xl border border-[#152F29]/10 bg-[#F3F7F0]"
+                      >
                         <button
                           type="button"
                           onClick={() =>
@@ -331,23 +326,23 @@ export function PremiumCourseTabs({
                               current === chapter.id ? null : chapter.id,
                             )
                           }
-                          className="flex w-full items-center gap-3 px-4 py-4 text-left transition hover:bg-cream/70 sm:px-5"
+                          className="flex w-full items-center gap-3 px-4 py-4 text-left transition hover:bg-[#EAF1E6] sm:px-5"
                           aria-expanded={open}
                         >
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-forest/8 text-forest">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#152F29]/10 text-[#1D6B56]">
                             <FolderIcon className="h-4 w-4" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block text-sm font-semibold text-ink sm:text-[15px]">
+                            <span className="block text-sm font-semibold text-[#152F29] sm:text-[15px]">
                               Chapter {chapterIndex + 1}
                               {chapter.title ? `: ${chapter.title}` : ""}
                             </span>
-                            <span className="mt-0.5 block text-xs text-ink/45">
+                            <span className="mt-0.5 block text-xs text-[#152F29]/45">
                               {lessonCount} {lessonCount === 1 ? "lesson" : "lessons"}
                             </span>
                           </span>
                           <ChevronDownIcon
-                            className={`h-4 w-4 shrink-0 text-ink/40 transition ${
+                            className={`h-4 w-4 shrink-0 text-[#152F29]/40 transition ${
                               open ? "rotate-180" : ""
                             }`}
                           />
@@ -360,7 +355,7 @@ export function PremiumCourseTabs({
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.22 }}
-                              className="overflow-hidden border-t border-ink/6 bg-cream/35"
+                              className="space-y-2 overflow-hidden border-t border-[#152F29]/8 bg-[#EAF1E6]/70 px-3 py-3 sm:px-4"
                             >
                               {(chapter.lessons ?? []).map((lesson, lessonIndex) => {
                                 const durationLabel = formatLessonDuration(
@@ -375,9 +370,9 @@ export function PremiumCourseTabs({
                                 return (
                                   <li
                                     key={lesson.id}
-                                    className="flex items-start gap-3 px-4 py-3.5 sm:px-5"
+                                    className="flex items-start gap-3 rounded-xl border border-[#152F29]/8 bg-[#F7FAF5] px-3.5 py-3 transition hover:border-[#152F29]/15 hover:bg-white sm:px-4"
                                   >
-                                    <span className="mt-0.5 text-ink/35">
+                                    <span className="mt-0.5 text-[#1D6B56]/70">
                                       {lesson.status === "published" ? (
                                         <PlayCircleIcon className="h-4 w-4" />
                                       ) : (
@@ -385,11 +380,11 @@ export function PremiumCourseTabs({
                                       )}
                                     </span>
                                     <span className="min-w-0 flex-1">
-                                      <span className="block text-sm font-medium text-ink">
+                                      <span className="block text-sm font-medium text-[#152F29]">
                                         {lesson.title?.trim() ||
                                           `Lesson ${lessonIndex + 1}`}
                                       </span>
-                                      <span className="mt-0.5 block text-xs text-ink/45">
+                                      <span className="mt-0.5 block text-xs text-[#152F29]/45">
                                         {[durationLabel, typeLabel].filter(Boolean).join(" · ")}
                                       </span>
                                     </span>
@@ -404,7 +399,7 @@ export function PremiumCourseTabs({
                   })}
                 </div>
               ) : (
-                <p className="mt-5 rounded-2xl border border-dashed border-ink/12 bg-cream/50 px-4 py-8 text-center text-sm text-ink/50">
+                <p className="mt-5 rounded-2xl border border-dashed border-[#152F29]/15 bg-[#F3F7F0] px-4 py-8 text-center text-sm text-[#152F29]/50">
                   Course content is being prepared. Check back soon.
                 </p>
               )}

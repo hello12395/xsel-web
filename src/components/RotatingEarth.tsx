@@ -127,16 +127,16 @@ function drawLocationMarker(
 
   const pin = new Path2D(PIN_PATH);
   const gradient = context.createLinearGradient(6, 2, 18, 22);
-  gradient.addColorStop(0, "#ff5a5a");
-  gradient.addColorStop(0.55, "#ef2b2b");
-  gradient.addColorStop(1, "#c41a1a");
+  gradient.addColorStop(0, "#e8a07a");
+  gradient.addColorStop(0.55, "#c45c3a");
+  gradient.addColorStop(1, "#9a3d28");
   context.fillStyle = gradient;
   context.fill(pin);
 
   context.shadowColor = "transparent";
   context.shadowBlur = 0;
   context.shadowOffsetY = 0;
-  context.strokeStyle = "#8f1414";
+  context.strokeStyle = "#7a2f1e";
   context.lineWidth = 0.75;
   context.stroke(pin);
 
@@ -212,17 +212,28 @@ export function RotatingEarth({
 
       context.beginPath();
       context.arc(containerWidth / 2, containerHeight / 2, currentScale, 0, 2 * Math.PI);
-      context.fillStyle = "#050814";
+      const ocean = context.createRadialGradient(
+        containerWidth / 2 - currentScale * 0.28,
+        containerHeight / 2 - currentScale * 0.32,
+        currentScale * 0.12,
+        containerWidth / 2,
+        containerHeight / 2,
+        currentScale,
+      );
+      ocean.addColorStop(0, "#234f44");
+      ocean.addColorStop(0.55, "#152F29");
+      ocean.addColorStop(1, "#0d1f1b");
+      context.fillStyle = ocean;
       context.fill();
-      context.strokeStyle = "rgba(55, 204, 248, 0.45)";
-      context.lineWidth = 2 * scaleFactor;
+      context.strokeStyle = "rgba(247, 243, 234, 0.42)";
+      context.lineWidth = 1.5 * scaleFactor;
       context.stroke();
 
       if (landFeatures) {
         const graticule = d3.geoGraticule();
         context.beginPath();
         path(graticule());
-        context.strokeStyle = "rgba(255, 255, 255, 0.18)";
+        context.strokeStyle = "rgba(247, 243, 234, 0.14)";
         context.lineWidth = 0.8 * scaleFactor;
         context.stroke();
 
@@ -230,7 +241,7 @@ export function RotatingEarth({
         landFeatures.features.forEach((feature) => {
           path(feature as d3.GeoPermissibleObjects);
         });
-        context.strokeStyle = "rgba(255, 255, 255, 0.55)";
+        context.strokeStyle = "rgba(232, 220, 196, 0.4)";
         context.lineWidth = 0.9 * scaleFactor;
         context.stroke();
 
@@ -242,7 +253,7 @@ export function RotatingEarth({
 
           context.beginPath();
           context.arc(x, y, 1.15 * scaleFactor, 0, 2 * Math.PI);
-          context.fillStyle = "rgba(180, 198, 220, 0.85)";
+          context.fillStyle = "rgba(220, 210, 185, 0.88)";
           context.fill();
         });
       }
