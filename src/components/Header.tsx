@@ -37,6 +37,15 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
     const supabase = createClient();
 
     supabase.auth.getUser().then(({ data }) => {
@@ -64,24 +73,24 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 ${
         solid
           ? "border-b border-white/10 bg-[#152F29] shadow-[0_12px_32px_-18px_rgba(21,47,41,0.55)]"
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:gap-5 sm:px-5 md:gap-6 lg:h-[4.5rem] lg:px-8">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:h-16 sm:gap-5 sm:px-5 md:gap-6 lg:h-[4.5rem] lg:px-8">
         <a href="#hero" className="group flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3">
           <BrandLogo
             size={40}
             priority
-            className="h-9 w-9 rounded-[10px] transition-transform duration-300 group-hover:scale-[1.03] sm:h-10 sm:w-10"
+            className="h-8 w-8 rounded-[10px] transition-transform duration-300 group-hover:scale-[1.03] sm:h-10 sm:w-10"
           />
           <span className="min-w-0 leading-none">
             <span className="mb-1 hidden text-[10px] font-extrabold tracking-[0.18em] text-white/70 uppercase sm:block">
               Sarwar
             </span>
-            <span className="font-display block max-w-[9.5rem] truncate text-[15px] font-extrabold tracking-[-0.035em] text-white sm:max-w-none sm:text-[17px]">
+            <span className="font-display block max-w-[9.5rem] truncate text-[14px] font-extrabold tracking-[-0.035em] text-white sm:max-w-none sm:text-[17px]">
               English Lab
             </span>
           </span>
@@ -128,8 +137,9 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/25 bg-white/10 text-white transition-colors sm:h-10 sm:w-10 xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-white/25 bg-white/10 text-white transition-colors sm:h-10 sm:w-10 xl:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <CloseIcon className="h-4 w-4" /> : <MenuIcon className="h-4 w-4" />}
@@ -147,12 +157,12 @@ export function Header() {
               solid ? "bg-[#152F29]" : "bg-[#152F29]/95 backdrop-blur-md"
             }`}
           >
-            <div className="flex flex-col gap-0.5 px-5 py-4">
+            <div className="flex max-h-[min(72dvh,32rem)] flex-col gap-0.5 overflow-y-auto overscroll-contain px-4 py-3 sm:px-5 sm:py-4">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-3 text-[16px] font-bold text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  className="rounded-xl px-3.5 py-3.5 text-[15px] font-bold text-white/85 transition-colors active:bg-white/10 hover:bg-white/10 hover:text-white"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -162,14 +172,14 @@ export function Header() {
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="mt-2 mb-1 rounded-[8px] border border-white/25 bg-white/10 px-4 py-3 text-center text-[15px] font-bold text-white"
+                  className="mt-2 mb-1 min-h-12 rounded-[10px] border border-white/25 bg-white/10 px-4 py-3.5 text-center text-[15px] font-bold text-white"
                 >
                   Log out
                 </button>
               ) : (
                 <a
                   href="#free-lessons"
-                  className="mt-2 mb-1 rounded-[8px] bg-white px-4 py-3 text-center text-[15px] font-extrabold text-[#152F29]"
+                  className="mt-2 mb-1 min-h-12 rounded-[10px] bg-white px-4 py-3.5 text-center text-[15px] font-extrabold text-[#152F29]"
                   onClick={() => setOpen(false)}
                 >
                   Start free

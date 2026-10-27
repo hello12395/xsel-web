@@ -111,7 +111,7 @@ function SocialCard({ social }: { social: Social }) {
     };
   }, [open]);
 
-  const cardClassName = `group relative flex h-full min-h-[13.5rem] w-full flex-col overflow-hidden rounded-[20px] p-4 text-left transition duration-300 hover:-translate-y-1 sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${theme.card}`;
+  const cardClassName = `group relative flex h-full min-h-[11.5rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left transition duration-300 hover:-translate-y-1 sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${theme.card}`;
 
   const cardBody = (
     <>
@@ -119,34 +119,41 @@ function SocialCard({ social }: { social: Social }) {
         className={`pointer-events-none absolute -right-2 -bottom-3 transition duration-500 group-hover:scale-105 ${theme.watermark}`}
         aria-hidden
       >
-        <Icon className="h-32 w-32 sm:h-36 sm:w-36" />
+        <Icon className="h-24 w-24 sm:h-36 sm:w-36" />
       </span>
 
-      <span className="relative z-10 flex items-start justify-between gap-3">
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 shadow-[0_4px_14px_-8px_rgba(21,47,41,0.25)] ring-1 ring-[#152F29]/6">
-          <Icon className="h-6 w-6" />
+      <span className="relative z-10 flex items-start justify-between gap-2 sm:gap-3">
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/80 shadow-[0_4px_14px_-8px_rgba(21,47,41,0.25)] ring-1 ring-[#152F29]/6 sm:h-11 sm:w-11 sm:rounded-2xl">
+          <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
         </span>
         <span
-          className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] uppercase ${theme.badge}`}
+          className={`rounded-full px-2 py-0.5 text-[9px] font-bold tracking-[0.1em] uppercase sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.12em] ${theme.badge}`}
         >
           {social.stat}
         </span>
       </span>
 
-      <div className="relative z-10 mt-5 flex-1">
+      <div className="relative z-10 mt-3.5 flex-1 sm:mt-5">
         <h3
-          className={`font-display text-[1.45rem] leading-tight tracking-[-0.04em] sm:text-[1.6rem] ${theme.title}`}
+          className={`font-display text-[1.15rem] leading-tight tracking-[-0.04em] sm:text-[1.6rem] ${theme.title}`}
         >
           {social.name}
         </h3>
-        <p className={`mt-1.5 text-sm leading-6 ${theme.handle}`}>{social.handle}</p>
+        <p className={`mt-1 line-clamp-2 text-[12px] leading-5 sm:mt-1.5 sm:text-sm sm:leading-6 ${theme.handle}`}>{social.handle}</p>
       </div>
 
       <span
-        className={`relative z-10 mt-5 inline-flex items-center gap-2 text-sm font-semibold transition ${theme.cta}`}
+        className={`relative z-10 mt-3.5 inline-flex items-center gap-1.5 text-[12px] font-semibold transition sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}
       >
-        {hasChoices ? "Choose account" : "Follow"}
-        <ArrowIcon className="h-4 w-4 transition duration-300 group-hover:translate-x-1" />
+        {hasChoices ? (
+          <>
+            <span className="sm:hidden">Choose</span>
+            <span className="hidden sm:inline">Choose account</span>
+          </>
+        ) : (
+          "Follow"
+        )}
+        <ArrowIcon className="h-3.5 w-3.5 transition duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
       </span>
     </>
   );
@@ -240,17 +247,17 @@ export function SocialMedia() {
       <div className="social-stage-glow" aria-hidden />
       <div className="social-stage-grid" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 lg:py-28">
-        <div className="grid items-end gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
+      <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-20 lg:py-28">
+        <div className="grid items-end gap-7 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
           <Reveal className="relative z-10 min-w-0">
-            <h2 className="font-display text-[clamp(1.85rem,6vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
+            <h2 className="font-display text-[clamp(1.75rem,7vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
               Social Media
             </h2>
-            <p className="mt-4 max-w-md text-[15px] leading-[1.75] text-muted sm:mt-5 sm:text-base md:text-lg">
+            <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75] md:text-lg">
               Daily prompts, lab clips, and community threads — follow the lab
               wherever you already scroll.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
+            <div className="mt-5 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
               <span className="rounded-full border border-ink/10 bg-white px-3.5 py-1.5 text-xs font-semibold tracking-wide text-ink/70 shadow-[0_4px_14px_-8px_rgba(30,90,50,0.2)]">
                 {socials.length} platforms
               </span>
@@ -262,7 +269,7 @@ export function SocialMedia() {
 
           <Reveal delay={0.12} className="relative min-w-0">
             <ShimmerGate minMs={500} skeleton={<SocialCardsSkeleton />}>
-              <Stagger className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
+              <Stagger className="grid grid-cols-2 gap-2.5 sm:gap-4">
                 {socials.map((social) => (
                   <StaggerItem key={social.name} className="h-full min-w-0">
                     <SocialCard social={social} />

@@ -65,11 +65,28 @@ export function SocialCardsSkeleton() {
 
 export function WhyCardsSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <Shimmer key={i} className="h-48 rounded-[22px] sm:h-56" />
-      ))}
-    </div>
+    <>
+      <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white/70 sm:hidden">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div
+            key={i}
+            className={`flex gap-3.5 px-4 py-4 ${i < 2 ? "border-b border-ink/8" : ""}`}
+          >
+            <Shimmer className="mt-0.5 h-5 w-8 shrink-0 rounded-md" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <Shimmer className="h-4 w-[85%] max-w-[14rem] rounded-md" />
+              <Shimmer className="h-3 w-full rounded-md" />
+              <Shimmer className="h-3 w-[90%] rounded-md" />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="hidden grid-cols-1 gap-4 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Shimmer key={i} className="h-48 rounded-[22px] sm:h-56" />
+        ))}
+      </div>
+    </>
   );
 }
 

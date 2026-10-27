@@ -75,7 +75,7 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
       id="premium-courses"
       className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
     >
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
         <SectionHeader
           title="Paid Courses"
           copy="Live, mentor-led English courses in Islamabad and online, structured lessons, real correction, and a seat

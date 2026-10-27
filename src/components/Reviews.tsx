@@ -37,6 +37,8 @@ const REVIEW_COLORS = [
     ring: "ring-ink/25",
     selector: "border-[#e6e0d4] bg-[#F7F3EA] text-ink",
     selectorMuted: "text-ink/60",
+    dots: "bg-[#152F29]/20",
+    dotsActive: "bg-[#152F29]",
   },
   {
     bg: "#F7F3EA",
@@ -49,6 +51,8 @@ const REVIEW_COLORS = [
     ring: "ring-ink/25",
     selector: "border-[#e6e0d4] bg-[#F7F3EA] text-ink",
     selectorMuted: "text-ink/60",
+    dots: "bg-[#152F29]/20",
+    dotsActive: "bg-[#152F29]",
   },
   {
     bg: "#f5c518",
@@ -61,6 +65,8 @@ const REVIEW_COLORS = [
     ring: "ring-ink/25",
     selector: "border-amber-400/70 bg-[#f5c518] text-ink",
     selectorMuted: "text-ink/60",
+    dots: "bg-[#152F29]/20",
+    dotsActive: "bg-[#152F29]",
   },
   {
     bg: "#1f7a38",
@@ -73,6 +79,8 @@ const REVIEW_COLORS = [
     ring: "ring-green-200/50",
     selector: "border-green-300/60 bg-[#1f7a38] text-white",
     selectorMuted: "text-white/70",
+    dots: "bg-white/30",
+    dotsActive: "bg-white",
   },
 ] as const;
 
@@ -114,27 +122,144 @@ export function Reviews() {
   }, [paused, count, active]);
 
   return (
-    <section id="reviews" className="relative section-anchor overflow-hidden bg-reviews-section text-white">
-      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-[#3d5a52]/40 blur-3xl" />
+    <section
+      id="reviews"
+      className="relative section-anchor reviews-section overflow-hidden border-b border-white/10 bg-reviews-section text-white sm:border-0"
+    >
+      <div className="pointer-events-none absolute -left-24 top-1/4 hidden h-72 w-72 rounded-full bg-white/5 blur-3xl sm:block" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 hidden h-80 w-80 rounded-full bg-[#3d5a52]/40 blur-3xl sm:block" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
-        <div className="grid items-start gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
-          <Reveal className="reviews-intro-panel min-w-0 text-left">
-            <h2 className="font-display text-[clamp(1.85rem,6vw,4.875rem)] leading-[1.08] tracking-[-0.055em] text-white sm:leading-[1.03]">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        {/* —— Mobile layout (matches xsel-mobile-preview) —— */}
+        <div className="sm:hidden">
+          <Reveal>
+            <p className="text-[11px] font-extrabold tracking-[0.18em] text-[#EFAA93] uppercase">
+              Reviews
+            </p>
+            <h2 className="font-display mt-2.5 text-[1.75rem] leading-[1.08] tracking-[-0.055em] text-white">
               What learners say
             </h2>
-            <p className="mt-4 max-w-prose text-[15px] leading-[1.75] text-[#cbd5df] sm:mt-5 sm:text-base">
+            <p className="mt-2.5 max-w-[36ch] text-[14px] leading-relaxed text-white/65">
+              Real notes from people who marked pages, spoke in the lab, and came back the next week.
+            </p>
+          </Reveal>
+
+          <div
+            className="mt-7"
+            onTouchStart={() => setPaused(true)}
+            onTouchEnd={() => setPaused(false)}
+          >
+            <ShimmerGate minMs={500} skeleton={<ReviewPanelSkeleton />}>
+              <Reveal delay={0.06}>
+                <AnimatePresence mode="wait">
+                  <motion.article
+                    key={review.name}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease }}
+                    style={{ backgroundColor: color.bg }}
+                    className={`relative min-h-[260px] overflow-hidden rounded-[20px] p-5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.25)] ${color.text}`}
+                  >
+                    <div className={`flex gap-0.5 ${color.star}`}>
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <StarIcon key={index} className="h-4 w-4" />
+                      ))}
+                    </div>
+
+                    <blockquote
+                      className={`mt-3.5 text-[1.05rem] leading-[1.4] font-semibold tracking-[-0.03em] ${color.quote}`}
+                    >
+                      {review.quote}
+                    </blockquote>
+
+                    <footer className="mt-6 flex items-center gap-3">
+                      <span
+                        className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full"
+                        style={
+                          isDefaultAvatar(review.avatar)
+                            ? { backgroundColor: DEFAULT_AVATAR_BG }
+                            : undefined
+                        }
+                      >
+                        <Image
+                          src={review.avatar}
+                          alt=""
+                          fill
+                          sizes="44px"
+                          className="object-cover object-center"
+                          unoptimized={isDefaultAvatar(review.avatar)}
+                        />
+                      </span>
+                      <div className="min-w-0">
+                        <cite className={`block text-sm font-extrabold tracking-[-0.02em] not-italic ${color.text}`}>
+                          {review.name}
+                        </cite>
+                        <p className={`mt-0.5 text-xs ${color.muted}`}>{review.role}</p>
+                      </div>
+                    </footer>
+
+                    <div
+                      className="mt-5 flex justify-center gap-2"
+                      role="tablist"
+                      aria-label="Select a review"
+                    >
+                      {reviews.map((item, index) => (
+                        <button
+                          key={item.name}
+                          type="button"
+                          role="tab"
+                          aria-selected={index === active}
+                          aria-label={`Review from ${item.name}`}
+                          onClick={() => setActive(index)}
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            index === active
+                              ? `w-[22px] ${color.dotsActive}`
+                              : `w-2 ${color.dots}`
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </motion.article>
+                </AnimatePresence>
+              </Reveal>
+
+              <Reveal delay={0.1} className="mt-[18px] grid grid-cols-3 gap-2 text-center">
+                {stats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-xl bg-white/8 px-2 py-3"
+                  >
+                    <p className="font-display text-[1.1rem] tracking-[-0.04em] text-white">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-[10px] tracking-[0.08em] text-white/50 uppercase">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </Reveal>
+            </ShimmerGate>
+          </div>
+        </div>
+
+        {/* —— Desktop / tablet (unchanged) —— */}
+        <div className="hidden sm:grid sm:items-start sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
+          <Reveal className="reviews-intro-panel min-w-0 text-left">
+            <h2 className="font-display text-[clamp(1.75rem,7vw,4.875rem)] leading-[1.08] tracking-[-0.055em] text-white sm:leading-[1.03]">
+              What learners say
+            </h2>
+            <p className="mt-3.5 max-w-prose text-[14px] leading-[1.7] text-[#cbd5df] sm:mt-5 sm:text-base sm:leading-[1.75]">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8 sm:mt-10 sm:gap-8 sm:pt-10">
+            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-6 sm:mt-10 sm:flex sm:flex-wrap sm:items-center sm:gap-8 sm:pt-10">
               {stats.map((stat, index) => (
                 <Fragment key={stat.label}>
                   {index > 0 ? <div className="reviews-stat-divider hidden sm:block" aria-hidden /> : null}
                   <div className="min-w-0">
-                    <p className="font-display text-2xl text-white sm:text-3xl">{stat.value}</p>
-                    <p className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase sm:text-[11px]">
+                    <p className="font-display text-xl text-white sm:text-3xl">{stat.value}</p>
+                    <p className="mt-1 text-[9px] font-semibold tracking-[0.1em] text-white/45 uppercase sm:text-[11px] sm:tracking-[0.18em]">
                       {stat.label}
                     </p>
                   </div>
@@ -155,176 +280,176 @@ export function Reviews() {
             }}
           >
             <ShimmerGate minMs={500} skeleton={<ReviewPanelSkeleton />}>
-            <Reveal delay={0.08} className="relative">
-              <div
-                className="pointer-events-none absolute -top-6 right-4 font-display text-[8rem] leading-none text-white/[0.04] select-none sm:text-[10rem]"
-                aria-hidden
-              >
-                &ldquo;
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.article
-                  key={review.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.45, ease }}
-                  style={{ backgroundColor: color.bg }}
-                  className="relative overflow-hidden rounded-[20px] border border-black/10 p-4 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:p-7 md:rounded-[32px] md:p-8 lg:p-9"
+              <Reveal delay={0.08} className="relative">
+                <div
+                  className="pointer-events-none absolute -top-6 right-4 font-display text-[8rem] leading-none text-white/[0.04] select-none sm:text-[10rem]"
+                  aria-hidden
                 >
-                  <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                  &ldquo;
+                </div>
 
-                  <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
-                    <div className="relative mx-auto shrink-0 sm:mx-0">
-                      <div
-                        className="absolute -inset-5 rounded-full"
-                        style={{
-                          background: `radial-gradient(circle, ${color.glow} 0%, transparent 70%)`,
-                        }}
-                        aria-hidden
-                      />
-                      <div
-                        className="relative h-20 w-20 overflow-hidden rounded-full border-[3px] border-white/25 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.55)] sm:h-28 sm:w-28"
-                        style={
-                          isDefaultAvatar(review.avatar)
-                            ? { backgroundColor: DEFAULT_AVATAR_BG }
-                            : undefined
-                        }
-                      >
-                        <Image
-                          src={review.avatar}
-                          alt={review.name}
-                          fill
-                          sizes="112px"
-                          className="object-cover object-center"
-                          unoptimized={isDefaultAvatar(review.avatar)}
-                          priority
+                <AnimatePresence mode="wait">
+                  <motion.article
+                    key={review.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.45, ease }}
+                    style={{ backgroundColor: color.bg }}
+                    className="relative overflow-hidden rounded-[20px] border border-black/10 p-4 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:p-7 md:rounded-[32px] md:p-8 lg:p-9"
+                  >
+                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
+                    <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
+                      <div className="relative mx-auto shrink-0 sm:mx-0">
+                        <div
+                          className="absolute -inset-5 rounded-full"
+                          style={{
+                            background: `radial-gradient(circle, ${color.glow} 0%, transparent 70%)`,
+                          }}
+                          aria-hidden
                         />
+                        <div
+                          className="relative h-20 w-20 overflow-hidden rounded-full border-[3px] border-white/25 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.55)] sm:h-28 sm:w-28"
+                          style={
+                            isDefaultAvatar(review.avatar)
+                              ? { backgroundColor: DEFAULT_AVATAR_BG }
+                              : undefined
+                          }
+                        >
+                          <Image
+                            src={review.avatar}
+                            alt={review.name}
+                            fill
+                            sizes="112px"
+                            className="object-cover object-center"
+                            unoptimized={isDefaultAvatar(review.avatar)}
+                            priority
+                          />
+                        </div>
+                      </div>
+
+                      <div className="min-w-0 flex-1 text-center sm:text-left">
+                        <div className="flex items-center justify-center gap-2 sm:justify-start">
+                          <div className="flex gap-0.5">
+                            {Array.from({ length: 5 }).map((_, index) => (
+                              <StarIcon key={index} className={`h-3.5 w-3.5 ${color.star}`} />
+                            ))}
+                          </div>
+                          <span
+                            className={`text-[11px] font-semibold tracking-[0.14em] uppercase ${color.muted}`}
+                          >
+                            5.0
+                          </span>
+                        </div>
+
+                        <blockquote
+                          className={`em-serif mt-3 text-pretty text-lg leading-[1.32] sm:mt-4 sm:text-[1.35rem] lg:text-[1.875rem] ${color.quote}`}
+                        >
+                          {review.quote}
+                        </blockquote>
+
+                        <footer className="mt-5 flex flex-col items-center gap-3 sm:mt-6 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="min-w-0">
+                            <cite className="not-italic">
+                              <span className={`text-base font-semibold ${color.text}`}>
+                                {review.name}
+                              </span>
+                            </cite>
+                            <p className={`mt-0.5 text-sm ${color.muted}`}>{review.role}</p>
+                          </div>
+                          <span
+                            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] uppercase ${color.badge}`}
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                            Verified learner
+                          </span>
+                        </footer>
                       </div>
                     </div>
+                  </motion.article>
+                </AnimatePresence>
+              </Reveal>
 
-                    <div className="min-w-0 flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center gap-2 sm:justify-start">
-                        <div className="flex gap-0.5">
-                          {Array.from({ length: 5 }).map((_, index) => (
-                            <StarIcon key={index} className={`h-3.5 w-3.5 ${color.star}`} />
-                          ))}
-                        </div>
-                        <span
-                          className={`text-[11px] font-semibold tracking-[0.14em] uppercase ${color.muted}`}
-                        >
-                          5.0
-                        </span>
-                      </div>
-
-                      <blockquote
-                        className={`em-serif mt-3 text-pretty text-lg leading-[1.32] sm:mt-4 sm:text-[1.35rem] lg:text-[1.875rem] ${color.quote}`}
-                      >
-                        {review.quote}
-                      </blockquote>
-
-                      <footer className="mt-5 flex flex-col items-center gap-3 sm:mt-6 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="min-w-0">
-                          <cite className="not-italic">
-                            <span className={`text-base font-semibold ${color.text}`}>
-                              {review.name}
-                            </span>
-                          </cite>
-                          <p className={`mt-0.5 text-sm ${color.muted}`}>{review.role}</p>
-                        </div>
-                        <span
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] uppercase ${color.badge}`}
-                        >
-                          <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                          Verified learner
-                        </span>
-                      </footer>
-                    </div>
-                  </div>
-                </motion.article>
-              </AnimatePresence>
-            </Reveal>
-
-            <Reveal delay={0.14} className="mt-5">
-              <div
-                className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 md:grid-cols-3 xl:grid-cols-5"
-                role="tablist"
-                aria-label="Select a review"
-              >
-                {reviews.map((item, index) => {
-                  const isActive = index === active;
-                  const itemColor = REVIEW_COLORS[index % REVIEW_COLORS.length];
-                  return (
-                    <button
-                      key={item.name}
-                      type="button"
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-label={`Review from ${item.name}`}
-                      onClick={() => setActive(index)}
-                      style={isActive ? { backgroundColor: itemColor.bg } : undefined}
-                      className={`group flex min-w-[11.5rem] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all duration-300 sm:min-w-0 sm:gap-3 sm:px-3.5 sm:py-3 ${
-                        isActive
-                          ? itemColor.selector
-                          : "border-white/10 bg-white/8 hover:border-white/20 hover:bg-white/12"
-                      }`}
-                    >
-                      <span
-                        className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-full transition sm:h-10 sm:w-10 ${
-                          isActive ? `ring-2 ${itemColor.ring} ring-offset-2 ring-offset-transparent` : ""
+              <Reveal delay={0.14} className="mt-5">
+                <div
+                  className="reviews-selector-strip -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 md:grid-cols-3 xl:grid-cols-5"
+                  role="tablist"
+                  aria-label="Select a review"
+                >
+                  {reviews.map((item, index) => {
+                    const isActive = index === active;
+                    const itemColor = REVIEW_COLORS[index % REVIEW_COLORS.length];
+                    return (
+                      <button
+                        key={item.name}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-label={`Review from ${item.name}`}
+                        onClick={() => setActive(index)}
+                        style={isActive ? { backgroundColor: itemColor.bg } : undefined}
+                        className={`group flex min-w-[10.75rem] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all duration-300 sm:min-w-0 sm:gap-3 sm:px-3.5 sm:py-3 ${
+                          isActive
+                            ? itemColor.selector
+                            : "border-white/10 bg-white/8 hover:border-white/20 hover:bg-white/12"
                         }`}
-                        style={
-                          isDefaultAvatar(item.avatar)
-                            ? { backgroundColor: DEFAULT_AVATAR_BG }
-                            : undefined
-                        }
                       >
-                        <Image
-                          src={item.avatar}
-                          alt=""
-                          fill
-                          sizes="40px"
-                          className="object-cover object-center"
-                          unoptimized={isDefaultAvatar(item.avatar)}
-                        />
-                      </span>
-                      <span className="min-w-0 flex-1">
                         <span
-                          className={`block truncate text-sm font-semibold transition ${
-                            isActive ? itemColor.text : "text-white/70 group-hover:text-white"
+                          className={`relative h-9 w-9 shrink-0 overflow-hidden rounded-full transition sm:h-10 sm:w-10 ${
+                            isActive ? `ring-2 ${itemColor.ring} ring-offset-2 ring-offset-transparent` : ""
                           }`}
+                          style={
+                            isDefaultAvatar(item.avatar)
+                              ? { backgroundColor: DEFAULT_AVATAR_BG }
+                              : undefined
+                          }
                         >
-                          {item.name.split(" ")[0]}
+                          <Image
+                            src={item.avatar}
+                            alt=""
+                            fill
+                            sizes="40px"
+                            className="object-cover object-center"
+                            unoptimized={isDefaultAvatar(item.avatar)}
+                          />
                         </span>
-                        <span
-                          className={`block truncate text-xs ${
-                            isActive ? itemColor.selectorMuted : "text-white/45"
-                          }`}
-                        >
-                          {item.role}
+                        <span className="min-w-0 flex-1">
+                          <span
+                            className={`block truncate text-sm font-semibold transition ${
+                              isActive ? itemColor.text : "text-white/70 group-hover:text-white"
+                            }`}
+                          >
+                            {item.name.split(" ")[0]}
+                          </span>
+                          <span
+                            className={`block truncate text-xs ${
+                              isActive ? itemColor.selectorMuted : "text-white/45"
+                            }`}
+                          >
+                            {item.role}
+                          </span>
                         </span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
 
-              <div className="mt-6 flex items-center justify-center gap-2 sm:justify-end">
-                {reviews.map((_, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    aria-label={`Go to review ${index + 1}`}
-                    aria-current={index === active ? "true" : undefined}
-                    onClick={() => setActive(index)}
-                    className={`h-1 rounded-full transition-all duration-300 ${
-                      index === active ? "w-7 bg-gold" : "w-1.5 bg-white/20 hover:bg-white/35"
-                    }`}
-                  />
-                ))}
-              </div>
-            </Reveal>
+                <div className="mt-6 flex items-center justify-center gap-2 sm:justify-end">
+                  {reviews.map((_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      aria-label={`Go to review ${index + 1}`}
+                      aria-current={index === active ? "true" : undefined}
+                      onClick={() => setActive(index)}
+                      className={`h-1 rounded-full transition-all duration-300 ${
+                        index === active ? "w-7 bg-gold" : "w-1.5 bg-white/20 hover:bg-white/35"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </Reveal>
             </ShimmerGate>
           </div>
         </div>

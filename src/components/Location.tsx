@@ -178,18 +178,18 @@ function LocationOrbit() {
 export function Location() {
   return (
     <section id="location" className="bg-location-section relative section-anchor overflow-hidden border-t border-ink/8">
-      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:gap-12 sm:px-5 sm:py-20 md:gap-14 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
+      <div className="relative mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:gap-12 sm:px-5 sm:py-20 md:gap-14 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
         <div className="min-w-0">
-          <h2 className="font-display text-[clamp(1.85rem,6vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
+          <h2 className="font-display text-[clamp(1.75rem,7vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
             On the map
           </h2>
-          <p className="mt-4 max-w-md text-[15px] leading-[1.75] text-muted sm:mt-5 sm:text-base">
+          <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75]">
             Find us in G-11 Markaz, Islamabad — walk in, or reach us by phone and email anytime.
           </p>
 
           <ShimmerGate
             minMs={450}
-            className="mt-10"
+            className="mt-8 sm:mt-10"
             skeleton={
               <div className="flex flex-col gap-3 sm:gap-4">
                 <Shimmer className="h-28 w-full rounded-2xl bg-[#152F29]/90" />

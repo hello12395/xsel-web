@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>xSEL — Mobile Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fffcf6;
+      --parchment: #fffef9;
+      --ink: #1c3530;
+      --heading: #18352f;
+      --muted: #67746d;
+      --forest: #1d6b56;
+      --forest-deep: #152f29;
+      --gold: #efaa93;
+      --gold-soft: #f2baa1;
+      --sage: #c2d7ba;
+      --coral: #df937f;
+      --green-card: #214f42;
+      --radius: 14px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--ink);
+      background: #0c1614;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; border: 0; background: none; cursor: pointer; color: inherit; }
+
+    /* —— Desktop stage: phone in a studio —— */
+    .stage {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 28px 16px 40px;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(239, 170, 147, 0.14), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(29, 107, 86, 0.22), transparent 50%),
+        linear-gradient(165deg, #0c1614 0%, #152f29 48%, #0a1210 100%);
+    }
+
+    .stage-meta {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      z-index: 5;
+      color: rgba(255, 252, 246, 0.72);
+      pointer-events: none;
+    }
+    .stage-meta .brand {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .stage-meta h1 {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #fffcf6;
+    }
+    .stage-meta p {
+      margin-top: 4px;
+      font-size: 13px;
+      color: rgba(255, 252, 246, 0.45);
+      max-width: 220px;
+    }
+
+    .phone {
+      position: relative;
+      width: min(390px, calc(100vw - 32px));
+      height: min(844px, calc(100dvh - 56px));
+      border-radius: 44px;
+      padding: 12px;
+      background: linear-gradient(145deg, #2a3a36, #0e1815 40%, #1a2a26);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 40px 80px -20px rgba(0, 0, 0, 0.65),
+        0 0 0 10px #0a100e,
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 108px;
+      height: 28px;
+      background: #050807;
+      border-radius: 20px;
+      z-index: 30;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .phone-screen {
+      position: relative;
+      height: 100%;
+      border-radius: 34px;
+      overflow: hidden;
+      background: var(--cream);
+      isolation: isolate;
+    }
+
+    .phone-scroll {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--forest) transparent;
+    }
+
+    .phone-scroll::-webkit-scrollbar { width: 4px; }
+    .phone-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--gold), var(--forest));
+      border-radius: 99px;
+    }
+
+    /* —— App chrome —— */
+    .status-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 22px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      pointer-events: none;
+      transition: color 0.25s, background 0.25s;
+    }
+    .status-bar.is-solid {
+      background: var(--forest-deep);
+      color: #fff;
+    }
+    .status-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .status-icons span {
+      display: block;
+      height: 10px;
+      border-radius: 2px;
+      background: currentColor;
+      opacity: 0.9;
+    }
+    .sig { width: 16px; }
+    .wifi { width: 12px; height: 9px; border-radius: 50% 50% 0 0; }
+    .batt {
+      width: 22px;
+      height: 10px;
+      border: 1.5px solid currentColor;
+      border-radius: 3px;
+      position: relative;
+      opacity: 0.9;
+    }
+    .batt::after {
+      content: "";
+      position: absolute;
+      inset: 1.5px 1.5px 1.5px auto;
+      width: 60%;
+      background: currentColor;
+      border-radius: 1px;
+    }
+
+    .header {
+      position: sticky;
+      top: 48px;
+      z-index: 35;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 56px;
+      padding: 0 16px;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      margin-top: -48px;
+      padding-top: 48px;
+      height: 104px;
+    }
+    .header.is-solid {
+      background: var(--forest-deep);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 32px -18px rgba(21, 47, 41, 0.55);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .logo-text {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-login {
+      display: inline-flex;
+      align-items: center;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .menu-btn {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+    }
+    .menu-btn svg { width: 20px; height: 20px; }
+
+    /* —— Sections —— */
+    .hero {
+      position: relative;
+      min-height: 640px;
+      margin-top: -104px;
+      padding: 120px 16px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: #fff;
+      overflow: hidden;
+      background: #000;
+    }
+    .hero video,
+    .hero .hero-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-fallback {
+      background:
+        linear-gradient(160deg, #1a2f2a 0%, #0d1815 55%, #243530 100%),
+        url("auth-slides/lab-1.jpg") center/cover;
+    }
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.28)),
+        linear-gradient(to top, rgba(0,0,0,0.72), transparent 45%, rgba(0,0,0,0.28));
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero h1 {
+      font-size: clamp(2.1rem, 9vw, 2.55rem);
+      font-weight: 800;
+      letter-spacing: -0.075em;
+      line-height: 1.05;
+    }
+    .hero h1 .em {
+      display: block;
+      margin-top: 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.07em;
+    }
+    .hero .sub {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 34ch;
+    }
+    .hero .sub span { display: block; margin-top: 6px; }
+
+    .cta-row {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: #fff;
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-primary svg { width: 16px; height: 16px; }
+    .play-badge {
+      align-self: center;
+      height: 48px;
+      width: min(100%, 180px);
+      border-radius: 7px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+    .play-badge small {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      opacity: 0.7;
+      letter-spacing: 0.04em;
+    }
+
+    .stats {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .stats dt {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .stats dd {
+      margin-top: 4px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    section.block {
+      padding: 48px 16px;
+      border-bottom: 1px solid rgba(28, 53, 48, 0.08);
+      background: var(--cream);
+    }
+    section.block.alt { background: var(--parchment); }
+    section.block.dark {
+      background: var(--forest-deep);
+      color: #fff;
+      border-bottom-color: rgba(255,255,255,0.06);
+    }
+
+    .sec-kicker {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--forest);
+    }
+    .dark .sec-kicker { color: var(--gold); }
+    .sec-title {
+      margin-top: 10px;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+      color: var(--heading);
+    }
+    .dark .sec-title { color: #fff; }
+    .sec-copy {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 36ch;
+    }
+    .dark .sec-copy { color: rgba(255,255,255,0.6); }
+
+    /* Why cards */
+    .why-grid {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+    }
+    .why-card {
+      position: relative;
+      padding: 22px 18px 20px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid rgba(28, 53, 48, 0.08);
+      box-shadow: 0 14px 36px -22px rgba(21, 47, 41, 0.28);
+      overflow: hidden;
+    }
+    .why-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent, var(--gold)), transparent);
+    }
+    .why-card:nth-child(1) { --accent: #f92227; }
+    .why-card:nth-child(2) { --accent: #1c30be; }
+    .why-card:nth-child(3) { --accent: #02abd5; }
+    .why-num {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--accent, var(--forest));
+    }
+    .why-card h3 {
+      margin-top: 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--heading);
+    }
+    .why-card p {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Course / playlist cards */
+    .card-stack {
+      margin-top: 26px;
+      display: grid;
+      gap: 14px;
+    }
+    .course-card {
+      position: relative;
+      border-radius: 18px;
+      padding: 18px;
+      overflow: hidden;
+      min-height: 168px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 22px 40px -22px rgba(21, 47, 41, 0.4);
+    }
+    .course-card.t0 { background: var(--green-card); color: #fff; }
+    .course-card.t1 { background: var(--sage); color: var(--forest-deep); }
+    .course-card.t2 { background: var(--coral); color: var(--forest-deep); }
+    .course-card .rings {
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 1px solid var(--ring, rgba(255,255,255,0.16));
+      pointer-events: none;
+    }
+    .course-card .rings::before,
+    .course-card .rings::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--ring-soft, rgba(255,255,255,0.08));
+    }
+    .course-card .rings::after { inset: 36px; border-color: var(--ring-faint, rgba(255,255,255,0.04)); }
+    .course-card.t1 { --ring: rgba(255,255,255,0.45); --ring-soft: rgba(255,255,255,0.28); --ring-faint: rgba(255,255,255,0.14); }
+    .course-card.t2 { --ring: rgba(255,255,255,0.42); --ring-soft: rgba(255,255,255,0.24); --ring-faint: rgba(255,255,255,0.12); }
+
+    .tag {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .t0 .tag { background: rgba(255,255,255,0.18); color: #fff; }
+    .t1 .tag, .t2 .tag { background: var(--forest-deep); color: #fff; }
+    .course-card h3 {
+      position: relative;
+      margin-top: 14px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 1.15;
+      max-width: 16ch;
+    }
+    .course-card .blurb {
+      position: relative;
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.45;
+      opacity: 0.88;
+      max-width: 28ch;
+    }
+    .course-card .meta {
+      position: relative;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .course-card .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .course-card .cta svg { width: 14px; height: 14px; }
+
+    .more-btn {
+      margin: 18px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 18px;
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(28, 53, 48, 0.14);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--heading);
+      background: #fff;
+    }
+
+    /* Reviews */
+    .review-panel {
+      margin-top: 26px;
+      border-radius: 20px;
+      padding: 24px 20px 22px;
+      background: #f7f3ea;
+      box-shadow: 0 18px 40px -24px rgba(0,0,0,0.25);
+      min-height: 260px;
+      transition: background 0.45s ease;
+    }
+    .review-panel.is-yellow { background: #f5c518; }
+    .review-panel.is-green { background: #1f7a38; color: #fff; }
+    .stars {
+      display: flex;
+      gap: 3px;
+      color: #c45c3a;
+    }
+    .review-panel.is-yellow .stars { color: var(--ink); }
+    .review-panel.is-green .stars { color: #a7f3c0; }
+    .stars svg { width: 16px; height: 16px; }
+    .quote {
+      margin-top: 14px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.4;
+    }
+    .reviewer {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .reviewer img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e4e6eb;
+    }
+    .reviewer strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .reviewer span {
+      font-size: 12px;
+      opacity: 0.65;
+    }
+    .review-dots {
+      margin-top: 18px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .review-dots button {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(28, 53, 48, 0.2);
+      transition: width 0.25s, background 0.25s;
+    }
+    .review-panel.is-green .review-dots button { background: rgba(255,255,255,0.3); }
+    .review-dots button.active {
+      width: 22px;
+      background: var(--forest-deep);
+    }
+    .review-panel.is-green .review-dots button.active { background: #fff; }
+
+    .review-stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+    .review-stats div {
+      padding: 12px 8px;
+      border-radius: 12px;
+      background: rgba(21, 47, 41, 0.06);
+    }
+    .review-stats strong {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .review-stats span {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    /* Social */
+    .social-grid {
+      margin-top: 26px;
+      display: grid;
+      gap: 12px;
+    }
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #e6e6d9;
+      background: var(--parchment);
+      box-shadow: 0 10px 28px -18px rgba(21, 47, 41, 0.18);
+    }
+    .social-card.ig { background: #fffef9; }
+    .social-card.fb { background: #f3f7f0; }
+    .social-card.wa { background: var(--forest-deep); color: #fff; border-color: transparent; }
+    .social-card.tt { background: #111; color: #fff; border-color: transparent; }
+    .social-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .ig .social-icon { background: #f7dfc7; color: #5c4033; }
+    .fb .social-icon { background: #d7e5d3; color: #214f42; }
+    .wa .social-icon { background: rgba(255,255,255,0.12); color: #25d366; }
+    .tt .social-icon { background: rgba(255,255,255,0.1); color: #fff; }
+    .social-icon svg { width: 20px; height: 20px; }
+    .social-card strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .social-card span {
+      font-size: 12px;
+      opacity: 0.65;
+    }
+    .social-card .go {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--forest);
+      white-space: nowrap;
+    }
+    .wa .go, .tt .go { color: var(--gold); }
+
+    /* Location */
+    .loc-card {
+      margin-top: 26px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .loc-map {
+      height: 160px;
+      background:
+        linear-gradient(rgba(21,47,41,0.35), rgba(21,47,41,0.55)),
+        url("https://maps.googleapis.com/maps/api/staticmap?center=33.66943,73.000109&zoom=14&size=600x320&maptype=roadmap&key=")
+        center/cover;
+      background: linear-gradient(135deg, #1d6b56 0%, #0e231f 100%);
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+    .pin {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--forest-deep);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      animation: float 2.8s ease-in-out infinite;
+    }
+    .pin svg { width: 22px; height: 22px; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .loc-body { padding: 18px; }
+    .loc-body h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .loc-body p {
+      margin-top: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+    .loc-links {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .loc-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .loc-links svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; }
+
+    /* Footer */
+    .footer {
+      background: var(--forest-deep);
+      color: #fff;
+      padding: 40px 16px calc(28px + var(--safe-b));
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+    }
+    .footer-brand strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .footer-brand strong em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .footer-brand span {
+      display: block;
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .footer > p {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      max-width: 32ch;
+      line-height: 1.6;
+    }
+    .footer-cols {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .footer-cols h4 {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .footer-cols a {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 10px;
+    }
+    .footer-bottom {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Nav drawer */
+    .drawer {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: var(--forest-deep);
+      color: #fff;
+      padding: 110px 20px 32px;
+      transform: translateX(105%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .drawer a {
+      padding: 14px 4px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .drawer .drawer-cta {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .drawer .drawer-cta a {
+      border: 0;
+      text-align: center;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      background: #fff;
+      color: var(--forest-deep);
+    }
+    .drawer .drawer-cta a.ghost {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.35);
+      z-index: 60;
+      pointer-events: none;
+      mix-blend-mode: difference;
+    }
+
+    /* Reveal motion */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Native phone: full bleed, no chrome */
+    @media (max-width: 480px) {
+      .stage {
+        padding: 0;
+        background: var(--cream);
+        display: block;
+      }
+      .stage-meta { display: none; }
+      .phone {
+        width: 100%;
+        height: 100dvh;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+      .phone::before,
+      .home-indicator { display: none; }
+      .phone-screen { border-radius: 0; }
+      .status-bar { display: none; }
+      .header {
+        top: 0;
+        margin-top: 0;
+        height: 56px;
+        padding-top: 0;
+      }
+      .hero {
+        margin-top: -56px;
+        padding-top: 88px;
+        min-height: 100dvh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <aside class="stage-meta" aria-hidden="true">
+      <div class="brand">xSEL</div>
+      <h1>Mobile view</h1>
+      <p>Sarwar English Lab — scroll the phone to preview the full experience.</p>
+    </aside>
+
+    <div class="phone" role="presentation">
+      <div class="phone-screen">
+        <div class="phone-scroll" id="scroll">
+          <div class="status-bar" id="statusBar">
+            <span>9:41</span>
+            <div class="status-icons" aria-hidden="true">
+              <span class="sig"></span>
+              <span class="wifi"></span>
+              <span class="batt"></span>
+            </div>
+          </div>
+
+          <header class="header" id="header">
+            <a class="logo" href="#hero">
+              <img src="app_logo.png" alt="xSEL" width="32" height="32" />
+              <span class="logo-text">English Lab</span>
+            </a>
+            <div class="header-actions">
+              <a class="btn-login" href="#">Log in</a>
+              <button class="menu-btn" id="menuBtn" aria-label="Open menu" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </header>
+
+          <section class="hero" id="hero">
+            <div class="hero-fallback" aria-hidden="true"></div>
+            <video autoplay muted loop playsinline poster="auth-slides/lab-1.jpg">
+              <source src="studio-hero-mobile.mp4" type="video/mp4" />
+            </video>
+            <div class="hero-shade"></div>
+            <div class="hero-content">
+              <h1>
+                English,<br />
+                taught live.
+                <span class="em">Put to work.</span>
+              </h1>
+              <p class="sub">
+                A real classroom for grammar, writing, and speaking.
+                <span>The same lesson you see on screen — marked, corrected, and practiced.</span>
+              </p>
+              <div class="cta-row">
+                <a class="btn-primary" href="#free">
+                  Browse free lessons
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="play-badge" href="https://play.google.com/store/apps/details?id=app.xsel" target="_blank" rel="noopener">
+                  <div>
+                    <small>GET IT ON</small>
+                    Google Play
+                  </div>
+                </a>
+              </div>
+              <dl class="stats">
+                <div><dt>2.4k</dt><dd>Learners</dd></div>
+                <div><dt>12</dt><dd>Weekly labs</dd></div>
+                <div><dt>8 yrs</dt><dd>On the floor</dd></div>
+              </dl>
+            </div>
+          </section>
+
+          <section class="block" id="why">
+            <p class="sec-kicker reveal">Why xSEL</p>
+            <h2 class="sec-title reveal">A room built for speaking English well.</h2>
+            <p class="sec-copy reveal">Live correction, small groups, and lessons that stick — in Islamabad or on Zoom.</p>
+            <div class="why-grid">
+              <article class="why-card reveal">
+                <div class="why-num">01</div>
+                <h3>Taught by him, not a handoff</h3>
+                <p>Every class and every correction come from Sir Mahmood Sarwar himself. No substitutes.</p>
+              </article>
+              <article class="why-card reveal">
+                <div class="why-num">02</div>
+                <h3>A room built for speaking</h3>
+                <p>Small groups, real-time correction, and a fear-free room where mistakes help you improve.</p>
+              </article>
+              <article class="why-card reveal">
+                <div class="why-num">03</div>
+                <h3>In the room, or on the screen</h3>
+                <p>Join live in G-11 Markaz, Islamabad, or on Zoom. Miss a class and catch the recording anytime.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="block alt" id="premium">
+            <p class="sec-kicker reveal">Paid courses</p>
+            <h2 class="sec-title reveal">Premium paths with live cohorts.</h2>
+            <p class="sec-copy reveal">Structured courses with feedback — grammar, writing, and exam English that moves with you.</p>
+            <div class="card-stack">
+              <article class="course-card t0 reveal">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Live</span>
+                <h3>Fundamentals of Grammar</h3>
+                <p class="blurb">Core grammar foundations explained clearly from the ground up.</p>
+                <div class="meta">
+                  <span>PKR 12,000 · Live cohort</span>
+                  <span class="cta">Enroll <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </article>
+              <article class="course-card t1 reveal">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Writing</span>
+                <h3>Essay & Precis Lab</h3>
+                <p class="blurb">Weekly drafts marked line by line until the structure holds.</p>
+                <div class="meta">
+                  <span>PKR 15,000 · 8 weeks</span>
+                  <span class="cta">Enroll <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </article>
+              <article class="course-card t2 reveal">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Speaking</span>
+                <h3>Spoken English Studio</h3>
+                <p class="blurb">Confidence on the floor — drills, correction, and real conversation.</p>
+                <div class="meta">
+                  <span>PKR 10,000 · Evenings</span>
+                  <span class="cta">Enroll <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="block" id="free">
+            <p class="sec-kicker reveal">Free lessons</p>
+            <h2 class="sec-title reveal">Watch anytime. No sign-up.</h2>
+            <p class="sec-copy reveal">Free YouTube playlists — grammar, exams, speaking, vocabulary, and more.</p>
+            <div class="card-stack">
+              <a class="course-card t0 reveal" href="https://www.youtube.com/playlist?list=PLQPKw6ae4dlYaGeeJHh8oJABDVxCtS59h" target="_blank" rel="noopener">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Grammar</span>
+                <h3>FoG — Fundamentals of Grammar</h3>
+                <p class="blurb">Core grammar foundations explained clearly from the ground up.</p>
+                <div class="meta">
+                  <span>35 videos</span>
+                  <span class="cta">Watch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </a>
+              <a class="course-card t1 reveal" href="https://www.youtube.com/playlist?list=PLQPKw6ae4dlY4ed4OHlu2uEmsw3ZDghLS" target="_blank" rel="noopener">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Speaking</span>
+                <h3>English Bol Chaal</h3>
+                <p class="blurb">Practical phrases and confidence in daily conversation.</p>
+                <div class="meta">
+                  <span>67 videos</span>
+                  <span class="cta">Watch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </a>
+              <a class="course-card t2 reveal" href="https://www.youtube.com/playlist?list=PLQPKw6ae4dlZL0vtW2oagpik40uK8yLXL" target="_blank" rel="noopener">
+                <div class="rings" aria-hidden="true"></div>
+                <span class="tag">Exam prep</span>
+                <h3>CSS MPT Exam Prep</h3>
+                <p class="blurb">Mocks, past papers, and MCQ practice for competitive tracks.</p>
+                <div class="meta">
+                  <span>19 videos</span>
+                  <span class="cta">Watch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </a>
+            </div>
+            <button class="more-btn" type="button">Show more playlists</button>
+          </section>
+
+          <section class="block alt" id="reviews">
+            <p class="sec-kicker reveal">Reviews</p>
+            <h2 class="sec-title reveal">Learners who stayed.</h2>
+            <div class="review-panel reveal" id="reviewPanel">
+              <div class="stars" aria-label="5 stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.4l1.1-6.5L2.6 9.3l6.5-.9L12 2.5z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.4l1.1-6.5L2.6 9.3l6.5-.9L12 2.5z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.4l1.1-6.5L2.6 9.3l6.5-.9L12 2.5z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.4l1.1-6.5L2.6 9.3l6.5-.9L12 2.5z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.4l1.1-6.5L2.6 9.3l6.5-.9L12 2.5z"/></svg>
+              </div>
+              <p class="quote" id="reviewQuote">The best mentor for aspirants. I was stuck on English prep for three years until Fundamentals of Grammar turned things around.</p>
+              <div class="reviewer">
+                <img id="reviewAvatar" src="reviews/haseeb-ur-rehman.jpg" alt="" width="44" height="44" />
+                <div>
+                  <strong id="reviewName">Haseeb Ur Rehman</strong>
+                  <span id="reviewRole">CSS aspirant</span>
+                </div>
+              </div>
+              <div class="review-dots" id="reviewDots" role="tablist" aria-label="Reviews"></div>
+            </div>
+            <div class="review-stats reveal">
+              <div><strong>2.4k+</strong><span>Learners</span></div>
+              <div><strong>4.9</strong><span>Avg. rating</span></div>
+              <div><strong>96%</strong><span>Return rate</span></div>
+            </div>
+          </section>
+
+          <section class="block" id="social">
+            <p class="sec-kicker reveal">Social</p>
+            <h2 class="sec-title reveal">Follow the lab.</h2>
+            <p class="sec-copy reveal">Daily clips, prompts, and community chats — wherever you already are.</p>
+            <div class="social-grid">
+              <a class="social-card ig reveal" href="https://www.instagram.com/english.with.mahmood.sarwar/" target="_blank" rel="noopener">
+                <div class="social-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                </div>
+                <div><strong>Instagram</strong><span>Daily clips</span></div>
+                <span class="go">Open →</span>
+              </a>
+              <a class="social-card fb reveal" href="https://www.facebook.com/EnglishWithMahmoodSarwar" target="_blank" rel="noopener">
+                <div class="social-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v7h3v-7h2.5l.5-3H14V9z"/></svg>
+                </div>
+                <div><strong>Facebook</strong><span>Daily prompts</span></div>
+                <span class="go">Open →</span>
+              </a>
+              <a class="social-card wa reveal" href="https://whatsapp.com/channel/0029VaOFixGDTkKAGpDqZK2L" target="_blank" rel="noopener">
+                <div class="social-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1 1 12 20zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7.9-.3.2-.5.1a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.1-.3v-.3c0-.1-.5-1.2-.7-1.6s-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3s-.8.8-.8 1.9.8 2.2.9 2.3a8.9 8.9 0 0 0 3.4 2.7c.5.2.8.3 1.1.4a2.6 2.6 0 0 0 1.2.1 2 2 0 0 0 1.3-.9c.2-.3.2-.6.1-.7s-.2-.1-.4-.2z"/></svg>
+                </div>
+                <div><strong>WhatsApp</strong><span>Channel & community</span></div>
+                <span class="go">Join →</span>
+              </a>
+              <a class="social-card tt reveal" href="https://www.tiktok.com/@english_with_mahmood" target="_blank" rel="noopener">
+                <div class="social-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.2 1.8 3.8 4 4.2v3c-1.4-.1-2.7-.5-3.9-1.3v5.7a5.8 5.8 0 1 1-5-5.7v3.1a2.8 2.8 0 1 0 2 2.7V3h2.9z"/></svg>
+                </div>
+                <div><strong>TikTok</strong><span>Short lessons</span></div>
+                <span class="go">Open →</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="block dark" id="location">
+            <p class="sec-kicker reveal">Visit</p>
+            <h2 class="sec-title reveal">G-11 Markaz, Islamabad.</h2>
+            <p class="sec-copy reveal">Come to the studio — or join the same class from anywhere on Zoom.</p>
+            <div class="loc-card reveal">
+              <div class="loc-map">
+                <div class="pin" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+                </div>
+              </div>
+              <div class="loc-body">
+                <h3>Sarwar English Lab</h3>
+                <p>G-11 Markaz · Islamabad, Pakistan</p>
+                <div class="loc-links">
+                  <a href="tel:+923714059245">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 4h3l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5L16 13.5l4 1.5v3A2 2 0 0 1 18 20 14 14 0 0 1 4 6a2 2 0 0 1 2.5-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    +92 371 4059245
+                  </a>
+                  <a href="mailto:xselsarwarenglishlab@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
+                    xselsarwarenglishlab@gmail.com
+                  </a>
+                  <a href="https://share.google/MFcGPe8XDTitAVMVg" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Get directions
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <div class="footer-brand">
+              <img src="app_logo.png" alt="" width="40" height="40" />
+              <div>
+                <strong>Sarwar English Lab<em>.</em></strong>
+                <span>Learn. Practise. Progress.</span>
+              </div>
+            </div>
+            <p>A better way to understand English, practise with purpose, and move forward with confidence.</p>
+            <div class="footer-cols">
+              <div>
+                <h4>Explore</h4>
+                <a href="#why">Why XSEL</a>
+                <a href="#premium">Paid Courses</a>
+                <a href="#free">Free Lessons</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#location">Visit the lab</a>
+              </div>
+              <div>
+                <h4>Contact</h4>
+                <a href="tel:+923714059245">Call the lab</a>
+                <a href="mailto:xselsarwarenglishlab@gmail.com">Email us</a>
+                <a href="https://play.google.com/store/apps/details?id=app.xsel" target="_blank" rel="noopener">Get the app</a>
+              </div>
+            </div>
+            <div class="footer-bottom">© <span id="year"></span> Sarwar English Lab · Mobile preview</div>
+          </footer>
+        </div>
+
+        <div class="drawer" id="drawer" aria-hidden="true">
+          <nav>
+            <a href="#why" data-close>Why Xsel</a>
+            <a href="#premium" data-close>Paid Courses</a>
+            <a href="#free" data-close>Free Lessons</a>
+            <a href="#reviews" data-close>Reviews</a>
+            <a href="#social" data-close>Social</a>
+            <a href="#location" data-close>Visit</a>
+          </nav>
+          <div class="drawer-cta">
+            <a href="#" data-close>Log in</a>
+            <a class="ghost" href="#" id="closeDrawer">Close menu</a>
+          </div>
+        </div>
+
+        <div class="home-indicator" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scrollEl = document.getElementById("scroll");
+    const header = document.getElementById("header");
+    const statusBar = document.getElementById("statusBar");
+    const menuBtn = document.getElementById("menuBtn");
+    const drawer = document.getElementById("drawer");
+    const closeDrawer = document.getElementById("closeDrawer");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function onScroll() {
+      const solid = scrollEl.scrollTop > 16;
+      header.classList.toggle("is-solid", solid);
+      statusBar.classList.toggle("is-solid", solid);
+    }
+    scrollEl.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    function setDrawer(open) {
+      drawer.classList.toggle("open", open);
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    menuBtn.addEventListener("click", () => setDrawer(!drawer.classList.contains("open")));
+    closeDrawer.addEventListener("click", (e) => { e.preventDefault(); setDrawer(false); });
+    drawer.querySelectorAll("[data-close]").forEach((el) => {
+      el.addEventListener("click", () => setDrawer(false));
+    });
+
+    const reviews = [
+      {
+        quote: "The best mentor for aspirants. I was stuck on English prep for three years until Fundamentals of Grammar turned things around.",
+        name: "Haseeb Ur Rehman",
+        role: "CSS aspirant",
+        avatar: "reviews/haseeb-ur-rehman.jpg",
+        tone: "",
+      },
+      {
+        quote: "I went in for literature and came out loving grammar too. The way he explains things, it just sticks.",
+        name: "Ayesha Ayaz",
+        role: "Learner",
+        avatar: "reviews/ayesha-ayaz.jpg",
+        tone: "",
+      },
+      {
+        quote: "He has a rare ability to start from the basics and build all the way up, without leaving anyone behind.",
+        name: "Rahmeen Aslam",
+        role: "Learner",
+        avatar: "reviews/rahmeen-aslam.jpg",
+        tone: "is-yellow",
+      },
+      {
+        quote: "I couldn't speak a line of English before. Two months later, I speak with confidence and without hesitation.",
+        name: "Aneela Yaqoub",
+        role: "Spoken English Program",
+        avatar: "reviews/aneela-yaqoub.jpg",
+        tone: "is-green",
+      },
+    ];
+
+    const panel = document.getElementById("reviewPanel");
+    const dots = document.getElementById("reviewDots");
+    let active = 0;
+
+    reviews.forEach((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Review " + (i + 1));
+      b.addEventListener("click", () => showReview(i));
+      dots.appendChild(b);
+    });
+
+    function showReview(i) {
+      active = i;
+      const r = reviews[i];
+      document.getElementById("reviewQuote").textContent = r.quote;
+      document.getElementById("reviewName").textContent = r.name;
+      document.getElementById("reviewRole").textContent = r.role;
+      document.getElementById("reviewAvatar").src = r.avatar;
+      panel.classList.remove("is-yellow", "is-green");
+      if (r.tone) panel.classList.add(r.tone);
+      [...dots.children].forEach((d, idx) => d.classList.toggle("active", idx === i));
+    }
+    showReview(0);
+    setInterval(() => showReview((active + 1) % reviews.length), 7000);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("in");
+        });
+      },
+      { root: scrollEl, threshold: 0.12, rootMargin: "0px 0px -24px 0px" }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>

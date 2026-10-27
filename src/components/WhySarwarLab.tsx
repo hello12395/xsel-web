@@ -116,7 +116,7 @@ function MethodCard3D({
         <div className="method-card-base rounded-[24px]" aria-hidden />
 
         <div
-          className={`method-card-face relative flex h-full min-h-[20rem] flex-col overflow-hidden rounded-[20px] p-5 ring-1 ring-inset sm:min-h-[24rem] sm:rounded-[24px] sm:p-7 md:min-h-[27rem] md:p-8 ${accent.ring}`}
+          className={`method-card-face relative flex h-full min-h-[16.5rem] flex-col overflow-hidden rounded-[20px] p-4 ring-1 ring-inset sm:min-h-[24rem] sm:rounded-[24px] sm:p-7 md:min-h-[27rem] md:p-8 ${accent.ring}`}
         >
           <div className="method-card-edge" aria-hidden />
           <div className="method-card-rim" aria-hidden />
@@ -144,7 +144,7 @@ function MethodCard3D({
           />
 
           <span
-            className="pointer-events-none absolute top-5 right-5 font-display text-[5.5rem] leading-none text-ink/[0.05] select-none"
+            className="pointer-events-none absolute top-4 right-4 font-display text-[4.25rem] leading-none text-ink/[0.05] select-none sm:top-5 sm:right-5 sm:text-[5.5rem]"
             aria-hidden
           >
             {number}
@@ -152,17 +152,17 @@ function MethodCard3D({
 
           <div className="method-card-copy relative flex min-h-0 flex-1 flex-col">
             <div className="relative flex items-center gap-3">
-              <span className={`font-display text-3xl leading-none ${accent.numberClass}`}>
+              <span className={`font-display text-[1.65rem] leading-none sm:text-3xl ${accent.numberClass}`}>
                 {number}
               </span>
               <span className={`h-px flex-1 bg-gradient-to-r ${accent.accentBar}`} />
             </div>
 
-            <h3 className="font-display relative mt-8 text-[1.5rem] leading-[1.2] text-ink md:text-[1.65rem]">
+            <h3 className="font-display relative mt-5 text-[1.35rem] leading-[1.2] text-ink sm:mt-8 sm:text-[1.5rem] md:text-[1.65rem]">
               {title}
             </h3>
 
-            <p className="relative mt-5 flex-1 text-[0.98rem] leading-[1.7] text-ink/80 md:text-base md:leading-[1.7]">
+            <p className="relative mt-3.5 flex-1 text-[0.95rem] leading-[1.65] text-ink/80 sm:mt-5 sm:text-[0.98rem] sm:leading-[1.7] md:text-base md:leading-[1.7]">
               {body}
             </p>
           </div>
@@ -172,11 +172,42 @@ function MethodCard3D({
   );
 }
 
+function MethodListMobile() {
+  return (
+    <Stagger className="overflow-hidden rounded-2xl border border-ink/10 bg-white/70 shadow-[0_10px_28px_-22px_rgba(21,47,41,0.28)] backdrop-blur-sm sm:hidden">
+      {whyCards.map((card, index) => {
+        const accent = cardAccents[index % cardAccents.length];
+        return (
+          <StaggerItem key={card.number}>
+            <article
+              className={`flex gap-3.5 px-4 py-4 ${
+                index < whyCards.length - 1 ? "border-b border-ink/8" : ""
+              }`}
+            >
+              <span
+                className={`font-display mt-0.5 w-8 shrink-0 text-[1.15rem] leading-none tabular-nums ${accent.numberClass}`}
+              >
+                {card.number}
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-display text-[1.05rem] leading-[1.25] tracking-[-0.03em] text-heading">
+                  {card.title}
+                </h3>
+                <p className="mt-1.5 text-[13px] leading-6 text-muted">{card.body}</p>
+              </div>
+            </article>
+          </StaggerItem>
+        );
+      })}
+    </Stagger>
+  );
+}
+
 export function WhySarwarLab() {
   return (
     <section id="why" className="relative section-anchor overflow-hidden border-b border-ink/8 bg-method-section">
-      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
-        <div className="grid items-start gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        <div className="grid items-start gap-7 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
           <div className="method-intro-panel min-w-0">
             <SectionHeader
               className="max-w-none"
@@ -187,18 +218,21 @@ export function WhySarwarLab() {
           </div>
 
           <ShimmerGate minMs={450} skeleton={<WhyCardsSkeleton />}>
-            <Stagger className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
-              {whyCards.map((card, index) => (
-                <StaggerItem key={card.number} className="h-full">
-                  <MethodCard3D
-                    number={card.number}
-                    title={card.title}
-                    body={card.body}
-                    index={index}
-                  />
-                </StaggerItem>
-              ))}
-            </Stagger>
+            <>
+              <MethodListMobile />
+              <Stagger className="hidden min-w-0 grid-cols-1 gap-3.5 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
+                {whyCards.map((card, index) => (
+                  <StaggerItem key={card.number} className="h-full">
+                    <MethodCard3D
+                      number={card.number}
+                      title={card.title}
+                      body={card.body}
+                      index={index}
+                    />
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </>
           </ShimmerGate>
         </div>
       </div>

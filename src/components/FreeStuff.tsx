@@ -82,9 +82,9 @@ export function FreeStuff() {
   return (
     <section
       id="free-lessons"
-      className="section-anchor border-b border-ink/8 bg-[#F7F3EA]"
+      className="section-anchor border-b border-ink/8 bg-[#FFFCF6]"
     >
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
         <SectionHeader
           title="Free Lessons"
           copy="Free YouTube playlists — grammar, exams preparation, speaking, vocabulary, and more. Watch anytime, no sign-up."
