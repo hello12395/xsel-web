@@ -93,12 +93,12 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
   return (
     <main className="min-h-dvh bg-[linear-gradient(180deg,#f7f4ec_0%,#f3efe6_45%,#efe9df_100%)]">
       <div className="border-b border-white/10 bg-[#152F29]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 pt-24 md:px-8 md:pt-28">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-2 pt-[max(3.75rem,calc(env(safe-area-inset-top)+2.5rem))] sm:px-5 sm:py-4 sm:pt-24 md:px-8 md:pt-28">
           <Link
             href={`/premium/${id}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white/75 transition hover:text-white"
+            className="inline-flex items-center gap-2 text-[13px] font-semibold text-white/75 transition hover:text-white sm:text-sm"
           >
-            <ArrowIcon className="h-4 w-4 -scale-x-100" />
+            <ArrowIcon className="h-3.5 w-3.5 -scale-x-100 sm:h-4 sm:w-4" />
             Back to course
           </Link>
           <p className="hidden text-sm font-medium text-white/60 sm:block">
@@ -107,7 +107,7 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-5 py-8 md:px-8 md:py-12">
+      <div className="mx-auto max-w-5xl px-4 py-3 sm:px-5 sm:py-8 md:px-8 md:py-12">
         <PaymentVerification
           course={paymentCourse}
           batches={batches}

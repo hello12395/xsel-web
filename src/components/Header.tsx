@@ -71,6 +71,21 @@ export function Header() {
     router.refresh();
   }
 
+  function goToSection(href: string) {
+    setOpen(false);
+    document.body.style.overflow = "";
+
+    const id = href.startsWith("#") ? href.slice(1) : "";
+    if (!id) return;
+
+    window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", href);
+    }, 80);
+  }
+
   return (
     <header
       className={`fixed top-0 right-0 left-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 ${
@@ -153,17 +168,21 @@ export function Header() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className={`overflow-hidden border-t border-white/10 xl:hidden ${
               solid ? "bg-[#152F29]" : "bg-[#152F29]/95 backdrop-blur-md"
             }`}
           >
-            <div className="flex max-h-[min(72dvh,32rem)] flex-col gap-0.5 overflow-y-auto overscroll-contain px-4 py-3 sm:px-5 sm:py-4">
+            <div className="flex max-h-[min(78dvh,36rem)] flex-col gap-1 overflow-y-auto overscroll-contain px-4 py-3 sm:px-5 sm:py-4">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="rounded-xl px-3.5 py-3.5 text-[15px] font-bold text-white/85 transition-colors active:bg-white/10 hover:bg-white/10 hover:text-white"
-                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-3.5 py-3.5 text-[16px] font-bold text-white/90 transition-colors active:bg-white/10 hover:bg-white/10 hover:text-white"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    goToSection(link.href);
+                  }}
                 >
                   {link.label}
                 </a>
@@ -172,15 +191,18 @@ export function Header() {
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="mt-2 mb-1 min-h-12 rounded-[10px] border border-white/25 bg-white/10 px-4 py-3.5 text-center text-[15px] font-bold text-white"
+                  className="mt-3 mb-1 min-h-12 rounded-[10px] border border-white/25 bg-white/10 px-4 py-3.5 text-center text-[15px] font-bold text-white"
                 >
                   Log out
                 </button>
               ) : (
                 <a
                   href="#free-lessons"
-                  className="mt-2 mb-1 min-h-12 rounded-[10px] bg-white px-4 py-3.5 text-center text-[15px] font-extrabold text-[#152F29]"
-                  onClick={() => setOpen(false)}
+                  className="mt-3 mb-1 min-h-12 rounded-[10px] bg-white px-4 py-3.5 text-center text-[15px] font-extrabold text-[#152F29]"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    goToSection("#free-lessons");
+                  }}
                 >
                   Start free
                 </a>

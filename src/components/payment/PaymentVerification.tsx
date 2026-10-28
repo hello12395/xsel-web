@@ -123,13 +123,17 @@ function CopyField({
   return (
     <div
       className={cn(
-        "group flex items-center justify-between gap-3 rounded-xl border border-[#152F29]/10 bg-[#F3F7F0] px-4 py-3.5 transition hover:border-[#152F29]/20 hover:bg-[#EAF1E6]",
+        "group flex items-center justify-between gap-2.5 rounded-xl border border-[#152F29]/10 bg-[#F3F7F0] px-3 py-3 transition hover:border-[#152F29]/20 hover:bg-[#EAF1E6] sm:gap-3 sm:px-4 sm:py-3.5",
         className
       )}
     >
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-medium tracking-wider text-[#152F29]/45 uppercase">{label}</p>
-        <p className="mt-0.5 break-all font-semibold text-[#152F29]">{value}</p>
+        <p className="text-[10px] font-medium tracking-wider text-[#152F29]/45 uppercase sm:text-[11px]">
+          {label}
+        </p>
+        <p className="mt-0.5 break-all text-[13px] font-semibold text-[#152F29] sm:text-[15px]">
+          {value}
+        </p>
       </div>
       <button
         type="button"
@@ -176,20 +180,22 @@ function PaymentMethodsPanel() {
   };
 
   return (
-    <section className="card-surface overflow-hidden rounded-[22px]">
-      <div className="border-b border-ink/8 px-5 py-4 sm:px-6">
+    <section className="card-surface overflow-hidden rounded-[18px] sm:rounded-[22px]">
+      <div className="border-b border-ink/8 px-3.5 py-3.5 sm:px-6 sm:py-4">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-forest text-xs font-bold text-white">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-forest text-[11px] font-bold text-white sm:h-7 sm:w-7 sm:text-xs">
             1
           </span>
           <div>
-            <h2 className="text-base font-semibold text-ink">Send payment</h2>
-            <p className="text-sm text-ink/50">Choose a method and copy the account details</p>
+            <h2 className="text-[15px] font-semibold text-ink sm:text-base">Send payment</h2>
+            <p className="text-[12px] text-ink/50 sm:text-sm">
+              Choose a method and copy the account details
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#F3F7F0] p-2 sm:gap-2.5 sm:p-2.5">
+      <div className="grid grid-cols-3 gap-1.5 border-b border-ink/8 bg-[#F3F7F0] p-1.5 sm:gap-2.5 sm:p-2.5">
         {PAYMENT_TABS.map((tab) => {
           const active = activeTab === tab.id;
 
@@ -199,7 +205,7 @@ function PaymentMethodsPanel() {
               type="button"
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "flex items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 text-xs font-semibold transition sm:py-3 sm:text-sm",
+                "flex items-center justify-center gap-1 rounded-lg px-1.5 py-2.5 text-[11px] font-semibold transition sm:gap-1.5 sm:rounded-xl sm:px-2 sm:py-3 sm:text-sm",
                 active
                   ? "bg-primary text-white shadow-[0_10px_22px_-12px_rgba(21,47,41,0.65)]"
                   : "bg-white/90 text-heading hover:bg-[#EAF1E6]",
@@ -213,15 +219,15 @@ function PaymentMethodsPanel() {
         })}
       </div>
 
-      <div className="p-5 sm:p-6">
-        <p className="mb-4 text-sm text-ink/50">{hints[activeTab]}</p>
-        <div className="grid gap-3 sm:grid-cols-2">
+      <div className="p-3.5 sm:p-6">
+        <p className="mb-3 text-[13px] text-ink/50 sm:mb-4 sm:text-sm">{hints[activeTab]}</p>
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
           {tabContent[activeTab].map((field) => (
             <CopyField
               key={field.label}
               label={field.label}
               value={field.value}
-              className={field.fullWidth ? "sm:col-span-2" : undefined}
+              className={field.fullWidth ? "col-span-2" : undefined}
             />
           ))}
         </div>
@@ -238,8 +244,8 @@ function CourseSummaryBar({
   batchName?: string;
 }) {
   return (
-    <div className="card-surface flex items-center gap-4 rounded-[22px] p-4 sm:p-5">
-      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-ink/5 ring-1 ring-ink/8 sm:h-16 sm:w-16">
+    <div className="card-surface grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[18px] p-3 sm:flex sm:gap-4 sm:rounded-[22px] sm:p-5">
+      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-ink/5 ring-1 ring-ink/8 sm:h-16 sm:w-16">
         {course.thumbnail_url ? (
           <Image
             src={course.thumbnail_url}
@@ -254,14 +260,20 @@ function CourseSummaryBar({
           </div>
         )}
       </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-xs font-medium tracking-wider text-ink/40 uppercase">Course</p>
-        <h2 className="mt-0.5 truncate text-base font-semibold text-ink sm:text-lg">{course.title}</h2>
-        {batchName ? <p className="mt-0.5 truncate text-sm text-ink/50">{batchName}</p> : null}
+      <div className="min-w-0">
+        <p className="text-[10px] font-medium tracking-wider text-ink/40 uppercase sm:text-xs">
+          Course
+        </p>
+        <h2 className="mt-0.5 truncate text-[14px] font-semibold text-ink sm:text-lg">
+          {course.title}
+        </h2>
+        {batchName ? (
+          <p className="mt-0.5 truncate text-[12px] text-ink/50 sm:text-sm">{batchName}</p>
+        ) : null}
       </div>
       <div className="shrink-0 text-right">
-        <p className="text-xs text-ink/40">Amount due</p>
-        <p className="font-display text-xl tracking-tight text-forest tabular-nums sm:text-2xl">
+        <p className="text-[10px] text-ink/40 sm:text-xs">Amount due</p>
+        <p className="font-display text-lg tracking-tight text-forest tabular-nums sm:text-2xl">
           {formatAmount(Number(course.price))}
         </p>
       </div>
@@ -456,22 +468,22 @@ function ReceiptUploadForm({
   }
 
   return (
-    <section className="card-surface rounded-[22px]">
-      <div className="border-b border-ink/8 px-5 py-4 sm:px-6">
+    <section className="card-surface rounded-[18px] sm:rounded-[22px]">
+      <div className="border-b border-ink/8 px-3.5 py-3.5 sm:px-6 sm:py-4">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-forest text-xs font-bold text-white">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-forest text-[11px] font-bold text-white sm:h-7 sm:w-7 sm:text-xs">
             2
           </span>
           <div>
-            <h2 className="text-base font-semibold text-ink">
+            <h2 className="text-[15px] font-semibold text-ink sm:text-base">
               {isResubmit ? "Upload a new receipt" : "Upload receipt"}
             </h2>
-            <p className="text-sm text-ink/50">JPG, PNG or PDF · Max 5MB</p>
+            <p className="text-[12px] text-ink/50 sm:text-sm">JPG, PNG or PDF · Max 5MB</p>
           </div>
         </div>
       </div>
 
-      <div className="p-5 sm:p-6">
+      <div className="p-3.5 sm:p-6">
         <div
           role="button"
           tabIndex={0}
@@ -486,7 +498,7 @@ function ReceiptUploadForm({
           onDrop={onDrop}
           onClick={() => inputRef.current?.click()}
           className={cn(
-            "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-8 transition",
+            "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-3 py-6 transition sm:px-4 sm:py-8",
             dragOver
               ? "border-forest bg-forest/8"
               : "border-ink/15 bg-cream/40 hover:border-forest/40 hover:bg-forest/5"
@@ -545,14 +557,14 @@ function ReceiptUploadForm({
             type="button"
             disabled={loading || !file}
             onClick={onSubmit}
-            className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-forest px-5 text-sm font-semibold text-white transition hover:bg-forest-deep disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-12 w-full flex-1 items-center justify-center gap-2 rounded-full bg-forest px-5 text-[15px] font-semibold text-white transition hover:bg-forest-deep disabled:cursor-not-allowed disabled:opacity-50 sm:h-11 sm:text-sm"
           >
             {loading ? "Submitting..." : isResubmit ? "Resubmit for verification" : "Submit for verification"}
             {!loading && <SendIcon className="h-4 w-4" />}
           </button>
           <Link
             href={`/premium/${courseId}`}
-            className="inline-flex h-11 items-center justify-center rounded-full border border-ink/15 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/25"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full border border-ink/15 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/25 sm:w-auto"
           >
             Cancel
           </Link>
@@ -608,54 +620,58 @@ export function PaymentVerification({
           : "Complete your enrollment";
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-stretch lg:gap-5">
-        <div className="relative overflow-hidden rounded-[22px] border border-[#152F29]/10 bg-gradient-to-br from-[#152F29] via-[#1a3d35] to-[#234f44] p-5 shadow-[0_20px_40px_-24px_rgba(21,47,41,0.55)] sm:rounded-[24px] sm:p-6">
+    <div className="space-y-3 sm:space-y-6">
+      <div className="grid gap-2.5 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-stretch lg:gap-5">
+        <div className="relative overflow-hidden rounded-[14px] border border-[#152F29]/10 bg-gradient-to-br from-[#152F29] via-[#1a3d35] to-[#234f44] px-3.5 py-3 shadow-[0_20px_40px_-24px_rgba(21,47,41,0.55)] sm:rounded-[24px] sm:p-6">
           <div
-            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#EFAA93]/18 blur-2xl"
+            className="pointer-events-none absolute -right-10 -top-10 hidden h-36 w-36 rounded-full bg-[#EFAA93]/18 blur-2xl sm:block"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute -bottom-12 left-8 h-28 w-28 rounded-full bg-white/10 blur-2xl"
+            className="pointer-events-none absolute -bottom-12 left-8 hidden h-28 w-28 rounded-full bg-white/10 blur-2xl sm:block"
             aria-hidden
           />
-          <p className="relative text-[11px] font-semibold tracking-[0.24em] text-[#EFAA93] uppercase">
+          <p className="relative text-[9px] font-semibold tracking-[0.18em] text-[#EFAA93] uppercase sm:text-[11px] sm:tracking-[0.24em]">
             Enrollment checkout
           </p>
-          <h2 className="font-display relative mt-3 text-2xl leading-tight tracking-tight text-white sm:text-[2rem]">
+          <h2 className="font-display relative mt-1 text-[1.15rem] leading-tight tracking-tight text-white sm:mt-3 sm:text-[2rem]">
             {heading}
           </h2>
-          <p className="relative mt-3 max-w-md text-sm leading-6 text-white/65">
+          <p className="relative mt-1 hidden max-w-md text-sm leading-6 text-white/65 sm:mt-3 sm:block">
             Secure your seat with a quick payment and receipt upload.
           </p>
         </div>
 
         {!status ? (
-          <aside className="rounded-[22px] border border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] px-4 py-4 shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)] sm:rounded-[24px] sm:px-5 sm:py-5">
-            <p className="text-[10px] font-bold tracking-[0.2em] text-[#5C4033] uppercase">
+          <aside className="rounded-[14px] border border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] px-3 py-3 shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)] sm:rounded-[24px] sm:px-5 sm:py-5">
+            <p className="text-[9px] font-bold tracking-[0.16em] text-[#5C4033] uppercase sm:text-[10px] sm:tracking-[0.2em]">
               Important note · How to enroll
             </p>
-            <ol className="mt-3.5 space-y-2.5 text-sm leading-relaxed text-[#152F29]">
-              <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
+            <ol className="mt-2 grid grid-cols-3 gap-1.5 sm:mt-3.5 sm:grid-cols-1 sm:gap-2.5 sm:space-y-0">
+              <li className="flex flex-col items-start gap-1 rounded-lg bg-[#152F29]/8 px-1.5 py-2 sm:flex-row sm:items-start sm:gap-2.5 sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[10px] font-bold text-white sm:h-5 sm:w-5 sm:text-[11px]">
                   1
                 </span>
-                <span className="font-bold">Pay the course fee</span>
+                <span className="text-[10px] leading-snug font-bold text-[#152F29] sm:text-sm sm:leading-relaxed">
+                  Pay the course fee
+                </span>
               </li>
-              <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
+              <li className="flex flex-col items-start gap-1 rounded-lg bg-[#152F29]/8 px-1.5 py-2 sm:flex-row sm:items-start sm:gap-2.5 sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[10px] font-bold text-white sm:h-5 sm:w-5 sm:text-[11px]">
                   2
                 </span>
-                <span className="font-bold">Upload the receipt</span>
+                <span className="text-[10px] leading-snug font-bold text-[#152F29] sm:text-sm sm:leading-relaxed">
+                  Upload the receipt
+                </span>
               </li>
-              <li className="flex gap-2.5">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[11px] font-bold text-white">
+              <li className="flex flex-col items-start gap-1 rounded-lg bg-[#152F29]/8 px-1.5 py-2 sm:flex-row sm:items-start sm:gap-2.5 sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#152F29] text-[10px] font-bold text-white sm:h-5 sm:w-5 sm:text-[11px]">
                   3
                 </span>
-                <span>
-                  <span className="font-bold">Wait for verification by admins</span>
-                  <span className="mt-0.5 block text-[12px] font-semibold text-[#5C4033]/85">
-                    Might take up to 24 hours
+                <span className="text-[10px] leading-snug text-[#152F29] sm:text-sm sm:leading-relaxed">
+                  <span className="font-bold">Wait for verification</span>
+                  <span className="mt-0.5 block text-[9px] font-semibold text-[#5C4033]/85 sm:text-[12px]">
+                    Up to 24 hours
                   </span>
                 </span>
               </li>
@@ -702,7 +718,7 @@ export function PaymentVerification({
       ) : null}
 
       {showPaymentSteps ? (
-        <div className="grid gap-6 lg:grid-cols-5 lg:gap-8">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-5 lg:gap-8">
           <div className="lg:col-span-3">
             <PaymentMethodsPanel />
           </div>
