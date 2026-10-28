@@ -1,38 +1,85 @@
 "use client";
 
-import { motion, useInView, type HTMLMotionProps } from "motion/react";
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  type HTMLMotionProps,
+} from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+const viewport = { once: true, amount: 0.12, margin: "0px 0px -8% 0px" } as const;
+
+type RevealVariant = "up" | "down" | "left" | "right" | "scale" | "fade";
+
+const revealFrom: Record<
+  RevealVariant,
+  { opacity: number; x?: number; y?: number; scale?: number }
+> = {
+  up: { opacity: 0, y: 36 },
+  down: { opacity: 0, y: -28 },
+  left: { opacity: 0, x: -36 },
+  right: { opacity: 0, x: 36 },
+  scale: { opacity: 0, y: 24, scale: 0.94 },
+  fade: { opacity: 0 },
+};
 
 type RevealProps = HTMLMotionProps<"div"> & {
   children: ReactNode;
   delay?: number;
   y?: number;
+  variant?: RevealVariant;
 };
 
 /**
- * Fade/slide-in when visible. Falls back to visible after a short timeout
- * so remounts / Suspense client switches never leave sections blank.
+ * Fade/slide-in when scrolled into view.
+ * Long safety timeout only — short force-show would skip scroll animations.
  */
-export function Reveal({ children, delay = 0, y = 24, className, ...props }: RevealProps) {
+export function Reveal({
+  children,
+  delay = 0,
+  y,
+  variant = "up",
+  className,
+  ...props
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.08, margin: "80px 0px" });
+  const inView = useInView(ref, viewport);
+  const reduceMotion = useReducedMotion();
   const [forceShow, setForceShow] = useState(false);
 
   useEffect(() => {
-    const t = window.setTimeout(() => setForceShow(true), 700);
+    const t = window.setTimeout(() => setForceShow(true), 6000);
     return () => window.clearTimeout(t);
   }, []);
 
-  const show = inView || forceShow;
+  const show = inView || forceShow || !!reduceMotion;
+  const from = revealFrom[variant];
+  const initial = reduceMotion
+    ? { opacity: 1 }
+    : {
+        opacity: from.opacity,
+        x: from.x ?? 0,
+        y: y ?? from.y ?? 0,
+        scale: from.scale ?? 1,
+      };
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y }}
-      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      transition={{ duration: 0.65, delay: show ? delay : 0, ease }}
+      initial={initial}
+      animate={
+        show
+          ? { opacity: 1, x: 0, y: 0, scale: 1 }
+          : initial
+      }
+      transition={{
+        duration: reduceMotion ? 0.01 : 0.7,
+        delay: show && !reduceMotion ? delay : 0,
+        ease,
+      }}
       className={className}
       {...props}
     >
@@ -44,22 +91,23 @@ export function Reveal({ children, delay = 0, y = 24, className, ...props }: Rev
 export function Stagger({
   children,
   className,
-  delay = 0.08,
+  delay = 0.09,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.06, margin: "100px 0px" });
+  const inView = useInView(ref, viewport);
+  const reduceMotion = useReducedMotion();
   const [forceShow, setForceShow] = useState(false);
 
   useEffect(() => {
-    const t = window.setTimeout(() => setForceShow(true), 700);
+    const t = window.setTimeout(() => setForceShow(true), 6000);
     return () => window.clearTimeout(t);
   }, []);
 
-  const show = inView || forceShow;
+  const show = inView || forceShow || !!reduceMotion;
 
   return (
     <motion.div
@@ -70,7 +118,10 @@ export function Stagger({
       variants={{
         hidden: {},
         show: {
-          transition: { staggerChildren: delay, delayChildren: 0.06 },
+          transition: {
+            staggerChildren: reduceMotion ? 0 : delay,
+            delayChildren: reduceMotion ? 0 : 0.08,
+          },
         },
       }}
     >
@@ -86,15 +137,23 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 22 },
+        hidden: reduceMotion
+          ? { opacity: 1 }
+          : { opacity: 0, y: 32, scale: 0.96 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.55, ease },
+          scale: 1,
+          transition: {
+            duration: reduceMotion ? 0.01 : 0.65,
+            ease,
+          },
         },
       }}
     >

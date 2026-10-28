@@ -11,7 +11,7 @@ import {
   TiktokIcon,
   WhatsappIcon,
 } from "./Icons";
-import { Reveal } from "./Reveal";
+import { Stagger, StaggerItem } from "./Reveal";
 
 const exploreLinks = [
   { href: "#why", label: "Why XSEL" },
@@ -40,100 +40,96 @@ export function Footer() {
 
   return (
     <footer className="bg-[#152F29] text-white">
-      <Reveal>
-        <div className="mx-auto max-w-6xl px-4 pt-10 pb-8 sm:px-5 sm:pt-16 sm:pb-12 lg:px-8">
-          <div className="grid gap-8 sm:gap-12 md:grid-cols-[1.45fr_0.7fr_0.85fr_0.75fr] md:gap-8 lg:gap-12">
-            <div className="max-w-sm">
-              <a href="#hero" className="inline-flex items-center gap-3 transition hover:opacity-90">
-                <BrandLogo size={52} className="h-10 w-10 shrink-0 rounded-[11px] sm:h-12 sm:w-12" />
-                <span className="min-w-0">
-                  <span className="font-display block text-base leading-none tracking-tight sm:text-xl">
-                    Sarwar English Lab
-                    <span className="text-[#EFAA93]">.</span>
-                  </span>
-                  <span className="mt-1.5 block text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">
-                    Learn. Practise. Progress.
-                  </span>
+      <div className="mx-auto max-w-6xl px-4 pt-10 pb-8 sm:px-5 sm:pt-16 sm:pb-12 lg:px-8">
+        <Stagger className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-[1.45fr_0.7fr_0.85fr_0.75fr] md:gap-8 lg:gap-12">
+          <StaggerItem className="col-span-2 max-w-sm md:col-span-1">
+            <a href="#hero" className="inline-flex items-center gap-3 transition hover:opacity-90">
+              <BrandLogo size={52} className="h-10 w-10 shrink-0 rounded-[11px] sm:h-12 sm:w-12" />
+              <span className="min-w-0">
+                <span className="font-display block text-base leading-none tracking-tight sm:text-xl">
+                  Sarwar English Lab
+                  <span className="text-[#EFAA93]">.</span>
                 </span>
-              </a>
-              <p className="mt-4 text-sm leading-relaxed text-white/55 sm:mt-5">
-                A better way to understand English, practise with purpose, and move forward with
-                confidence.
-              </p>
-            </div>
+                <span className="mt-1.5 block text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">
+                  Learn. Practise. Progress.
+                </span>
+              </span>
+            </a>
+            <p className="mt-4 text-sm leading-relaxed text-white/55 sm:mt-5">
+              A better way to understand English, practise with purpose, and move forward with
+              confidence.
+            </p>
+          </StaggerItem>
 
-            <div className="grid grid-cols-2 gap-8 sm:contents">
-              <div>
-                <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
-                  Explore
-                </p>
-                <nav aria-label="Footer" className="flex flex-col gap-2.5 sm:gap-3">
-                  {exploreLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="text-sm text-white/70 transition hover:text-white"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </nav>
-              </div>
+          <StaggerItem>
+            <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
+              Explore
+            </p>
+            <nav aria-label="Footer" className="flex flex-col gap-2.5 sm:gap-3">
+              {exploreLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-white/70 transition hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </StaggerItem>
 
-              <div>
-                <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
-                  Visit
-                </p>
-                <div className="flex flex-col gap-3 text-sm text-white/70 sm:gap-3.5">
-                  <p className="leading-relaxed">
-                    {location.addressLines.map((line) => (
-                      <span key={line} className="block">
-                        {line}
-                      </span>
-                    ))}
-                  </p>
-                  <a
-                    href={`tel:${location.phone.replace(/\s/g, "")}`}
-                    className="inline-flex items-center gap-2.5 transition hover:text-white"
-                  >
-                    <PhoneIcon className="h-3.5 w-3.5 shrink-0 text-[#EFAA93]" />
-                    {location.phone}
-                  </a>
-                  <a
-                    href={`mailto:${location.email}`}
-                    className="inline-flex items-start gap-2.5 break-all transition hover:text-white"
-                  >
-                    <MailIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#EFAA93]" />
-                    {location.email}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
-                Connect
-              </p>
-              <div className="flex flex-row flex-wrap gap-2.5 sm:flex-col sm:gap-3">
-                {primarySocials.map(({ name, href, Icon }) => (
-                  <a
-                    key={name}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white/70 transition hover:text-white sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
-                  >
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/8">
-                      <Icon className="h-3.5 w-3.5" />
-                    </span>
-                    {name}
-                  </a>
+          <StaggerItem>
+            <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
+              Visit
+            </p>
+            <div className="flex flex-col gap-3 text-sm text-white/70 sm:gap-3.5">
+              <p className="leading-relaxed">
+                {location.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
                 ))}
-              </div>
+              </p>
+              <a
+                href={`tel:${location.phone.replace(/\s/g, "")}`}
+                className="inline-flex items-center gap-2.5 transition hover:text-white"
+              >
+                <PhoneIcon className="h-3.5 w-3.5 shrink-0 text-[#EFAA93]" />
+                {location.phone}
+              </a>
+              <a
+                href={`mailto:${location.email}`}
+                className="inline-flex items-start gap-2.5 break-all transition hover:text-white"
+              >
+                <MailIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#EFAA93]" />
+                {location.email}
+              </a>
             </div>
-          </div>
-        </div>
-      </Reveal>
+          </StaggerItem>
+
+          <StaggerItem className="col-span-2 md:col-span-1">
+            <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
+              Connect
+            </p>
+            <div className="flex flex-row flex-wrap gap-2.5 sm:flex-col sm:gap-3">
+              {primarySocials.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white/70 transition hover:text-white sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/8">
+                    <Icon className="h-3.5 w-3.5" />
+                  </span>
+                  {name}
+                </a>
+              ))}
+            </div>
+          </StaggerItem>
+        </Stagger>
+      </div>
 
       <div className="mx-auto max-w-6xl overflow-hidden px-4 sm:px-5 lg:px-8">
         <p

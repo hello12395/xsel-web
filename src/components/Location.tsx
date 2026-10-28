@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { location } from "@/data/site";
 import { CloseIcon, MailIcon, PhoneIcon, PinIcon, ArrowIcon } from "./Icons";
+import { Reveal, Stagger, StaggerItem } from "./Reveal";
 import { RotatingEarth } from "./RotatingEarth";
 import { Shimmer } from "./Shimmer";
 import { ShimmerGate } from "./ShimmerGate";
@@ -178,32 +179,42 @@ function LocationOrbit() {
 export function Location() {
   return (
     <section id="location" className="bg-location-section relative section-anchor overflow-hidden border-t border-ink/8">
-      <div className="relative mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:gap-12 sm:px-5 sm:py-20 md:gap-14 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
-        <div className="min-w-0">
+      <div className="relative mx-auto grid max-w-6xl gap-6 px-4 py-12 sm:gap-10 sm:px-5 sm:py-20 md:gap-12 md:px-8 md:py-28 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
+        {/* Mobile: heading → globe → cards. Desktop: heading+cards | globe */}
+        <Reveal className="order-1 min-w-0 lg:col-start-1 lg:row-start-1">
           <h2 className="font-display text-[clamp(1.75rem,7vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
             On the map
           </h2>
           <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75]">
             Find us in G-11 Markaz, Islamabad — walk in, or reach us by phone and email anytime.
           </p>
+        </Reveal>
 
-          <ShimmerGate
-            minMs={450}
-            className="mt-8 sm:mt-10"
-            skeleton={
-              <div className="flex flex-col gap-3 sm:gap-4">
-                <Shimmer className="h-28 w-full rounded-2xl bg-[#152F29]/90" />
-                <div className="grid grid-cols-2 gap-3">
-                  <Shimmer className="h-24 rounded-2xl bg-[#152F29]/90" />
-                  <Shimmer className="h-24 rounded-2xl bg-[#152F29]/90" />
-                </div>
-              </div>
-            }
-          >
+        <Reveal
+          variant="scale"
+          delay={0.08}
+          className="order-2 min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1"
+        >
+          <LocationOrbit />
+        </Reveal>
+
+        <ShimmerGate
+          minMs={450}
+          className="order-3 mt-1 min-w-0 sm:mt-2 lg:col-start-1 lg:row-start-2 lg:mt-8"
+          skeleton={
             <div className="flex flex-col gap-3 sm:gap-4">
-              {location.studios.map((studio) => (
+              <Shimmer className="h-28 w-full rounded-2xl bg-[#152F29]/90" />
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                <Shimmer className="h-24 rounded-2xl bg-[#152F29]/90" />
+                <Shimmer className="h-24 rounded-2xl bg-[#152F29]/90" />
+              </div>
+            </div>
+          }
+        >
+          <Stagger className="flex flex-col gap-2.5 sm:gap-4">
+            {location.studios.map((studio) => (
+              <StaggerItem key={studio.label}>
                 <a
-                  key={studio.label}
                   href={location.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -222,12 +233,14 @@ export function Location() {
                     </p>
                   </div>
                 </a>
-              ))}
+              </StaggerItem>
+            ))}
 
+            <StaggerItem>
               <div className="location-contact-grid">
                 <a
                   href={`tel:${location.phone.replace(/\s/g, "")}`}
-                  className="location-contact-row"
+                  className="location-contact-row location-contact-row--compact"
                 >
                   <span className="location-contact-icon">
                     <PhoneIcon className="h-4 w-4" />
@@ -236,13 +249,15 @@ export function Location() {
                     <p className="text-[10px] font-semibold tracking-[0.18em] text-[#EFAA93] uppercase">
                       Phone
                     </p>
-                    <p className="mt-1 text-sm text-white/85">{location.phone}</p>
+                    <p className="mt-1 text-[12px] leading-snug text-white/85 sm:text-sm">
+                      {location.phone}
+                    </p>
                   </div>
                 </a>
 
                 <a
                   href={`mailto:${location.email}`}
-                  className="location-contact-row"
+                  className="location-contact-row location-contact-row--compact"
                 >
                   <span className="location-contact-icon">
                     <MailIcon className="h-4 w-4" />
@@ -251,15 +266,15 @@ export function Location() {
                     <p className="text-[10px] font-semibold tracking-[0.18em] text-[#EFAA93] uppercase">
                       Email
                     </p>
-                    <p className="mt-1 text-sm break-all text-white/85">{location.email}</p>
+                    <p className="mt-1 text-[11px] leading-snug break-all text-white/85 sm:text-sm">
+                      {location.email}
+                    </p>
                   </div>
                 </a>
               </div>
-            </div>
-          </ShimmerGate>
-        </div>
-
-        <LocationOrbit />
+            </StaggerItem>
+          </Stagger>
+        </ShimmerGate>
       </div>
     </section>
   );

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import type { PremiumCourse } from "@/data/premium-courses";
 import { ArrowIcon, PremiumIcon } from "./Icons";
-import { Reveal } from "./Reveal";
+import { Reveal, Stagger, StaggerItem } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 import { CourseCardsSkeleton } from "./Shimmer";
 import { ShimmerGate } from "./ShimmerGate";
@@ -113,87 +113,90 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
           </Reveal>
         ) : (
           <>
-            <Reveal className="mt-10 sm:mt-14">
+            <div className="mt-10 sm:mt-14">
               <ShimmerGate minMs={550} skeleton={<CourseCardsSkeleton />}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={showAll ? "all" : `page-${page}`}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3"
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 >
+                <Stagger className="grid grid-cols-2 gap-2.5 sm:gap-5 md:gap-6 lg:grid-cols-3">
                   {visible.map((course, index) => {
                     const theme = getCardTheme(showAll ? index : page * PAGE_SIZE + index);
                     return (
+                    <StaggerItem key={course.id} className="h-full min-w-0">
                     <Link
-                      key={course.id}
                       href={course.href}
                       style={{ background: theme.background }}
-                      className={`group flex min-w-0 flex-col overflow-hidden rounded-[22px] border transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
+                      className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-[16px] border transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
                     >
-                      <div className="relative aspect-video overflow-hidden bg-black/20">
+                      <div className="relative aspect-[16/10] overflow-hidden bg-black/20 sm:aspect-video">
                         <Image
                           src={course.thumbnail}
                           alt=""
                           fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover transition duration-500 group-hover:scale-[1.04]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         <span
-                          className="absolute top-2.5 left-2.5 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-br from-[#f0d060] to-[#c9a227] px-2 py-1 text-[10px] font-semibold tracking-wide text-white shadow-[0_4px_12px_rgba(185,134,11,0.35)] uppercase sm:top-3 sm:left-3 sm:px-2.5 sm:text-[11px]"
+                          className="absolute top-1.5 left-1.5 inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#f0d060] to-[#c9a227] px-1.5 py-0.5 text-[8px] font-semibold tracking-wide text-white shadow-[0_4px_12px_rgba(185,134,11,0.35)] uppercase sm:top-3 sm:left-3 sm:gap-1.5 sm:px-2.5 sm:py-1 sm:text-[11px]"
                           aria-label="Paid course"
                         >
-                          <PremiumIcon className="h-3 w-3" />
+                          <PremiumIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                           Paid
                         </span>
-                        <span className="absolute right-2.5 bottom-2.5 rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white tabular-nums sm:right-3 sm:bottom-3 sm:px-2.5 sm:text-[11px]">
+                        <span className="absolute right-1.5 bottom-1.5 rounded-full bg-black/65 px-1.5 py-0.5 text-[8px] font-semibold tracking-wide text-white tabular-nums sm:right-3 sm:bottom-3 sm:px-2.5 sm:py-1 sm:text-[11px]">
                           {course.price}
                         </span>
-                        <span className="absolute bottom-2.5 left-2.5 max-w-[45%] truncate rounded-full bg-black/65 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase sm:bottom-3 sm:left-3 sm:max-w-none sm:px-2.5 sm:text-[11px]">
+                        <span className="absolute bottom-1.5 left-1.5 max-w-[48%] truncate rounded-full bg-black/65 px-1.5 py-0.5 text-[8px] font-semibold tracking-wide text-white uppercase sm:bottom-3 sm:left-3 sm:max-w-none sm:px-2.5 sm:py-1 sm:text-[11px]">
                           {course.lessons > 0
                             ? `${course.lessons} lessons`
                             : course.duration}
                         </span>
                       </div>
 
-                      <div className="relative flex flex-1 flex-col overflow-hidden p-4 sm:p-6">
+                      <div className="relative flex flex-1 flex-col overflow-hidden p-2.5 sm:p-6">
                         <span
                           aria-hidden="true"
-                          className="pointer-events-none absolute top-[18%] -right-[28%] h-[14rem] w-[14rem] rounded-full sm:h-[16rem] sm:w-[16rem]"
+                          className="pointer-events-none absolute top-[18%] -right-[28%] hidden h-[14rem] w-[14rem] rounded-full sm:block sm:h-[16rem] sm:w-[16rem]"
                           style={{
                             border: `1px solid ${theme.ring}`,
                             boxShadow: `0 0 0 1.75rem ${theme.ringSoft}, 0 0 0 3.75rem ${theme.ringFaint}`,
                           }}
                         />
-                        <div className="relative z-[1] flex flex-wrap items-center gap-2">
-                          <span className={`w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase sm:px-3 sm:text-[11px] ${theme.badge}`}>
+                        <div className="relative z-[1] hidden flex-wrap items-center gap-2 sm:flex">
+                          <span className={`w-fit rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide uppercase ${theme.badge}`}>
                             Paid
                           </span>
                         </div>
-                        <h3 className={`relative z-[1] font-display mt-3 text-[1.25rem] leading-tight sm:mt-4 sm:text-[1.45rem] ${theme.title}`}>
+                        <h3 className={`relative z-[1] font-display text-[0.92rem] leading-snug tracking-[-0.03em] sm:mt-4 sm:text-[1.45rem] sm:leading-tight ${theme.title}`}>
                           {course.title}
                         </h3>
-                        <p className={`relative z-[1] mt-2 line-clamp-3 flex-1 text-sm leading-6 sm:mt-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
+                        <p className={`relative z-[1] mt-1.5 line-clamp-2 flex-1 text-[11px] leading-4 sm:mt-3 sm:line-clamp-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
                           {course.blurb}
                         </p>
-                        <p className={`relative z-[1] mt-3 text-[11px] font-medium tracking-wide uppercase sm:mt-4 sm:text-[12px] ${theme.meta}`}>
+                        <p className={`relative z-[1] mt-2 hidden text-[12px] font-medium tracking-wide uppercase sm:mt-4 sm:block ${theme.meta}`}>
                           {course.duration} · Sign in to enroll
                         </p>
-                        <span className={`relative z-[1] mt-4 inline-flex items-center gap-2 text-sm font-semibold sm:mt-5 ${theme.cta}`}>
-                          View course
-                          <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                        <span className={`relative z-[1] mt-2.5 inline-flex items-center gap-1 text-[11px] font-semibold sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}>
+                          View
+                          <span className="hidden sm:inline">course</span>
+                          <ArrowIcon className="h-3 w-3 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
                         </span>
                       </div>
                     </Link>
+                    </StaggerItem>
                     );
                   })}
+                </Stagger>
                 </motion.div>
               </AnimatePresence>
               </ShimmerGate>
-            </Reveal>
+            </div>
 
             {courses.length > PAGE_SIZE ? (
               <Reveal delay={0.12} className="mt-10 flex flex-col items-center gap-5 sm:flex-row sm:justify-between">

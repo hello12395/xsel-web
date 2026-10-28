@@ -174,27 +174,59 @@ function MethodCard3D({
 
 function MethodListMobile() {
   return (
-    <Stagger className="overflow-hidden rounded-2xl border border-ink/10 bg-white/70 shadow-[0_10px_28px_-22px_rgba(21,47,41,0.28)] backdrop-blur-sm sm:hidden">
+    <Stagger className="grid grid-cols-2 gap-2.5 sm:hidden">
       {whyCards.map((card, index) => {
         const accent = cardAccents[index % cardAccents.length];
+        const featured = index === 0;
+
         return (
-          <StaggerItem key={card.number}>
+          <StaggerItem
+            key={card.number}
+            className={featured ? "col-span-2" : "min-w-0"}
+          >
             <article
-              className={`flex gap-3.5 px-4 py-4 ${
-                index < whyCards.length - 1 ? "border-b border-ink/8" : ""
+              className={`relative flex h-full flex-col overflow-hidden rounded-[16px] border border-ink/10 bg-white shadow-[0_8px_22px_-16px_rgba(21,47,41,0.22)] ${
+                featured ? "p-3.5" : "p-3"
               }`}
             >
               <span
-                className={`font-display mt-0.5 w-8 shrink-0 text-[1.15rem] leading-none tabular-nums ${accent.numberClass}`}
+                className={`pointer-events-none absolute -right-1 -bottom-2 font-display leading-none text-ink/[0.04] select-none ${
+                  featured ? "text-[4.5rem]" : "text-[3.25rem]"
+                }`}
+                aria-hidden
               >
                 {card.number}
               </span>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-display text-[1.05rem] leading-[1.25] tracking-[-0.03em] text-heading">
-                  {card.title}
-                </h3>
-                <p className="mt-1.5 text-[13px] leading-6 text-muted">{card.body}</p>
+
+              <div className="relative flex items-center gap-2">
+                <span
+                  className={`font-display leading-none tabular-nums ${accent.numberClass} ${
+                    featured ? "text-[1.35rem]" : "text-[1.15rem]"
+                  }`}
+                >
+                  {card.number}
+                </span>
+                <span className={`h-px flex-1 bg-gradient-to-r ${accent.accentBar}`} />
               </div>
+
+              <h3
+                className={`font-display relative mt-2.5 tracking-[-0.03em] text-heading ${
+                  featured
+                    ? "text-[1.05rem] leading-[1.25]"
+                    : "text-[0.92rem] leading-snug"
+                }`}
+              >
+                {card.title}
+              </h3>
+              <p
+                className={`relative mt-1.5 text-muted ${
+                  featured
+                    ? "text-[13px] leading-5"
+                    : "line-clamp-4 text-[11px] leading-4"
+                }`}
+              >
+                {card.body}
+              </p>
             </article>
           </StaggerItem>
         );

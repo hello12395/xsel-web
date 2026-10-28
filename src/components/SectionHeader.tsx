@@ -15,7 +15,7 @@ export function SectionHeader({
   className?: string;
 }) {
   return (
-    <Reveal className={`max-w-2xl text-left ${className}`}>
+    <Reveal variant="up" className={`max-w-2xl text-left ${className}`}>
       {kicker ? (
         <p
           className={`text-[11px] font-extrabold tracking-[0.2em] uppercase ${

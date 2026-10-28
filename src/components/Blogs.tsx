@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { getPlaylistById } from "@/data/playlists";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
+import { Reveal } from "./Reveal";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -312,12 +313,14 @@ export function Blogs() {
   return (
     <section id="blogs" className="bg-blogs-section relative section-anchor overflow-x-clip border-b border-[#d9c4b4]/50">
       <div className="relative mx-auto w-full max-w-[1500px] px-3 pb-16 pt-12 sm:px-4 sm:pb-24 sm:pt-20 md:px-6 lg:px-8">
-        <h2 className="blogs-heading font-display mb-6 text-left text-[1.85rem] tracking-tight lowercase sm:mb-10 sm:text-4xl md:text-5xl">
-          blogs
-        </h2>
+        <Reveal>
+          <h2 className="blogs-heading font-display mb-6 text-left text-[1.85rem] tracking-tight lowercase sm:mb-10 sm:text-4xl md:text-5xl">
+            blogs
+          </h2>
+        </Reveal>
 
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12 xl:gap-16">
-          <div className="min-w-0">
+          <Reveal variant="scale" className="min-w-0">
             <div className="blogs-stage relative w-full overflow-hidden">
               <div className="blogs-stage-glow pointer-events-none" aria-hidden />
 
@@ -389,9 +392,9 @@ export function Blogs() {
                 <ChevronRightIcon className="h-4 w-4" />
               </button>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="relative flex min-w-0 items-center lg:pl-2 xl:pl-6">
+          <Reveal delay={0.12} className="relative flex min-w-0 items-center lg:pl-2 xl:pl-6">
             <AnimatePresence mode="wait" custom={direction}>
               <BlogDetailPanel
                 key={current.id}
@@ -401,7 +404,7 @@ export function Blogs() {
                 direction={direction}
               />
             </AnimatePresence>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

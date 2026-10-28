@@ -1034,13 +1034,13 @@ p {
 
 .location-contact-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 640px) {
   .location-contact-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
   }
 }
 
@@ -1093,6 +1093,43 @@ p {
   }
 }
 
+/* Hero scroll cue — soft pulse rings + mouse bead */
+.hero-scroll-cue__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(239, 170, 147, 0.35);
+  opacity: 0;
+  animation: hero-scroll-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  pointer-events: none;
+}
+
+.hero-scroll-cue__ring--delay {
+  animation-delay: 1.2s;
+}
+
+@keyframes hero-scroll-ring {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-cue__ring {
+    animation: none;
+    opacity: 0.25;
+    transform: scale(1);
+  }
+}
+
 .bg-social-stage {
   background: #FFFCF6;
 }
@@ -1114,6 +1151,25 @@ p {
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 75% 70% at 70% 55%, black 15%, transparent 72%);
   pointer-events: none;
+}
+
+/* Aceternity-style 3D pin flip — GPU-friendly */
+.social-card-scene {
+  perspective: 1000px;
+}
+
+.social-card-3d {
+  transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social-card-3d:hover:not(.is-open) {
+    transform: translate3d(0, 0, 0) rotateX(40deg) scale(0.8);
+  }
 }
 
 .social-slab-scene {
@@ -1545,14 +1601,16 @@ p {
     padding-left: 1rem;
   }
 
-  .method-card-scene {
+  .method-card-scene,
+  .social-card-scene {
     perspective: none;
   }
 
   .method-card-3d,
   .method-card-face,
   .method-card-base,
-  .method-card-float {
+  .method-card-float,
+  .social-card-3d {
     transform: none !important;
   }
 
@@ -1614,6 +1672,19 @@ p {
   .location-contact-row {
     padding: 0.85rem;
     border-radius: 0.9rem;
+  }
+
+  .location-contact-row--compact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.75rem;
+  }
+
+  .location-contact-row--compact .location-contact-icon {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 0.55rem;
   }
 
   .location-orbit-stage-earth {

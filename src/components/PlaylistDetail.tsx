@@ -200,64 +200,70 @@ export function PlaylistDetail({
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-5 sm:py-16 md:px-8 md:py-20">
         <Reveal>
-          <div className="flex flex-col gap-4 border-b border-ink/8 pb-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-3 border-b border-ink/8 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pb-8">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.24em] text-gold uppercase">All videos</p>
-              <h2 className="font-display mt-2 text-3xl tracking-tight text-ink sm:text-4xl">{sectionTitle}</h2>
+              <h2 className="font-display mt-2 text-[1.65rem] tracking-tight text-ink sm:text-3xl md:text-4xl">
+                {sectionTitle}
+              </h2>
             </div>
             <div className="flex flex-col gap-1 sm:items-end">
               <span className="w-fit rounded-full bg-forest/8 px-3 py-1 text-[11px] font-semibold tracking-wide text-forest uppercase">
                 {countLabel}
               </span>
-              <p className="text-sm text-ink/55">Tap any lesson to watch on YouTube</p>
+              <p className="text-[13px] text-ink/55 sm:text-sm">Tap any lesson to watch on YouTube</p>
             </div>
           </div>
         </Reveal>
 
-        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:gap-10">
-          <Stagger className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3" delay={0.06}>
+        <div className="mt-6 grid items-start gap-6 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:gap-10">
+          <Stagger className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3" delay={0.06}>
             {playlist.videos.map((video, index) => {
               const lessonNo = String(index + 1).padStart(2, "0");
 
               return (
-                <StaggerItem key={video.id} className="h-full">
+                <StaggerItem key={video.id} className="h-full min-w-0">
                   <a
                     href={video.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-[#152F29]/10 bg-[#F3F7F0] transition duration-300 hover:-translate-y-1 hover:border-[#152F29]/20 hover:bg-[#EAF1E6] hover:shadow-[0_22px_44px_-22px_rgba(21,47,41,0.28)]"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-[16px] border border-[#152F29]/10 bg-[#F3F7F0] transition duration-300 hover:-translate-y-1 hover:border-[#152F29]/20 hover:bg-[#EAF1E6] hover:shadow-[0_22px_44px_-22px_rgba(21,47,41,0.28)] sm:rounded-[22px]"
                   >
-                    <div className="relative aspect-video overflow-hidden bg-ink/5">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-ink/5 sm:aspect-video">
                       <Image
                         src={video.thumbnail}
                         alt=""
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1280px) 50vw, 33vw"
                         className="object-cover transition duration-500 group-hover:scale-[1.04]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
+                      <div className="absolute inset-0 hidden items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100 sm:flex">
                         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-forest shadow-lg">
                           <PlayIcon className="ml-0.5 h-5 w-5" />
                         </span>
                       </div>
-                      <span className="absolute top-3 left-3 font-display text-lg leading-none text-white/90 tabular-nums">
+                      <span className="absolute top-1.5 left-1.5 font-display text-[13px] leading-none text-white/90 tabular-nums sm:top-3 sm:left-3 sm:text-lg">
                         {lessonNo}
+                      </span>
+                      <span className="absolute right-1.5 bottom-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-forest shadow-md sm:hidden">
+                        <PlayIcon className="ml-0.5 h-3 w-3" />
                       </span>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[11px] font-semibold tracking-[0.18em] text-ink/40 uppercase">
+                    <div className="flex flex-1 flex-col p-2.5 sm:p-5">
+                      <p className="text-[9px] font-semibold tracking-[0.14em] text-ink/40 uppercase sm:text-[11px] sm:tracking-[0.18em]">
                         {playlist.isCourse ? "Lesson" : "Video"} {lessonNo}
                       </p>
-                      <h3 className="mt-2 line-clamp-3 text-[15px] leading-6 font-semibold text-ink transition group-hover:text-forest">
+                      <h3 className="mt-1 line-clamp-2 text-[12px] leading-4 font-semibold text-ink transition group-hover:text-forest sm:mt-2 sm:line-clamp-3 sm:text-[15px] sm:leading-6">
                         {video.title}
                       </h3>
-                      <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-forest">
-                        Watch on YouTube
-                        <ArrowIcon className="h-3.5 w-3.5 transition duration-300 group-hover:translate-x-1" />
+                      <span className="mt-auto inline-flex items-center gap-1 pt-2.5 text-[11px] font-semibold text-forest sm:gap-1.5 sm:pt-4 sm:text-sm">
+                        <span className="sm:hidden">Watch</span>
+                        <span className="hidden sm:inline">Watch on YouTube</span>
+                        <ArrowIcon className="h-3 w-3 transition duration-300 group-hover:translate-x-1 sm:h-3.5 sm:w-3.5" />
                       </span>
                     </div>
                   </a>

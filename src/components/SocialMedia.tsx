@@ -37,7 +37,7 @@ const themes: Record<
 > = {
   /* Soft warm tile — sits cleanly on cream */
   instagram: {
-    card: "border border-[#e6e6d9] bg-[#FFFEF9] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)] hover:border-[#d9d9cc] hover:shadow-[0_16px_34px_-16px_rgba(21,47,41,0.22)]",
+    card: "border border-[#e6e6d9] bg-[#FFFEF9] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)]",
     badge: "bg-[#f7dfc7] text-[#5c4033]",
     title: "text-heading",
     handle: "text-muted",
@@ -48,7 +48,7 @@ const themes: Record<
   },
   /* Soft sage tile */
   facebook: {
-    card: "border border-[#e6e6d9] bg-[#F3F7F0] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)] hover:border-[#d9d9cc] hover:shadow-[0_16px_34px_-16px_rgba(21,47,41,0.22)]",
+    card: "border border-[#e6e6d9] bg-[#F3F7F0] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)]",
     badge: "bg-[#d7e5d3] text-[#214F42]",
     title: "text-heading",
     handle: "text-muted",
@@ -59,7 +59,7 @@ const themes: Record<
   },
   /* Deep brand green */
   whatsapp: {
-    card: "border border-[#214F42]/20 bg-[#214F42] shadow-[0_12px_30px_-16px_rgba(33,79,66,0.45)] hover:shadow-[0_18px_36px_-14px_rgba(33,79,66,0.55)]",
+    card: "border border-[#214F42]/20 bg-[#214F42] shadow-[0_12px_30px_-16px_rgba(33,79,66,0.45)]",
     badge: "bg-white/12 text-[#E8F0E4]",
     title: "text-white",
     handle: "text-white/60",
@@ -70,7 +70,7 @@ const themes: Record<
   },
   /* Primary dark green */
   tiktok: {
-    card: "border border-[#152F29]/20 bg-[#152F29] shadow-[0_12px_30px_-16px_rgba(21,47,41,0.45)] hover:shadow-[0_18px_36px_-14px_rgba(21,47,41,0.55)]",
+    card: "border border-[#152F29]/20 bg-[#152F29] shadow-[0_12px_30px_-16px_rgba(21,47,41,0.45)]",
     badge: "bg-white/12 text-[#E8F0E4]",
     title: "text-white",
     handle: "text-white/60",
@@ -111,12 +111,12 @@ function SocialCard({ social }: { social: Social }) {
     };
   }, [open]);
 
-  const cardClassName = `group relative flex h-full min-h-[11.5rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left transition duration-300 hover:-translate-y-1 sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${theme.card}`;
+  const cardClassName = `social-card-3d group relative flex h-full min-h-[11.5rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${open ? "is-open" : ""} ${theme.card}`;
 
   const cardBody = (
     <>
       <span
-        className={`pointer-events-none absolute -right-2 -bottom-3 transition duration-500 group-hover:scale-105 ${theme.watermark}`}
+        className={`pointer-events-none absolute -right-2 -bottom-3 ${theme.watermark}`}
         aria-hidden
       >
         <Icon className="h-24 w-24 sm:h-36 sm:w-36" />
@@ -160,19 +160,21 @@ function SocialCard({ social }: { social: Social }) {
 
   if (!hasChoices) {
     return (
-      <a
-        href={social.links[0].href}
-        target="_blank"
-        rel="noreferrer"
-        className={cardClassName}
-      >
-        {cardBody}
-      </a>
+      <div className="social-card-scene h-full">
+        <a
+          href={social.links[0].href}
+          target="_blank"
+          rel="noreferrer"
+          className={cardClassName}
+        >
+          {cardBody}
+        </a>
+      </div>
     );
   }
 
   return (
-    <div ref={rootRef} className="relative h-full">
+    <div ref={rootRef} className="social-card-scene relative h-full">
       <button
         type="button"
         aria-expanded={open}

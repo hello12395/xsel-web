@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, Fragment } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { reviews } from "@/data/site";
@@ -253,17 +253,21 @@ export function Reviews() {
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
 
-            <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-6 sm:mt-10 sm:flex sm:flex-wrap sm:items-center sm:gap-8 sm:pt-10">
+            <div className="mt-6 grid grid-cols-3 items-start gap-2 border-t border-white/10 pt-6 sm:mt-10 sm:gap-0 sm:pt-10">
               {stats.map((stat, index) => (
-                <Fragment key={stat.label}>
-                  {index > 0 ? <div className="reviews-stat-divider hidden sm:block" aria-hidden /> : null}
-                  <div className="min-w-0">
-                    <p className="font-display text-xl text-white sm:text-3xl">{stat.value}</p>
-                    <p className="mt-1 text-[9px] font-semibold tracking-[0.1em] text-white/45 uppercase sm:text-[11px] sm:tracking-[0.18em]">
-                      {stat.label}
-                    </p>
-                  </div>
-                </Fragment>
+                <div
+                  key={stat.label}
+                  className={`min-w-0 ${
+                    index > 0
+                      ? "sm:border-l sm:border-white/15 sm:pl-5 lg:pl-6"
+                      : "sm:pr-5 lg:pr-6"
+                  }`}
+                >
+                  <p className="font-display text-xl text-white sm:text-3xl">{stat.value}</p>
+                  <p className="mt-1 text-[9px] font-semibold tracking-[0.1em] text-white/45 uppercase sm:text-[11px] sm:tracking-[0.14em]">
+                    {stat.label}
+                  </p>
+                </div>
               ))}
             </div>
           </Reveal>

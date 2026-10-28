@@ -183,9 +183,9 @@ export function PremiumCourseTabs({
   ] as const;
 
   return (
-    <div className="card-surface overflow-hidden rounded-[24px]">
+    <div className="card-surface overflow-hidden rounded-[18px] sm:rounded-[24px]">
       <div
-        className="grid grid-cols-3 gap-2 border-b border-ink/8 bg-[#F3F7F0] p-2 sm:gap-2.5 sm:p-2.5"
+        className="grid grid-cols-3 gap-1.5 border-b border-ink/8 bg-[#F3F7F0] p-1.5 sm:gap-2.5 sm:p-2.5"
         role="tablist"
         aria-label="Course sections"
       >
@@ -199,7 +199,7 @@ export function PremiumCourseTabs({
               role="tab"
               aria-selected={active}
               onClick={() => selectTab(item.id)}
-              className={`rounded-xl px-2 py-2.5 text-center text-[13px] font-semibold transition sm:py-3 sm:text-sm ${
+              className={`rounded-lg px-1.5 py-2.5 text-center text-[12px] font-semibold transition sm:rounded-xl sm:px-2 sm:py-3 sm:text-sm ${
                 active
                   ? "bg-primary text-white shadow-[0_10px_22px_-12px_rgba(21,47,41,0.65)]"
                   : "bg-white/90 text-heading hover:bg-[#EAF1E6]"
@@ -211,7 +211,7 @@ export function PremiumCourseTabs({
         })}
       </div>
 
-      <div className="p-5 sm:p-7">
+      <div className="p-3.5 sm:p-7">
         <AnimatePresence mode="wait">
           {tab === "overview" ? (
             <motion.div
@@ -220,21 +220,21 @@ export function PremiumCourseTabs({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.22 }}
-              className="space-y-8"
+              className="space-y-6 sm:space-y-8"
             >
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 {stats.map((stat) => {
                   const Icon = stat.icon;
                   return (
                     <div
                       key={stat.label}
-                      className="rounded-2xl border border-[#152F29]/10 bg-[#F7FAF5] px-3.5 py-3.5 sm:px-4 sm:py-4"
+                      className="rounded-xl border border-[#152F29]/10 bg-[#F7FAF5] px-2.5 py-2.5 sm:rounded-2xl sm:px-4 sm:py-4"
                     >
-                      <Icon className="h-4 w-4 text-[#1D6B56]" />
-                      <p className="mt-2.5 text-sm font-semibold tracking-tight text-[#152F29] sm:text-[15px]">
+                      <Icon className="h-3.5 w-3.5 text-[#1D6B56] sm:h-4 sm:w-4" />
+                      <p className="mt-1.5 text-[13px] font-semibold tracking-tight text-[#152F29] sm:mt-2.5 sm:text-[15px]">
                         {stat.value}
                       </p>
-                      <p className="mt-0.5 text-[11px] font-medium tracking-wide text-[#152F29]/40 uppercase">
+                      <p className="mt-0.5 text-[9px] font-medium tracking-wide text-[#152F29]/40 uppercase sm:text-[11px]">
                         {stat.label}
                       </p>
                     </div>
@@ -244,10 +244,10 @@ export function PremiumCourseTabs({
 
               {showAbout ? (
                 <section>
-                  <h3 className="font-display text-xl tracking-tight text-ink sm:text-[1.35rem]">
+                  <h3 className="font-display text-[1.15rem] tracking-tight text-ink sm:text-[1.35rem]">
                     About this course
                   </h3>
-                  <p className="mt-3 text-[15px] leading-7 whitespace-pre-line text-ink/65">
+                  <p className="mt-2.5 text-[14px] leading-6 whitespace-pre-line text-ink/65 sm:mt-3 sm:text-[15px] sm:leading-7">
                     {aboutText}
                   </p>
                 </section>
@@ -255,36 +255,49 @@ export function PremiumCourseTabs({
 
               <section>
                 <div className="flex flex-wrap items-end justify-between gap-2">
-                  <h3 className="font-display text-xl tracking-tight text-ink sm:text-[1.35rem]">
+                  <h3 className="font-display text-[1.15rem] tracking-tight text-ink sm:text-[1.35rem]">
                     What you&apos;ll learn
                   </h3>
-                  <p className="text-xs font-medium text-ink/40">{formatLabel}</p>
+                  <p className="text-[11px] font-medium text-ink/40 sm:text-xs">{formatLabel}</p>
                 </div>
 
                 {outcomes.length > 0 ? (
-                  <ul className="mt-4 grid gap-3">
-                    {outcomes.map((outcome, index) => (
-                      <li
-                        key={`${outcome.title}-${index}`}
-                        className={`rounded-2xl px-4 py-4 sm:px-5 ${OUTCOME_TONES[index % OUTCOME_TONES.length]}`}
-                      >
-                        {outcome.title ? (
-                          <p className="text-sm font-semibold sm:text-[15px]">{outcome.title}</p>
-                        ) : null}
-                        {outcome.description ? (
-                          <p
-                            className={`text-sm leading-6 ${
-                              outcome.title ? "mt-1 opacity-85" : ""
-                            }`}
-                          >
-                            {outcome.description}
-                          </p>
-                        ) : null}
-                      </li>
-                    ))}
+                  <ul className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-1 sm:gap-3">
+                    {outcomes.map((outcome, index) => {
+                      const aloneOnLastRow =
+                        outcomes.length % 2 === 1 && index === outcomes.length - 1;
+
+                      return (
+                        <li
+                          key={`${outcome.title}-${index}`}
+                          className={`flex h-full flex-col rounded-xl px-2.5 py-2.5 sm:rounded-2xl sm:px-5 sm:py-4 ${
+                            aloneOnLastRow
+                              ? "order-first col-span-2 sm:order-none"
+                              : ""
+                          } ${OUTCOME_TONES[index % OUTCOME_TONES.length]}`}
+                        >
+                          {outcome.title ? (
+                            <p className="text-[12px] leading-snug font-semibold sm:text-[15px]">
+                              {outcome.title}
+                            </p>
+                          ) : null}
+                          {outcome.description ? (
+                            <p
+                              className={`text-[11px] leading-4 sm:text-sm sm:leading-6 ${
+                                outcome.title
+                                  ? "mt-1 line-clamp-3 opacity-85 sm:line-clamp-none"
+                                  : ""
+                              }`}
+                            >
+                              {outcome.description}
+                            </p>
+                          ) : null}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : (
-                  <p className="mt-4 rounded-2xl border border-dashed border-ink/12 bg-cream/50 px-4 py-6 text-sm text-ink/50">
+                  <p className="mt-3 rounded-xl border border-dashed border-ink/12 bg-cream/50 px-3 py-5 text-[13px] text-ink/50 sm:mt-4 sm:rounded-2xl sm:px-4 sm:py-6 sm:text-sm">
                     Learning outcomes will appear here once the curriculum is finalized.
                   </p>
                 )}

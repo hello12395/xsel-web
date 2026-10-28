@@ -45,7 +45,7 @@ export function CourseCardsSkeleton({
   tones?: ReadonlyArray<"neutral" | "red" | "yellow" | "blue" | "green">;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-3">
       {tones.map((tone, index) => (
         <CardSkeleton key={`${tone}-${index}`} tone={tone} />
       ))}
@@ -66,20 +66,10 @@ export function SocialCardsSkeleton() {
 export function WhyCardsSkeleton() {
   return (
     <>
-      <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white/70 sm:hidden">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className={`flex gap-3.5 px-4 py-4 ${i < 2 ? "border-b border-ink/8" : ""}`}
-          >
-            <Shimmer className="mt-0.5 h-5 w-8 shrink-0 rounded-md" />
-            <div className="min-w-0 flex-1 space-y-2">
-              <Shimmer className="h-4 w-[85%] max-w-[14rem] rounded-md" />
-              <Shimmer className="h-3 w-full rounded-md" />
-              <Shimmer className="h-3 w-[90%] rounded-md" />
-            </div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 gap-2.5 sm:hidden">
+        <Shimmer className="col-span-2 h-36 rounded-[16px]" />
+        <Shimmer className="h-40 rounded-[16px]" />
+        <Shimmer className="h-40 rounded-[16px]" />
       </div>
       <div className="hidden grid-cols-1 gap-4 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
@@ -116,7 +106,7 @@ export function PremiumCoursesSkeleton() {
           <Shimmer className="h-4 w-full max-w-md rounded-md" />
           <Shimmer className="h-4 w-[80%] max-w-sm rounded-md" />
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-2.5 sm:mt-14 sm:gap-5 lg:grid-cols-3">
           <CardSkeleton tone="neutral" />
           <CardSkeleton tone="neutral" />
           <CardSkeleton tone="neutral" />
@@ -138,7 +128,7 @@ export function FreeLessonsSkeleton() {
           <Shimmer className="h-10 w-52 rounded-xl sm:h-12 sm:w-64" />
           <Shimmer className="h-4 w-full max-w-lg rounded-md" />
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-2.5 sm:mt-14 sm:gap-5 lg:grid-cols-3">
           <CardSkeleton tone="red" />
           <CardSkeleton tone="yellow" />
           <CardSkeleton tone="blue" />

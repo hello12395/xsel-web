@@ -102,7 +102,7 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 py-14 pt-28 md:px-8 md:py-16 md:pt-32">
+        <div className="relative mx-auto max-w-6xl px-4 py-10 pt-24 sm:px-5 sm:py-14 sm:pt-28 md:px-8 md:py-16 md:pt-32">
           <Link
             href="/#premium-courses"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
@@ -111,21 +111,21 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             Back to Paid Courses
           </Link>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-3 sm:mt-8">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EFAA93]/18 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#EFAA93] uppercase">
               <PremiumIcon className="h-3.5 w-3.5" />
               Paid
             </span>
           </div>
 
-          <h1 className="font-display mt-5 text-3xl leading-tight text-white sm:text-5xl">
+          <h1 className="font-display mt-3.5 text-[1.75rem] leading-tight text-white sm:mt-5 sm:text-5xl">
             {course.title}
           </h1>
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-16">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start lg:gap-8">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-5 sm:py-12 md:px-8 md:py-16">
+        <div className="grid gap-5 sm:gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start lg:gap-8">
           <PremiumCourseTabs
             description={row.description?.trim() || ""}
             outcomes={outcomes}
@@ -139,8 +139,8 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
           />
 
           <aside className="self-start lg:sticky lg:top-24 lg:z-20">
-            <div className="card-surface overflow-hidden rounded-[24px]">
-              <div className="relative aspect-video bg-ink/5">
+            <div className="card-surface overflow-hidden rounded-[18px] sm:rounded-[24px]">
+              <div className="relative aspect-[16/10] bg-ink/5 sm:aspect-video">
                 <Image
                   src={course.thumbnail}
                   alt=""
@@ -149,27 +149,27 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                   className="object-cover"
                 />
               </div>
-              <div className="p-6">
-                <p className="text-xs font-medium tracking-wide text-ink/40 uppercase">
+              <div className="p-4 sm:p-6">
+                <p className="text-[11px] font-medium tracking-wide text-ink/40 uppercase sm:text-xs">
                   Enrollment
                 </p>
-                <p className="mt-2 font-display text-3xl tracking-tight text-ink tabular-nums">
+                <p className="mt-1.5 font-display text-[1.75rem] tracking-tight text-ink tabular-nums sm:mt-2 sm:text-3xl">
                   {course.price}
                 </p>
-                <p className="mt-2 text-sm leading-6 text-ink/55">
+                <p className="mt-1.5 text-[13px] leading-5 text-ink/55 sm:mt-2 sm:text-sm sm:leading-6">
                   Secure your seat with bank or mobile wallet payment. Admin verification usually
                   takes 24–48 hours.
                 </p>
                 <Link
                   href={`/premium/${course.id}/enroll`}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#152F29] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1a3d35]"
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#152F29] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1a3d35] sm:mt-6 sm:px-6 sm:py-3.5"
                 >
                   Enroll
                   <ArrowIcon className="h-3.5 w-3.5" />
                 </Link>
                 <Link
                   href="/#free-lessons"
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#152F29]/15 bg-white px-6 py-3.5 text-sm font-semibold text-[#152F29] transition hover:border-[#152F29]/30 hover:bg-[#F3F7F0]"
+                  className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#152F29]/15 bg-white px-5 py-3 text-sm font-semibold text-[#152F29] transition hover:border-[#152F29]/30 hover:bg-[#F3F7F0] sm:mt-3 sm:px-6 sm:py-3.5"
                 >
                   Browse free lessons
                 </Link>
