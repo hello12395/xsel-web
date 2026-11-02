@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { features } from "@/config/features";
 import { location, socials } from "@/data/site";
 import { BrandLogo } from "./BrandLogo";
 import {
+  ArrowIcon,
+  CloseIcon,
   FacebookIcon,
   InstagramIcon,
   MailIcon,
@@ -33,11 +37,119 @@ const socialIcons = {
   threads: ThreadsIcon,
 } as const;
 
-const primarySocials = socials.map((social) => ({
-  name: social.name,
-  href: social.links[0]?.href ?? "#",
-  Icon: socialIcons[social.icon],
-}));
+type Social = (typeof socials)[number];
+
+const linkClassName =
+  "inline-flex w-full items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-left text-sm text-white/70 transition hover:border-white/20 hover:bg-white/[0.07] hover:text-white sm:w-auto sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:hover:bg-transparent";
+
+function FooterSocialItem({ social }: { social: Social }) {
+  const Icon = socialIcons[social.icon];
+  const hasChoices = social.links.length > 1;
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function onPointerDown(event: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+
+    window.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  if (!hasChoices) {
+    return (
+      <a
+        href={social.links[0]?.href ?? "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={linkClassName}
+      >
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/8">
+          <Icon className="h-3.5 w-3.5" />
+        </span>
+        {social.name}
+      </a>
+    );
+  }
+
+  return (
+    <div ref={rootRef} className="relative w-full sm:w-auto">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={() => setOpen((value) => !value)}
+        className={linkClassName}
+      >
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/8">
+          <Icon className="h-3.5 w-3.5" />
+        </span>
+        {social.name}
+      </button>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            role="menu"
+            aria-label={`Choose ${social.name} account`}
+            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-[calc(100%+0.5rem)] left-0 z-30 w-[min(18.5rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-white/12 bg-[#1a3d35] shadow-[0_20px_44px_-16px_rgba(0,0,0,0.55)] sm:left-auto sm:right-0"
+          >
+            <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
+              <p className="text-[11px] font-semibold tracking-[0.14em] text-[#EFAA93] uppercase">
+                Choose account
+              </p>
+              <button
+                type="button"
+                aria-label="Close"
+                onClick={() => setOpen(false)}
+                className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white/45 transition hover:bg-white/8 hover:text-white"
+              >
+                <CloseIcon className="h-3.5 w-3.5" />
+              </button>
+            </div>
+            <ul className="p-1.5">
+              {social.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    role="menuitem"
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-white/80 transition hover:bg-white/8 hover:text-white"
+                  >
+                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0 flex-1 text-sm font-semibold">{link.label}</span>
+                    <ArrowIcon className="h-3.5 w-3.5 shrink-0 text-white/35" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -116,32 +228,12 @@ export function Footer() {
               Connect
             </p>
             <div className="flex flex-row flex-wrap gap-2.5 sm:flex-col sm:gap-3">
-              {primarySocials.map(({ name, href, Icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white/70 transition hover:text-white sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/8">
-                    <Icon className="h-3.5 w-3.5" />
-                  </span>
-                  {name}
-                </a>
+              {socials.map((social) => (
+                <FooterSocialItem key={social.name} social={social} />
               ))}
             </div>
           </StaggerItem>
         </Stagger>
-      </div>
-
-      <div className="mx-auto max-w-6xl overflow-hidden px-4 sm:px-5 lg:px-8">
-        <p
-          aria-hidden="true"
-          className="select-none font-sans text-[clamp(4.75rem,28vw,22rem)] leading-[0.82] font-black tracking-[-0.02em] text-white/[0.11]"
-        >
-          XSEL
-        </p>
       </div>
 
       <div className="border-t border-white/10 pb-[env(safe-area-inset-bottom)]">

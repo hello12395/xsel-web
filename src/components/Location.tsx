@@ -229,7 +229,7 @@ export function Location() {
                       {studio.label}
                     </p>
                     <p className="font-display mt-1 text-lg text-white">{studio.name}</p>
-                    <p className="mt-1.5 text-xs leading-6 text-white/60">
+                    <p className="mt-1.5 text-xs leading-6 text-white/65">
                       {studio.addressLines.join(", ")}
                     </p>
                   </div>
@@ -250,7 +250,7 @@ export function Location() {
                     <p className="text-[10px] font-semibold tracking-[0.18em] text-[#EFAA93] uppercase">
                       Phone
                     </p>
-                    <p className="mt-1 text-[12px] leading-snug text-white/85 sm:text-sm">
+                    <p className="mt-1 text-[12px] leading-snug text-white sm:text-sm">
                       {location.phone}
                     </p>
                   </div>
@@ -267,7 +267,7 @@ export function Location() {
                     <p className="text-[10px] font-semibold tracking-[0.18em] text-[#EFAA93] uppercase">
                       Email
                     </p>
-                    <p className="mt-1 text-[11px] leading-snug break-all text-white/85 sm:text-sm">
+                    <p className="mt-1 text-[11px] leading-snug break-all text-white sm:text-sm">
                       {location.email}
                     </p>
                   </div>

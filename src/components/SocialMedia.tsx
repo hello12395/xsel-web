@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { socials } from "@/data/site";
 import {
@@ -269,7 +270,25 @@ export function SocialMedia() {
       <div className="social-stage-glow" aria-hidden />
       <div className="social-stage-grid" aria-hidden />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 lg:px-12 lg:py-28">
+      {/* Pencil parrot sketch — left to center */}
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[78%] max-w-[52rem] sm:w-[68%] lg:w-[58%]"
+        aria-hidden
+      >
+        <Image
+          src="/social-parrot-sketch.jpg"
+          alt=""
+          fill
+          unoptimized
+          sizes="(min-width: 1024px) 50vw, 75vw"
+          className="object-contain object-left opacity-[0.2] mix-blend-multiply [filter:grayscale(0.15)_sepia(0.45)_hue-rotate(78deg)_saturate(0.75)_contrast(1.05)] sm:opacity-[0.24] lg:opacity-[0.28]"
+        />
+        <div className="absolute inset-y-0 right-0 w-[42%] bg-gradient-to-r from-transparent via-[#FFFCF6]/55 to-[#FFFCF6]" />
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#FFFCF6]/70 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#FFFCF6]/75 to-transparent" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 lg:px-12 lg:py-28">
         <div className="grid items-center gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] lg:gap-14 xl:gap-16">
           <div className="relative z-10 min-w-0 lg:pr-2">
             <h2 className="font-display text-[clamp(1.75rem,6.5vw,4.25rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">

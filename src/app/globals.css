@@ -1052,7 +1052,7 @@ p {
   padding: 0.9rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(155deg, #1a3d35 0%, var(--color-primary) 55%, #0f241f 100%);
+  background: linear-gradient(155deg, #1a3d35 0%, #152f29 55%, #0f241f 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 18px 36px -22px rgba(21, 47, 41, 0.55);
@@ -1061,7 +1061,7 @@ p {
 }
 
 .location-contact-row:hover {
-  border-color: rgba(239, 170, 147, 0.35);
+  border-color: rgba(239, 170, 147, 0.4);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.1) inset,
     0 20px 40px -18px rgba(21, 47, 41, 0.65);
@@ -1076,8 +1076,8 @@ p {
   align-items: center;
   justify-content: center;
   border-radius: 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(239, 170, 147, 0.28);
+  background: rgba(239, 170, 147, 0.12);
   color: #efaa93;
   box-shadow: none;
 }
