@@ -24,7 +24,6 @@ type PremiumCourseTabsProps = {
   duration: string;
   lessons: number;
   students: number;
-  formatLabel: string;
   /** Average rating from `course_reviews` (1–5). */
   rating?: number | null;
   reviews: ReviewItem[];
@@ -121,7 +120,6 @@ export function PremiumCourseTabs({
   duration,
   lessons,
   students,
-  formatLabel,
   rating = null,
   reviews,
 }: PremiumCourseTabsProps) {
@@ -228,13 +226,15 @@ export function PremiumCourseTabs({
                   return (
                     <div
                       key={stat.label}
-                      className="rounded-xl border border-[#152F29]/10 bg-[#F7FAF5] px-2.5 py-2.5 sm:rounded-2xl sm:px-4 sm:py-4"
+                      className="flex flex-col items-center justify-center rounded-xl border border-[#152F29]/10 bg-[#F7FAF5] px-2.5 py-3 text-center sm:rounded-2xl sm:px-4 sm:py-5"
                     >
-                      <Icon className="h-3.5 w-3.5 text-[#1D6B56] sm:h-4 sm:w-4" />
-                      <p className="mt-1.5 text-[13px] font-semibold tracking-tight text-[#152F29] sm:mt-2.5 sm:text-[15px]">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1D6B56]/12 text-[#1D6B56] sm:h-10 sm:w-10">
+                        <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      </span>
+                      <p className="mt-2 text-[13px] font-extrabold tracking-tight text-[#152F29] sm:mt-3 sm:text-[16px]">
                         {stat.value}
                       </p>
-                      <p className="mt-0.5 text-[9px] font-medium tracking-wide text-[#152F29]/40 uppercase sm:text-[11px]">
+                      <p className="mt-0.5 text-[9px] font-semibold tracking-[0.12em] text-[#152F29]/45 uppercase sm:mt-1 sm:text-[11px]">
                         {stat.label}
                       </p>
                     </div>
@@ -254,47 +254,33 @@ export function PremiumCourseTabs({
               ) : null}
 
               <section>
-                <div className="flex flex-wrap items-end justify-between gap-2">
-                  <h3 className="font-display text-[1.15rem] tracking-tight text-ink sm:text-[1.35rem]">
-                    What you&apos;ll learn
-                  </h3>
-                  <p className="text-[11px] font-medium text-ink/40 sm:text-xs">{formatLabel}</p>
-                </div>
+                <h3 className="font-display text-[1.15rem] tracking-tight text-ink sm:text-[1.35rem]">
+                  What you&apos;ll learn
+                </h3>
 
                 {outcomes.length > 0 ? (
-                  <ul className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-1 sm:gap-3">
-                    {outcomes.map((outcome, index) => {
-                      const aloneOnLastRow =
-                        outcomes.length % 2 === 1 && index === outcomes.length - 1;
-
-                      return (
-                        <li
-                          key={`${outcome.title}-${index}`}
-                          className={`flex h-full flex-col rounded-xl px-2.5 py-2.5 sm:rounded-2xl sm:px-5 sm:py-4 ${
-                            aloneOnLastRow
-                              ? "order-first col-span-2 sm:order-none"
-                              : ""
-                          } ${OUTCOME_TONES[index % OUTCOME_TONES.length]}`}
-                        >
-                          {outcome.title ? (
-                            <p className="text-[12px] leading-snug font-semibold sm:text-[15px]">
-                              {outcome.title}
-                            </p>
-                          ) : null}
-                          {outcome.description ? (
-                            <p
-                              className={`text-[11px] leading-4 sm:text-sm sm:leading-6 ${
-                                outcome.title
-                                  ? "mt-1 line-clamp-3 opacity-85 sm:line-clamp-none"
-                                  : ""
-                              }`}
-                            >
-                              {outcome.description}
-                            </p>
-                          ) : null}
-                        </li>
-                      );
-                    })}
+                  <ul className="mt-3 grid grid-cols-1 gap-2 sm:mt-4 sm:grid-cols-3 sm:gap-3">
+                    {outcomes.map((outcome, index) => (
+                      <li
+                        key={`${outcome.title}-${index}`}
+                        className={`flex h-full min-w-0 flex-col rounded-xl px-2.5 py-2.5 sm:rounded-2xl sm:px-4 sm:py-4 ${OUTCOME_TONES[index % OUTCOME_TONES.length]}`}
+                      >
+                        {outcome.title ? (
+                          <p className="text-[12px] leading-snug font-semibold sm:text-[14px] sm:leading-snug">
+                            {outcome.title}
+                          </p>
+                        ) : null}
+                        {outcome.description ? (
+                          <p
+                            className={`text-[11px] leading-4 sm:text-[13px] sm:leading-5 ${
+                              outcome.title ? "mt-1 opacity-85" : ""
+                            }`}
+                          >
+                            {outcome.description}
+                          </p>
+                        ) : null}
+                      </li>
+                    ))}
                   </ul>
                 ) : (
                   <p className="mt-3 rounded-xl border border-dashed border-ink/12 bg-cream/50 px-3 py-5 text-[13px] text-ink/50 sm:mt-4 sm:rounded-2xl sm:px-4 sm:py-6 sm:text-sm">

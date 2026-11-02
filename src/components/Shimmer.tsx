@@ -55,9 +55,9 @@ export function CourseCardsSkeleton({
 
 export function SocialCardsSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <Shimmer key={i} className="min-h-[14.5rem] rounded-[20px] sm:min-h-[16rem]" />
+    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:gap-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <Shimmer key={i} className="min-h-[11.5rem] rounded-[18px] sm:min-h-[13.5rem] sm:rounded-[22px]" />
       ))}
     </div>
   );

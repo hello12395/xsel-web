@@ -1,110 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowIcon, ChevronDownIcon } from "./Icons";
+import { motion } from "motion/react";
+import { ArrowIcon } from "./Icons";
 
 const googlePlayUrl = "https://play.google.com/store/apps/details?id=app.xsel";
-const DESKTOP_HERO_VIDEO = "/studio-hero.mp4";
-const MOBILE_HERO_VIDEO = "/studio-hero-mobile.mp4";
-
 const ease = [0.22, 1, 0.36, 1] as const;
-
-function ScrollCue() {
-  const reduceMotion = useReducedMotion();
-  const [hidden, setHidden] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setHidden(window.scrollY > 48);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <motion.a
-      href="#why"
-      aria-label="Scroll to explore the lab"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{
-        opacity: hidden ? 0 : 1,
-        y: hidden ? 12 : 0,
-      }}
-      transition={{
-        duration: 0.45,
-        delay: hidden ? 0 : 1.15,
-        ease,
-      }}
-      className={`hero-scroll-cue absolute right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-20 flex scale-90 flex-col items-center gap-1.5 sm:right-auto sm:bottom-8 sm:left-1/2 sm:scale-100 sm:-translate-x-1/2 sm:gap-3 ${
-        hidden ? "pointer-events-none" : ""
-      }`}
-    >
-      <span className="hero-scroll-cue__label hidden text-[10px] font-semibold tracking-[0.36em] text-white/70 uppercase sm:inline">
-        Scroll
-      </span>
-
-      <span className="relative flex h-9 w-9 items-center justify-center sm:h-12 sm:w-12">
-        {!reduceMotion ? (
-          <>
-            <span className="hero-scroll-cue__ring" aria-hidden />
-            <span className="hero-scroll-cue__ring hero-scroll-cue__ring--delay" aria-hidden />
-          </>
-        ) : null}
-
-        <span className="relative flex h-8 w-[18px] items-start justify-center rounded-full border border-white/45 bg-white/[0.06] shadow-[0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-[2px] sm:h-10 sm:w-6">
-          <motion.span
-            className="mt-1.5 h-1.5 w-1 rounded-full bg-[#efaa93] shadow-[0_0_10px_rgba(239,170,147,0.85)]"
-            aria-hidden
-            animate={
-              reduceMotion
-                ? undefined
-                : { y: [0, 12, 0], opacity: [1, 0.35, 1] }
-            }
-            transition={{
-              duration: 1.55,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        </span>
-      </span>
-
-      <span className="hidden flex-col items-center -space-y-2.5 text-white/55 sm:flex" aria-hidden>
-        {[0, 1].map((i) => (
-          <motion.span
-            key={i}
-            animate={
-              reduceMotion
-                ? undefined
-                : { opacity: [0.25, 1, 0.25], y: [0, 3, 0] }
-            }
-            transition={{
-              duration: 1.35,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.18,
-            }}
-          >
-            <ChevronDownIcon className="h-4 w-4" />
-          </motion.span>
-        ))}
-      </span>
-    </motion.a>
-  );
-}
 
 function RevealLine({
   children,
   delay = 0,
   className = "",
 }: {
-  children: string;
+  children: ReactNode;
   delay?: number;
   className?: string;
 }) {
   return (
-    <span className={`block overflow-hidden pb-[0.12em] ${className}`}>
+    <span className={`block overflow-hidden pb-[0.28em] ${className}`}>
       <motion.span
         className="block"
         initial={{ y: "110%", opacity: 0 }}
@@ -117,57 +31,143 @@ function RevealLine({
   );
 }
 
-export function Hero() {
-  const [heroVideo, setHeroVideo] = useState(DESKTOP_HERO_VIDEO);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 639px)");
-    const sync = () => {
-      setHeroVideo(media.matches ? MOBILE_HERO_VIDEO : DESKTOP_HERO_VIDEO);
-    };
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, []);
-
+function AccentUnderline({ children }: { children: string }) {
   return (
-    <section id="hero" className="relative min-h-dvh w-full overflow-hidden bg-black">
-      <video
-        key={heroVideo}
-        className="absolute inset-0 h-full w-full object-cover object-center sm:object-[72%_center]"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-label="English teacher leading a studio lesson"
+    <span className="relative inline-block pb-[0.18em]">
+      {children}
+      <svg
+        aria-hidden
+        viewBox="0 0 320 18"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute right-0 bottom-0 left-0 h-[0.28em] w-full overflow-visible"
       >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+        <path
+          d="M4 13.5 C70 15.5, 150 11, 230 8.5 C270 7.2, 300 6.5, 316 7.2 L316 9.8 C280 11.8, 220 13.5, 150 14.8 C90 16, 40 15.5, 4 13.5 Z"
+          fill="#EFAA93"
+        />
+      </svg>
+    </span>
+  );
+}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-black/20 sm:from-black/80 sm:via-black/40 sm:to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/30 sm:from-black/55 sm:via-transparent sm:to-black/20" />
+function HeroVisual() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28, rotate: 4 }}
+      animate={{ opacity: 1, y: 0, rotate: 3 }}
+      transition={{ duration: 0.9, delay: 0.35, ease }}
+      className="relative mx-auto w-full max-w-[22rem] lg:max-w-[26rem]"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-10 -right-8 h-40 w-40 rounded-full border border-white/10 sm:-top-14 sm:-right-10 sm:h-52 sm:w-52"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-12 -left-10 h-44 w-44 rounded-full border border-white/10 sm:-bottom-16 sm:-left-14 sm:h-56 sm:w-56"
+      />
 
-      <div className="relative z-10 flex min-h-dvh items-end px-4 pt-20 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:items-center sm:px-8 sm:pt-28 sm:pb-20 md:px-10 md:pb-16 lg:px-16 lg:pt-32 xl:px-24">
-        <div className="w-full max-w-3xl pb-1 text-left sm:pb-0 lg:max-w-4xl xl:max-w-[58rem]">
+      <div className="relative overflow-hidden rounded-[1.35rem] bg-[#FFFCF6] p-5 shadow-[0_28px_60px_-28px_rgba(0,0,0,0.55)] sm:rounded-[1.6rem] sm:p-6">
+        <div className="flex items-center justify-between gap-3 text-[10px] font-bold tracking-[0.16em] text-[#152F29]/45 uppercase sm:text-[11px]">
+          <span>Sarwar Lab</span>
+          <span>Live class</span>
+        </div>
+
+        <p className="font-display mt-5 text-[1.45rem] leading-[1.15] tracking-[-0.04em] text-[#152F29] sm:mt-6 sm:text-[1.7rem]">
+          Grammar.
+          <br />
+          Writing. Speaking.
+        </p>
+
+        <div className="mt-5 space-y-2.5 sm:mt-6">
+          <div className="rounded-xl bg-[#152F29]/[0.05] px-3.5 py-3">
+            <p className="text-[10px] font-bold tracking-[0.14em] text-[#152F29]/40 uppercase">
+              Rule
+            </p>
+            <p className="mt-1 text-[13px] leading-snug text-[#152F29]/55">
+              Learn it clearly in class.
+            </p>
+          </div>
+          <div className="rounded-xl border border-[#EFAA93]/45 bg-[#EFAA93]/15 px-3.5 py-3">
+            <p className="text-[10px] font-bold tracking-[0.14em] text-[#B86B52] uppercase">
+              Practice
+            </p>
+            <p className="mt-1 text-[13px] leading-snug text-[#152F29]/80">
+              Get corrected. Leave more confident.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute -top-5 -right-3 flex h-[5.5rem] w-[5.5rem] rotate-6 items-center justify-center rounded-full border border-dashed border-[#152F29]/25 bg-[#EFAA93] shadow-[0_16px_30px_-14px_rgba(184,107,82,0.55)] sm:-top-6 sm:-right-4 sm:h-[6.5rem] sm:w-[6.5rem]">
+        <div className="text-center leading-tight text-[#152F29]">
+          <span className="mb-0.5 block text-[14px] font-bold">*</span>
+          <span className="block text-[9px] font-extrabold tracking-[0.08em] uppercase sm:text-[10px]">
+            Learn.
+            <br />
+            Practise.
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export function Hero() {
+  return (
+    <section
+      id="hero"
+      className="relative flex min-h-dvh w-full flex-col overflow-hidden bg-[#152F29]"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="absolute top-[-12%] left-[-8%] h-[28rem] w-[28rem] rounded-full border border-white/[0.07]" />
+        <div className="absolute top-[18%] left-[8%] h-[18rem] w-[18rem] rounded-full border border-white/[0.05]" />
+        <div className="absolute right-[-10%] bottom-[-18%] h-[34rem] w-[34rem] rounded-full border border-white/[0.07]" />
+        <div className="absolute right-[12%] bottom-[8%] h-[16rem] w-[16rem] rounded-full border border-white/[0.05]" />
+      </div>
+
+      <div
+        className="shrink-0 pt-[env(safe-area-inset-top)]"
+        aria-hidden
+      >
+        <div className="h-14 sm:h-16 lg:h-[4.5rem]" />
+      </div>
+
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-center gap-10 px-4 py-8 sm:gap-12 sm:px-8 sm:py-10 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-8 lg:py-12 xl:gap-16">
+        <div className="min-w-0">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05, ease }}
+            className="mb-4 inline-flex w-fit max-w-full items-center gap-2 rounded-full border border-white/25 bg-white/5 px-3.5 py-2 text-[11px] font-semibold tracking-[0.14em] text-white/90 uppercase sm:mb-5 sm:px-4 sm:text-[12px]"
+          >
+            <span aria-hidden className="text-[#EFAA93]">
+              *
+            </span>
+            An English lab, not just a class
+          </motion.p>
+
           <h1 className="text-left text-white">
             <RevealLine
               delay={0.12}
-              className="font-display text-[clamp(2.75rem,12vw,5.25rem)] leading-[1.02] tracking-[-0.07em] sm:text-[clamp(2.15rem,9vw,5.25rem)] sm:tracking-[-0.075em]"
+              className="font-display text-[clamp(2.4rem,5vw+1rem,4.4rem)] leading-[1.02] tracking-[-0.07em]"
             >
               English,
             </RevealLine>
             <RevealLine
               delay={0.42}
-              className="font-display mt-1.5 text-[clamp(2.35rem,10.5vw,4.75rem)] leading-[1.02] tracking-[-0.07em] sm:mt-3 sm:text-[clamp(1.7rem,7.5vw,4.75rem)] sm:tracking-[-0.075em]"
+              className="font-display mt-1 text-[clamp(2.05rem,4.4vw+0.85rem,3.9rem)] leading-[1.02] tracking-[-0.07em] sm:mt-1.5"
             >
-              taught live.
+              taught live &
             </RevealLine>
             <RevealLine
               delay={0.56}
-              className="em-serif mt-2.5 text-[clamp(2.35rem,10.5vw,4.75rem)] leading-[1.02] text-white sm:mt-6 sm:text-[clamp(1.7rem,7.5vw,4.75rem)]"
+              className="em-serif mt-1.5 text-[clamp(2.05rem,4.4vw+0.85rem,3.9rem)] leading-[1.02] text-[#EFAA93] sm:mt-2"
             >
-              Put to work.
+              <AccentUnderline>Put to work.</AccentUnderline>
             </RevealLine>
           </h1>
 
@@ -175,27 +175,22 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.72, ease }}
-            className="mt-5 max-w-xl text-left text-[16px] leading-7 text-white/85 sm:mt-8 sm:max-w-2xl sm:text-xl sm:leading-8 md:text-[1.375rem] md:leading-9 lg:max-w-none lg:text-[1.5rem] lg:leading-10"
+            className="mt-4 max-w-xl text-left text-[15px] font-normal leading-[1.55] tracking-[-0.01em] text-white/75 sm:mt-5 sm:text-[17px] sm:leading-[1.55] md:text-[1.125rem] md:leading-[1.6]"
           >
-            <span className="block">
-              A real classroom for grammar, writing, and speaking.
-            </span>
-            <span className="mt-2 block sm:mt-3">
-              The same lesson you see on screen, marked, corrected, and
-              practiced, whether that&apos;s a sentence you write or a sentence
-              you say.
-            </span>
+            A real classroom for grammar, writing and speaking. Learn the rule,
+            practise it, get corrected, and leave every lesson a little more
+            confident.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.86, ease }}
-            className="mt-7 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
+            className="mt-5 flex flex-col items-stretch gap-3 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           >
             <a
               href="#free-lessons"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-semibold text-black transition hover:-translate-y-0.5 hover:bg-white/90 sm:justify-start sm:px-7 sm:py-4 sm:text-base"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#EFAA93] px-6 py-3 text-[15px] font-semibold text-[#152F29] transition hover:-translate-y-0.5 hover:bg-[#F2BAA1] sm:min-h-12 sm:justify-start sm:px-7 sm:py-3.5 sm:text-base"
             >
               Browse free lessons
               <ArrowIcon className="h-4 w-4" />
@@ -204,7 +199,7 @@ export function Hero() {
               href={googlePlayUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative mx-auto inline-flex h-[48px] w-[min(100%,200px)] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:mx-0 sm:h-[56px] sm:w-[238px]"
+              className="relative mx-auto inline-flex h-[46px] w-[min(100%,190px)] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:mx-0 sm:h-[52px] sm:w-[220px]"
               aria-label="Get it on Google Play"
             >
               <Image
@@ -212,7 +207,7 @@ export function Hero() {
                 alt="Get it on Google Play"
                 width={646}
                 height={250}
-                className="absolute top-1/2 left-1/2 h-[105px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[123px]"
+                className="absolute top-1/2 left-1/2 h-[100px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[114px]"
               />
             </a>
           </motion.div>
@@ -221,11 +216,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1, ease }}
-            className="mt-7 grid max-w-3xl grid-cols-3 gap-3 border-t border-white/15 pt-5 text-left sm:mt-12 sm:gap-6 sm:pt-8 lg:max-w-4xl"
+            className="mt-6 grid max-w-xl grid-cols-3 gap-3 border-t border-white/15 pt-5 text-left sm:mt-8 sm:gap-6 sm:pt-6"
           >
             {[
-              ["2.4k", "Learners"],
-              ["12", "Weekly labs"],
+              ["2.4k", "Learners and growing"],
+              ["12", "Weekly learning labs"],
               ["8 yrs", "On the floor"],
             ].map(([value, label], index) => (
               <motion.div
@@ -233,21 +228,23 @@ export function Hero() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 1.05 + index * 0.1, ease }}
-                className="min-w-0"
+                className="flex min-w-0 items-center gap-2 sm:gap-2.5"
               >
-                <dt className="font-display text-[1.65rem] tracking-[-0.04em] text-white sm:text-3xl md:text-4xl">
+                <dt className="font-display shrink-0 text-[1.4rem] tracking-[-0.04em] text-white sm:text-[1.85rem]">
                   {value}
                 </dt>
-                <dd className="mt-1 text-[11px] tracking-[0.1em] text-white/55 uppercase sm:mt-1.5 sm:text-xs sm:tracking-[0.16em] md:text-sm">
+                <dd className="max-w-[5.5rem] text-[10px] leading-[1.3] text-white/70 sm:max-w-[6.5rem] sm:text-[12px]">
                   {label}
                 </dd>
               </motion.div>
             ))}
           </motion.dl>
         </div>
-      </div>
 
-      <ScrollCue />
+        <div className="hidden min-w-0 lg:block">
+          <HeroVisual />
+        </div>
+      </div>
     </section>
   );
 }

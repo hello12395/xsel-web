@@ -186,6 +186,34 @@ export const socials = [
       },
     ],
   },
+  {
+    name: "YouTube",
+    handle: "@EnglishwithMahmoodSarwar",
+    stat: "Full lessons",
+    icon: "youtube" as const,
+    links: [
+      {
+        label: "English with Mahmood Sarwar",
+        href: "https://www.youtube.com/@EnglishwithMahmoodSarwar",
+      },
+    ],
+  },
+  {
+    name: "Threads",
+    handle: "Two lab accounts",
+    stat: "Daily notes",
+    icon: "threads" as const,
+    links: [
+      {
+        label: "CSS Mentor Mahmood Sarwar",
+        href: "https://www.threads.com/@cssmentor_mahmood_sarwar",
+      },
+      {
+        label: "English with Mahmood Sarwar",
+        href: "https://www.threads.com/@english.with.mahmood.sarwar",
+      },
+    ],
+  },
 ];
 
 export const blogs = [

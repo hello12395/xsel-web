@@ -183,7 +183,8 @@ export function Location() {
         {/* Mobile: heading → globe → cards. Desktop: heading+cards | globe */}
         <Reveal className="order-1 min-w-0 lg:col-start-1 lg:row-start-1">
           <h2 className="font-display text-[clamp(1.75rem,7vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
-            On the map
+            On the{" "}
+            <span className="em-serif italic text-[#EFAA93]">map</span>
           </h2>
           <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75]">
             Find us in G-11 Markaz, Islamabad — walk in, or reach us by phone and email anytime.

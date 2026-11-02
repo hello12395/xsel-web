@@ -8,8 +8,10 @@ import {
   InstagramIcon,
   MailIcon,
   PhoneIcon,
+  ThreadsIcon,
   TiktokIcon,
   WhatsappIcon,
+  YoutubeIcon,
 } from "./Icons";
 import { Stagger, StaggerItem } from "./Reveal";
 
@@ -27,6 +29,8 @@ const socialIcons = {
   facebook: FacebookIcon,
   whatsapp: WhatsappIcon,
   tiktok: TiktokIcon,
+  youtube: YoutubeIcon,
+  threads: ThreadsIcon,
 } as const;
 
 const primarySocials = socials.map((social) => ({

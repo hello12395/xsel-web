@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { FreeStuff } from "@/components/FreeStuff";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { HeroMarquee } from "@/components/HeroMarquee";
 import { Location } from "@/components/Location";
 import { PendingDiscussions } from "@/components/PendingDiscussions";
 import { PremiumCoursesSection } from "@/components/PremiumCoursesSection";
@@ -21,6 +22,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <HeroMarquee />
         <WhySarwarLab />
         <Suspense fallback={<PremiumCoursesSkeleton />}>
           <PremiumCoursesSection />

@@ -52,14 +52,17 @@ function useAuthSlideIndex() {
 /** Full-bleed photo stack for mobile auth — desktop keeps the side panel. */
 export function AuthMobileBackdrop({
   children,
+  compact = false,
 }: {
   children?: ReactNode;
+  compact?: boolean;
 }) {
   const [index, setIndex] = useAuthSlideIndex();
   const active = authSlides[index];
+  const heightClass = compact ? "h-[28dvh] min-h-[10.5rem] max-h-[15rem]" : "min-h-[42dvh]";
 
   return (
-    <div className="relative isolate min-h-[42dvh] overflow-hidden lg:hidden">
+    <div className={`relative isolate overflow-hidden lg:hidden ${heightClass}`}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={active.src}
@@ -92,13 +95,17 @@ export function AuthMobileBackdrop({
 
       <Link
         href="/"
-        className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/35 text-white backdrop-blur-md"
+        className="absolute top-[max(0.75rem,env(safe-area-inset-top))] left-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/35 text-white backdrop-blur-md sm:h-10 sm:w-10"
         aria-label="Back to home"
       >
         <ArrowIcon className="h-3.5 w-3.5 -scale-x-100" />
       </Link>
 
-      <div className="absolute right-4 bottom-16 z-10 flex items-center gap-1.5">
+      <div
+        className={`absolute right-4 z-10 flex items-center gap-1.5 ${
+          compact ? "bottom-8" : "bottom-16"
+        }`}
+      >
         {authSlides.map((slide, slideIndex) => (
           <button
             key={slide.src}
@@ -114,7 +121,11 @@ export function AuthMobileBackdrop({
       </div>
 
       {children ? (
-        <div className="relative z-10 flex min-h-[42dvh] flex-col justify-end px-5 pb-10 pt-16">
+        <div
+          className={`relative z-10 flex h-full flex-col justify-end px-5 ${
+            compact ? "pb-7 pt-12" : "min-h-[42dvh] pb-10 pt-16"
+          }`}
+        >
           {children}
         </div>
       ) : null}

@@ -8,10 +8,11 @@ import {
   CloseIcon,
   FacebookIcon,
   InstagramIcon,
+  ThreadsIcon,
   TiktokIcon,
   WhatsappIcon,
+  YoutubeIcon,
 } from "./Icons";
-import { Reveal, Stagger, StaggerItem } from "./Reveal";
 import { SocialCardsSkeleton } from "./Shimmer";
 import { ShimmerGate } from "./ShimmerGate";
 
@@ -20,6 +21,8 @@ const icons: Record<(typeof socials)[number]["icon"], ComponentType<{ className?
   tiktok: TiktokIcon,
   facebook: FacebookIcon,
   whatsapp: WhatsappIcon,
+  youtube: YoutubeIcon,
+  threads: ThreadsIcon,
 };
 
 const themes: Record<
@@ -35,49 +38,71 @@ const themes: Record<
     menuIconBg: string;
   }
 > = {
-  /* Soft warm tile — sits cleanly on cream */
+  /* Instagram — darker magenta */
   instagram: {
-    card: "border border-[#e6e6d9] bg-[#FFFEF9] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)]",
-    badge: "bg-[#f7dfc7] text-[#5c4033]",
-    title: "text-heading",
-    handle: "text-muted",
-    cta: "text-[#1d6b56] group-hover:text-[#152F29]",
-    watermark: "text-[#152F29]/[0.06]",
-    menuHover: "hover:bg-[#fff6ef]",
-    menuIconBg: "bg-[#f7dfc7]",
+    card: "border border-white/10 bg-[rgba(42,12,29,0.5)] shadow-[0_12px_30px_-16px_rgba(42,12,29,0.4)]",
+    badge: "bg-white/12 text-[#F7D6E6]",
+    title: "text-white",
+    handle: "text-white",
+    cta: "text-[#F7B8D4] group-hover:text-white",
+    watermark: "opacity-[0.28]",
+    menuHover: "hover:bg-[#fdf2f7]",
+    menuIconBg: "bg-[#f7d6e6]",
   },
-  /* Soft sage tile */
+  /* Facebook — darker blue */
   facebook: {
-    card: "border border-[#e6e6d9] bg-[#F3F7F0] shadow-[0_10px_28px_-18px_rgba(21,47,41,0.18)]",
-    badge: "bg-[#d7e5d3] text-[#214F42]",
-    title: "text-heading",
-    handle: "text-muted",
-    cta: "text-[#1d6b56] group-hover:text-[#152F29]",
-    watermark: "text-[#152F29]/[0.06]",
-    menuHover: "hover:bg-[#eaf1e6]",
-    menuIconBg: "bg-[#d7e5d3]",
+    card: "border border-white/10 bg-[rgba(7,31,59,0.5)] shadow-[0_12px_30px_-16px_rgba(7,31,59,0.4)]",
+    badge: "bg-white/12 text-[#D6E6FC]",
+    title: "text-white",
+    handle: "text-white",
+    cta: "text-[#A8C8F5] group-hover:text-white",
+    watermark: "opacity-[0.3]",
+    menuHover: "hover:bg-[#ebf3fe]",
+    menuIconBg: "bg-[#d6e6fc]",
   },
-  /* Deep brand green */
+  /* WhatsApp — darker green */
   whatsapp: {
-    card: "border border-[#214F42]/20 bg-[#214F42] shadow-[0_12px_30px_-16px_rgba(33,79,66,0.45)]",
-    badge: "bg-white/12 text-[#E8F0E4]",
+    card: "border border-white/10 bg-[rgba(4,37,28,0.5)] shadow-[0_12px_30px_-16px_rgba(4,37,28,0.4)]",
+    badge: "bg-white/12 text-[#C9EFD8]",
     title: "text-white",
-    handle: "text-white/60",
-    cta: "text-[#C2D7BA] group-hover:text-white",
-    watermark: "text-white/[0.08]",
-    menuHover: "hover:bg-[#eaf1e6]",
-    menuIconBg: "bg-[#eaf1e6]",
+    handle: "text-white",
+    cta: "text-[#7DDBA8] group-hover:text-white",
+    watermark: "opacity-[0.3]",
+    menuHover: "hover:bg-[#e8f8ef]",
+    menuIconBg: "bg-[#c9efd8]",
   },
-  /* Primary dark green */
+  /* TikTok — near black */
   tiktok: {
-    card: "border border-[#152F29]/20 bg-[#152F29] shadow-[0_12px_30px_-16px_rgba(21,47,41,0.45)]",
-    badge: "bg-white/12 text-[#E8F0E4]",
+    card: "border border-white/10 bg-[rgba(8,8,8,0.5)] shadow-[0_12px_30px_-16px_rgba(0,0,0,0.4)]",
+    badge: "bg-white/12 text-[#E5E7EB]",
     title: "text-white",
-    handle: "text-white/60",
-    cta: "text-[#DF937F] group-hover:text-white",
-    watermark: "text-white/[0.08]",
-    menuHover: "hover:bg-[#f5f0ea]",
-    menuIconBg: "bg-[#f5f0ea]",
+    handle: "text-white",
+    cta: "text-[#25F4EE] group-hover:text-white",
+    watermark: "opacity-[0.32]",
+    menuHover: "hover:bg-[#f3f4f6]",
+    menuIconBg: "bg-[#e5e7eb]",
+  },
+  /* YouTube — darker red */
+  youtube: {
+    card: "border border-white/10 bg-[rgba(58,9,9,0.5)] shadow-[0_12px_30px_-16px_rgba(58,9,9,0.4)]",
+    badge: "bg-white/12 text-[#FCD0D0]",
+    title: "text-white",
+    handle: "text-white",
+    cta: "text-[#FFB4B4] group-hover:text-white",
+    watermark: "opacity-[0.3]",
+    menuHover: "hover:bg-[#feecec]",
+    menuIconBg: "bg-[#fcd0d0]",
+  },
+  /* Threads — charcoal black */
+  threads: {
+    card: "border border-white/10 bg-[rgba(11,11,11,0.5)] shadow-[0_12px_30px_-16px_rgba(0,0,0,0.4)]",
+    badge: "bg-white/12 text-[#E4E4E4]",
+    title: "text-white",
+    handle: "text-white",
+    cta: "text-white group-hover:text-[#EFAA93]",
+    watermark: "opacity-[0.34]",
+    menuHover: "hover:bg-[#f0f0f0]",
+    menuIconBg: "bg-[#e4e4e4]",
   },
 };
 
@@ -111,70 +136,65 @@ function SocialCard({ social }: { social: Social }) {
     };
   }, [open]);
 
-  const cardClassName = `social-card-3d group relative flex h-full min-h-[11.5rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left sm:min-h-[15.5rem] sm:rounded-[22px] sm:p-6 ${open ? "is-open" : ""} ${theme.card}`;
+  const cardClassName = `group relative flex h-full min-h-[10.75rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left sm:min-h-[13.5rem] sm:rounded-[22px] sm:p-5 lg:min-h-[12.75rem] lg:p-5 ${open ? "is-open" : ""} ${theme.card}`;
 
   const cardBody = (
     <>
       <span
-        className={`pointer-events-none absolute -right-2 -bottom-3 ${theme.watermark}`}
+        className={`pointer-events-none absolute inset-0 overflow-hidden ${theme.watermark}`}
         aria-hidden
       >
-        <Icon className="h-24 w-24 sm:h-36 sm:w-36" />
+        <Icon className="absolute top-1/2 right-[-28%] h-[118%] w-[118%] -translate-y-1/2 drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]" />
       </span>
-
-      <span className="relative z-10 flex items-start justify-between gap-2 sm:gap-3">
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/80 shadow-[0_4px_14px_-8px_rgba(21,47,41,0.25)] ring-1 ring-[#152F29]/6 sm:h-11 sm:w-11 sm:rounded-2xl">
-          <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-        </span>
-        <span
-          className={`rounded-full px-2 py-0.5 text-[9px] font-bold tracking-[0.1em] uppercase sm:px-2.5 sm:py-1 sm:text-[10px] sm:tracking-[0.12em] ${theme.badge}`}
-        >
-          {social.stat}
-        </span>
-      </span>
-
-      <div className="relative z-10 mt-3.5 flex-1 sm:mt-5">
-        <h3
-          className={`font-display text-[1.15rem] leading-tight tracking-[-0.04em] sm:text-[1.6rem] ${theme.title}`}
-        >
-          {social.name}
-        </h3>
-        <p className={`mt-1 line-clamp-2 text-[12px] leading-5 sm:mt-1.5 sm:text-sm sm:leading-6 ${theme.handle}`}>{social.handle}</p>
-      </div>
-
       <span
-        className={`relative z-10 mt-3.5 inline-flex items-center gap-1.5 text-[12px] font-semibold transition sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}
-      >
-        {hasChoices ? (
-          <>
-            <span className="sm:hidden">Choose</span>
-            <span className="hidden sm:inline">Choose account</span>
-          </>
-        ) : (
-          "Follow"
-        )}
-        <ArrowIcon className="h-3.5 w-3.5 transition duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
-      </span>
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-between">
+        <div>
+          <h3
+            className={`font-display text-[1.15rem] leading-tight tracking-[-0.04em] sm:text-[1.4rem] ${theme.title}`}
+          >
+            {social.name}
+          </h3>
+          <p className={`mt-1.5 line-clamp-2 text-[12px] leading-5 sm:mt-2 sm:text-[13px] sm:leading-5 ${theme.handle}`}>
+            {social.handle}
+          </p>
+        </div>
+
+        <span
+          className={`mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold transition sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}
+        >
+          {hasChoices ? (
+            <>
+              <span className="sm:hidden">Choose</span>
+              <span className="hidden sm:inline">Choose account</span>
+            </>
+          ) : (
+            "Follow"
+          )}
+          <ArrowIcon className="h-3.5 w-3.5 transition duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
+        </span>
+      </div>
     </>
   );
 
   if (!hasChoices) {
     return (
-      <div className="social-card-scene h-full">
-        <a
-          href={social.links[0].href}
-          target="_blank"
-          rel="noreferrer"
-          className={cardClassName}
-        >
-          {cardBody}
-        </a>
-      </div>
+      <a
+        href={social.links[0].href}
+        target="_blank"
+        rel="noreferrer"
+        className={cardClassName}
+      >
+        {cardBody}
+      </a>
     );
   }
 
   return (
-    <div ref={rootRef} className="social-card-scene relative h-full">
+    <div ref={rootRef} className="relative h-full">
       <button
         type="button"
         aria-expanded={open}
@@ -249,37 +269,38 @@ export function SocialMedia() {
       <div className="social-stage-glow" aria-hidden />
       <div className="social-stage-grid" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-20 lg:py-28">
-        <div className="grid items-end gap-7 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-14">
-          <Reveal className="relative z-10 min-w-0">
-            <h2 className="font-display text-[clamp(1.75rem,7vw,4.625rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
-              Social Media
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 lg:px-12 lg:py-28">
+        <div className="grid items-center gap-8 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] lg:gap-14 xl:gap-16">
+          <div className="relative z-10 min-w-0 lg:pr-2">
+            <h2 className="font-display text-[clamp(1.75rem,6.5vw,4.25rem)] leading-[1.08] tracking-[-0.055em] text-heading sm:leading-[1.03]">
+              <span className="em-serif italic text-[#EFAA93]">Beyond</span> the
+              Classroom
             </h2>
-            <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75] md:text-lg">
-              Daily prompts, lab clips, and community threads — follow the lab
-              wherever you already scroll.
+            <p className="mt-3.5 max-w-md text-[14px] leading-[1.7] text-muted sm:mt-5 sm:text-base sm:leading-[1.75]">
+              Daily prompts, bite-sized explanations and practical learning tips
+              — follow along wherever you already scroll.
             </p>
             <div className="mt-5 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
-              <span className="rounded-full border border-ink/10 bg-white px-3.5 py-1.5 text-xs font-semibold tracking-wide text-ink/70 shadow-[0_4px_14px_-8px_rgba(30,90,50,0.2)]">
+              <span className="rounded-full border border-[#EFAA93]/50 bg-[#EFAA93] px-3.5 py-1.5 text-xs font-semibold tracking-wide text-[#152F29] shadow-[0_4px_14px_-8px_rgba(184,107,82,0.35)]">
                 {socials.length} platforms
               </span>
-              <span className="rounded-full border border-ink/10 bg-white px-3.5 py-1.5 text-xs font-semibold tracking-wide text-ink/70 shadow-[0_4px_14px_-8px_rgba(30,90,50,0.2)]">
+              <span className="rounded-full border border-[#EFAA93]/50 bg-[#EFAA93] px-3.5 py-1.5 text-xs font-semibold tracking-wide text-[#152F29] shadow-[0_4px_14px_-8px_rgba(184,107,82,0.35)]">
                 Always live
               </span>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.12} className="relative min-w-0">
+          <div className="relative min-w-0">
             <ShimmerGate minMs={500} skeleton={<SocialCardsSkeleton />}>
-              <Stagger className="grid grid-cols-2 gap-2.5 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:gap-4">
                 {socials.map((social) => (
-                  <StaggerItem key={social.name} className="h-full min-w-0">
+                  <div key={social.name} className="h-full min-w-0">
                     <SocialCard social={social} />
-                  </StaggerItem>
+                  </div>
                 ))}
-              </Stagger>
+              </div>
             </ShimmerGate>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

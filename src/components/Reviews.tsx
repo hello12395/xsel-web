@@ -18,13 +18,7 @@ function isDefaultAvatar(src: string) {
   return src.includes("default-user");
 }
 
-const stats = [
-  { value: "2.4k+", label: "Learners" },
-  { value: "4.9", label: "Avg. rating" },
-  { value: "96%", label: "Return rate" },
-] as const;
-
-/** Cream, cream, yellow, green — cycles across reviews */
+/** Cream, paid-course green — cycles cream → green → cream → green */
 const REVIEW_COLORS = [
   {
     bg: "#F7F3EA",
@@ -41,46 +35,18 @@ const REVIEW_COLORS = [
     dotsActive: "bg-[#152F29]",
   },
   {
-    bg: "#F7F3EA",
+    bg: "rgb(175, 198, 160)",
     text: "text-ink",
     muted: "text-ink/55",
     quote: "text-ink",
     star: "text-[#1d6b56]",
     badge: "border-ink/15 bg-black/8 text-[#1d6b56]",
-    glow: "rgba(0,0,0,0.1)",
+    glow: "rgba(21,47,41,0.12)",
     ring: "ring-ink/25",
-    selector: "border-[#e6e0d4] bg-[#F7F3EA] text-ink",
+    selector: "border-[#9fb892] bg-[rgb(175,198,160)] text-ink",
     selectorMuted: "text-ink/60",
     dots: "bg-[#152F29]/20",
     dotsActive: "bg-[#152F29]",
-  },
-  {
-    bg: "#f5c518",
-    text: "text-ink",
-    muted: "text-ink/55",
-    quote: "text-ink",
-    star: "text-ink",
-    badge: "border-ink/15 bg-black/8 text-ink",
-    glow: "rgba(0,0,0,0.12)",
-    ring: "ring-ink/25",
-    selector: "border-amber-400/70 bg-[#f5c518] text-ink",
-    selectorMuted: "text-ink/60",
-    dots: "bg-[#152F29]/20",
-    dotsActive: "bg-[#152F29]",
-  },
-  {
-    bg: "#1f7a38",
-    text: "text-white",
-    muted: "text-white/55",
-    quote: "text-white",
-    star: "text-[#a7f3c0]",
-    badge: "border-white/15 bg-white/10 text-[#a7f3c0]",
-    glow: "rgba(167,243,192,0.35)",
-    ring: "ring-green-200/50",
-    selector: "border-green-300/60 bg-[#1f7a38] text-white",
-    selectorMuted: "text-white/70",
-    dots: "bg-white/30",
-    dotsActive: "bg-white",
   },
 ] as const;
 
@@ -137,7 +103,9 @@ export function Reviews() {
               Reviews
             </p>
             <h2 className="font-display mt-2.5 text-[1.75rem] leading-[1.08] tracking-[-0.055em] text-white">
-              What learners say
+              What{" "}
+              <span className="em-serif italic text-[#EFAA93]">learners</span>{" "}
+              say.
             </h2>
             <p className="mt-2.5 max-w-[36ch] text-[14px] leading-relaxed text-white/65">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
@@ -223,22 +191,6 @@ export function Reviews() {
                   </motion.article>
                 </AnimatePresence>
               </Reveal>
-
-              <Reveal delay={0.1} className="mt-[18px] grid grid-cols-3 gap-2 text-center">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-xl bg-white/8 px-2 py-3"
-                  >
-                    <p className="font-display text-[1.1rem] tracking-[-0.04em] text-white">
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-[10px] tracking-[0.08em] text-white/50 uppercase">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </Reveal>
             </ShimmerGate>
           </div>
         </div>
@@ -247,29 +199,13 @@ export function Reviews() {
         <div className="hidden sm:grid sm:items-start sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] xl:gap-16">
           <Reveal className="reviews-intro-panel min-w-0 text-left">
             <h2 className="font-display text-[clamp(1.75rem,7vw,4.875rem)] leading-[1.08] tracking-[-0.055em] text-white sm:leading-[1.03]">
-              What learners say
+              What{" "}
+              <span className="em-serif italic text-[#EFAA93]">learners</span>{" "}
+              say.
             </h2>
             <p className="mt-3.5 max-w-prose text-[14px] leading-[1.7] text-[#cbd5df] sm:mt-5 sm:text-base sm:leading-[1.75]">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
-
-            <div className="mt-6 grid grid-cols-3 items-start gap-2 border-t border-white/10 pt-6 sm:mt-10 sm:gap-0 sm:pt-10">
-              {stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className={`min-w-0 ${
-                    index > 0
-                      ? "sm:border-l sm:border-white/15 sm:pl-5 lg:pl-6"
-                      : "sm:pr-5 lg:pr-6"
-                  }`}
-                >
-                  <p className="font-display text-xl text-white sm:text-3xl">{stat.value}</p>
-                  <p className="mt-1 text-[9px] font-semibold tracking-[0.1em] text-white/45 uppercase sm:text-[11px] sm:tracking-[0.14em]">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
           </Reveal>
 
           <div
@@ -458,6 +394,11 @@ export function Reviews() {
           </div>
         </div>
       </div>
+
+      <p className="absolute bottom-4 left-1/2 z-10 inline-flex w-max max-w-[calc(100%-2rem)] -translate-x-1/2 items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-4 py-2 text-center text-[10px] font-semibold tracking-[0.12em] text-[#152F29] uppercase sm:bottom-5 sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.14em] md:bottom-6 lg:bottom-8">
+        <span aria-hidden>*</span>
+        Good teaching leaves a mark
+      </p>
     </section>
   );
 }

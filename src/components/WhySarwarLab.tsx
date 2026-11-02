@@ -10,28 +10,28 @@ import { ShimmerGate } from "./ShimmerGate";
 
 const cardAccents = [
   {
-    numberClass: "text-mark",
-    accentBar: "from-mark/80 via-mark/30 to-transparent",
+    numberClass: "text-[#F92227]",
+    accentBar: "from-[#F92227]/80 via-[#F92227]/30 to-transparent",
     border:
       "linear-gradient(135deg, rgba(249, 34, 39, 0.9) 0%, rgba(249, 34, 39, 0.35) 45%, rgba(249, 34, 39, 0.75) 100%)",
     glow: "rgba(249, 34, 39, 0.16)",
-    ring: "ring-mark/10",
+    ring: "ring-[#F92227]/15",
   },
   {
-    numberClass: "text-forest",
-    accentBar: "from-forest/80 via-forest/30 to-transparent",
+    numberClass: "text-[#1C30BE]",
+    accentBar: "from-[#1C30BE]/80 via-[#1C30BE]/30 to-transparent",
     border:
       "linear-gradient(135deg, rgba(28, 48, 190, 0.9) 0%, rgba(28, 48, 190, 0.35) 45%, rgba(28, 48, 190, 0.75) 100%)",
     glow: "rgba(28, 48, 190, 0.18)",
-    ring: "ring-forest/10",
+    ring: "ring-[#1C30BE]/15",
   },
   {
-    numberClass: "text-gold",
-    accentBar: "from-gold/80 via-gold-soft/40 to-transparent",
+    numberClass: "text-[#1D6B56]",
+    accentBar: "from-[#1D6B56]/80 via-[#1D6B56]/30 to-transparent",
     border:
-      "linear-gradient(135deg, rgba(2, 171, 213, 0.9) 0%, rgba(2, 171, 213, 0.35) 45%, rgba(2, 171, 213, 0.75) 100%)",
-    glow: "rgba(2, 171, 213, 0.18)",
-    ring: "ring-gold/15",
+      "linear-gradient(135deg, rgba(29, 107, 86, 0.9) 0%, rgba(29, 107, 86, 0.35) 45%, rgba(29, 107, 86, 0.75) 100%)",
+    glow: "rgba(29, 107, 86, 0.18)",
+    ring: "ring-[#1D6B56]/15",
   },
 ] as const;
 
@@ -243,9 +243,8 @@ export function WhySarwarLab() {
           <div className="method-intro-panel min-w-0">
             <SectionHeader
               className="max-w-none"
-              title="Why Sarwar English Lab?"
-              copy="English isn't something you memorize in a lecture. It's something you work on, like a lab, where you
-                  practice, get corrected, and leave with something better than you walked in with."
+              title="Why xSEL?"
+              copy="English isn't something you memorize in a lecture. It's something you work on, like a lab — until it becomes second nature."
             />
           </div>
 
@@ -268,6 +267,11 @@ export function WhySarwarLab() {
           </ShimmerGate>
         </div>
       </div>
+
+      <p className="absolute right-4 bottom-4 inline-flex max-w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-4 py-2 text-center text-[10px] font-semibold tracking-[0.12em] text-[#152F29] uppercase sm:right-5 sm:bottom-5 sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.14em] md:right-8 md:bottom-6 lg:right-12 lg:bottom-8">
+        <span aria-hidden>*</span>
+        Good English is built, not borrowed
+      </p>
     </section>
   );
 }

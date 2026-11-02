@@ -38,10 +38,6 @@ export async function generateMetadata({
   }
 }
 
-function formatCourseType(type: string) {
-  return type === "live" ? "Live cohort" : "Pre-recorded";
-}
-
 export default async function PremiumCoursePage({ params }: PremiumCoursePageProps) {
   const { id } = await params;
 
@@ -133,7 +129,6 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
             duration={course.duration}
             lessons={course.lessons}
             students={studentCount}
-            formatLabel={formatCourseType(row.course_type)}
             rating={courseRating}
             reviews={courseReviews}
           />

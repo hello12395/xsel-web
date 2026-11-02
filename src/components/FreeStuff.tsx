@@ -22,37 +22,34 @@ const LABEL_COLORS = [
 
 const CARD_THEMES = [
   {
-    background: "#214F42",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(33,79,66,0.55)]",
-    border: "border-white/10",
+    background: "rgba(33, 79, 66, 0.78)",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(33,79,66,0.4)]",
+    border: "border-[#214F42]/25",
     title: "text-white",
-    blurb: "text-[#E8F0E4]",
-    cta: "text-[#F7DFC7]",
-    ring: "rgba(255,255,255,0.16)",
-    ringSoft: "rgba(255,255,255,0.08)",
-    ringFaint: "rgba(255,255,255,0.04)",
-  },
-  {
-    background: "#C2D7BA",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(194,215,186,0.65)]",
-    border: "border-[#152F29]/12",
-    title: "text-[#152F29]",
-    blurb: "text-[#1c3530]",
-    cta: "text-[#152F29]",
-    ring: "rgba(255,255,255,0.45)",
-    ringSoft: "rgba(255,255,255,0.28)",
-    ringFaint: "rgba(255,255,255,0.14)",
-  },
-  {
-    background: "#DF937F",
-    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(223,147,127,0.55)]",
-    border: "border-[#152F29]/12",
-    title: "text-[#152F29]",
-    blurb: "text-[#1c3530]",
-    cta: "text-[#152F29]",
+    blurb: "text-white",
     ring: "rgba(255,255,255,0.42)",
-    ringSoft: "rgba(255,255,255,0.24)",
-    ringFaint: "rgba(255,255,255,0.12)",
+    ringSoft: "rgba(255,255,255,0.28)",
+    ringFaint: "rgba(255,255,255,0.16)",
+  },
+  {
+    background: "rgba(194, 215, 186, 0.55)",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(194,215,186,0.45)]",
+    border: "border-[#152F29]/15",
+    title: "text-[#0F241F]",
+    blurb: "text-[#152F29]",
+    ring: "rgba(21,47,41,0.28)",
+    ringSoft: "rgba(21,47,41,0.18)",
+    ringFaint: "rgba(21,47,41,0.1)",
+  },
+  {
+    background: "rgba(223, 147, 127, 0.55)",
+    hoverShadow: "hover:shadow-[0_28px_52px_-18px_rgba(223,147,127,0.4)]",
+    border: "border-[#152F29]/15",
+    title: "text-[#0F241F]",
+    blurb: "text-[#152F29]",
+    ring: "rgba(21,47,41,0.28)",
+    ringSoft: "rgba(21,47,41,0.18)",
+    ringFaint: "rgba(21,47,41,0.1)",
   },
 ] as const;
 
@@ -86,8 +83,8 @@ export function FreeStuff() {
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
         <SectionHeader
-          title="Free Lessons"
-          copy="Free YouTube playlists — grammar, exams preparation, speaking, vocabulary, and more. Watch anytime, no sign-up."
+          title="Your Free Classroom"
+          copy="Explore free video lessons on grammar, speaking, vocabulary and exam preparation. Learn something worthwhile whenever you have a moment."
         />
 
         <div className="mt-10 sm:mt-14">
@@ -118,8 +115,7 @@ export function FreeStuff() {
                   <StaggerItem key={playlist.id} className="h-full min-w-0">
                   <Link
                     href={`/playlists/${playlist.id}`}
-                    style={{ background: theme.background }}
-                    className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-[16px] border transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
+                    className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-[16px] border bg-[#FFFCF6] transition duration-300 hover:-translate-y-1.5 sm:rounded-[28px] ${theme.border} ${theme.hoverShadow}`}
                   >
                     <div className="relative aspect-[16/10] overflow-hidden bg-black/20 sm:aspect-video">
                       <Image
@@ -142,7 +138,10 @@ export function FreeStuff() {
                       </span>
                     </div>
 
-                    <div className="relative flex flex-1 flex-col overflow-hidden p-2.5 sm:p-6">
+                    <div
+                      className="relative flex flex-1 flex-col overflow-hidden p-2.5 sm:p-6"
+                      style={{ background: theme.background }}
+                    >
                       <span
                         aria-hidden="true"
                         className="pointer-events-none absolute top-[18%] -right-[28%] hidden h-[14rem] w-[14rem] rounded-full sm:block sm:h-[16rem] sm:w-[16rem]"
@@ -157,13 +156,13 @@ export function FreeStuff() {
                       >
                         {playlist.tag}
                       </span>
-                      <h3 className={`relative z-[1] font-display mt-1.5 text-[0.92rem] leading-snug tracking-[-0.03em] sm:mt-4 sm:text-[1.45rem] sm:leading-tight ${theme.title}`}>
+                      <h3 className={`relative z-[1] font-display mt-1.5 text-[0.95rem] leading-snug font-extrabold tracking-[-0.03em] sm:mt-4 sm:text-[1.5rem] sm:leading-tight ${theme.title}`}>
                         {playlist.title}
                       </h3>
-                      <p className={`relative z-[1] mt-1.5 line-clamp-2 flex-1 text-[11px] leading-4 sm:mt-3 sm:line-clamp-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
+                      <p className={`relative z-[1] mt-1.5 line-clamp-2 flex-1 text-[11px] leading-4 font-medium sm:mt-3 sm:line-clamp-3 sm:text-[15px] sm:leading-7 ${theme.blurb}`}>
                         {playlist.body}
                       </p>
-                      <span className={`relative z-[1] mt-2.5 inline-flex items-center gap-1 text-[11px] font-semibold sm:mt-6 sm:gap-2 sm:text-sm ${theme.cta}`}>
+                      <span className="relative z-[1] mt-2.5 inline-flex w-fit items-center gap-1.5 rounded-full bg-[#EFAA93] px-3 py-1.5 text-[11px] font-semibold text-[#152F29] transition group-hover:-translate-y-px group-hover:bg-[#F2BAA1] sm:mt-6 sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm">
                         <span className="sm:hidden">View</span>
                         <span className="hidden sm:inline">
                           {playlist.isCourse ? "View course" : "View playlist"}

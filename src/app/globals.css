@@ -1528,6 +1528,26 @@ p {
   animation: shimmer-sweep 1.2s ease-in-out infinite;
 }
 
+@keyframes hero-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-marquee__track {
+  animation: hero-marquee-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee__track {
+    animation: none;
+  }
+}
+
 @keyframes shimmer-sweep {
   100% {
     transform: translateX(100%);
