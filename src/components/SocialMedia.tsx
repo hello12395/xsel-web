@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { socials } from "@/data/site";
@@ -114,15 +115,22 @@ function SocialCard({ social }: { social: Social }) {
   const theme = themes[social.icon];
   const hasChoices = social.links.length > 1;
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
 
     function onPointerDown(event: MouseEvent) {
-      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
+      const target = event.target as Node | null;
+      if (!target) return;
+      if (rootRef.current?.contains(target)) return;
+      if (target instanceof Element && target.closest('[role="menu"]')) return;
+      setOpen(false);
     }
 
     function onKeyDown(event: KeyboardEvent) {
@@ -137,7 +145,7 @@ function SocialCard({ social }: { social: Social }) {
     };
   }, [open]);
 
-  const cardClassName = `group relative flex h-full min-h-[10.75rem] w-full flex-col overflow-hidden rounded-[18px] p-3.5 text-left sm:min-h-[13.5rem] sm:rounded-[22px] sm:p-5 lg:min-h-[12.75rem] lg:p-5 ${open ? "is-open" : ""} ${theme.card}`;
+  const cardClassName = `group relative flex h-full min-h-[9.5rem] w-full flex-col overflow-hidden rounded-[16px] p-2.5 text-left sm:min-h-[13.5rem] sm:rounded-[22px] sm:p-5 lg:min-h-[12.75rem] lg:p-5 ${open ? "is-open" : ""} ${theme.card}`;
 
   const cardBody = (
     <>
@@ -155,17 +163,17 @@ function SocialCard({ social }: { social: Social }) {
       <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-between">
         <div>
           <h3
-            className={`font-display text-[1.15rem] leading-tight tracking-[-0.04em] sm:text-[1.4rem] ${theme.title}`}
+            className={`font-display text-[0.95rem] leading-tight tracking-[-0.04em] sm:text-[1.4rem] ${theme.title}`}
           >
             {social.name}
           </h3>
-          <p className={`mt-1.5 line-clamp-2 text-[12px] leading-5 sm:mt-2 sm:text-[13px] sm:leading-5 ${theme.handle}`}>
+          <p className={`mt-1 line-clamp-2 text-[11px] leading-4 sm:mt-2 sm:text-[13px] sm:leading-5 ${theme.handle}`}>
             {social.handle}
           </p>
         </div>
 
         <span
-          className={`mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold transition sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}
+          className={`mt-3 inline-flex items-center gap-1 text-[11px] font-semibold transition sm:mt-5 sm:gap-2 sm:text-sm ${theme.cta}`}
         >
           {hasChoices ? (
             <>
@@ -194,6 +202,50 @@ function SocialCard({ social }: { social: Social }) {
     );
   }
 
+  function MenuContent() {
+    return (
+      <>
+        <div className="flex items-center justify-between border-b border-ink/8 px-3.5 py-2.5">
+          <p className="text-xs font-semibold tracking-wide text-ink/55 uppercase">
+            Open {social.name}
+          </p>
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setOpen(false)}
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full text-ink/40 transition hover:bg-ink/5 hover:text-ink"
+          >
+            <CloseIcon className="h-3.5 w-3.5" />
+          </button>
+        </div>
+        <ul className="p-1.5">
+          {social.links.map((link) => (
+            <li key={link.href}>
+              <a
+                role="menuitem"
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition ${theme.menuHover}`}
+              >
+                <span
+                  className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${theme.menuIconBg}`}
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+                <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink">
+                  {link.label}
+                </span>
+                <ArrowIcon className="h-3.5 w-3.5 shrink-0 text-ink/35" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
+
   return (
     <div ref={rootRef} className="relative h-full">
       <button
@@ -209,54 +261,55 @@ function SocialCard({ social }: { social: Social }) {
       <AnimatePresence>
         {open ? (
           <motion.div
+            key="desktop-menu"
             role="menu"
             aria-label={`${social.name} accounts`}
             initial={{ opacity: 0, y: 8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 6, scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-3 bottom-3 z-20 overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-[0_18px_40px_-16px_rgba(0,0,0,0.35)]"
+            className="absolute inset-x-3 bottom-3 z-20 hidden overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-[0_18px_40px_-16px_rgba(0,0,0,0.35)] sm:block"
           >
-            <div className="flex items-center justify-between border-b border-ink/8 px-3.5 py-2.5">
-              <p className="text-xs font-semibold tracking-wide text-ink/55 uppercase">
-                Open {social.name}
-              </p>
-              <button
-                type="button"
-                aria-label="Close"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-7 w-7 items-center justify-center rounded-full text-ink/40 transition hover:bg-ink/5 hover:text-ink"
-              >
-                <CloseIcon className="h-3.5 w-3.5" />
-              </button>
-            </div>
-            <ul className="p-1.5">
-              {social.links.map((link) => (
-                <li key={link.href}>
-                  <a
-                    role="menuitem"
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => setOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition ${theme.menuHover}`}
-                  >
-                    <span
-                      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${theme.menuIconBg}`}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span className="min-w-0 flex-1 text-sm font-semibold text-ink">
-                      {link.label}
-                    </span>
-                    <ArrowIcon className="h-3.5 w-3.5 shrink-0 text-ink/35" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <MenuContent />
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {open ? (
+                <motion.div
+                  key="mobile-menu"
+                  className="fixed inset-0 z-[80] flex items-end justify-center p-4 sm:hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <button
+                    type="button"
+                    aria-label="Dismiss"
+                    className="absolute inset-0 bg-black/45"
+                    onClick={() => setOpen(false)}
+                  />
+                  <motion.div
+                    role="menu"
+                    aria-label={`${social.name} accounts`}
+                    initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 16, scale: 0.98 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative z-10 mb-[env(safe-area-inset-bottom)] w-full max-w-sm overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-[0_24px_48px_-16px_rgba(0,0,0,0.45)]"
+                  >
+                    <MenuContent />
+                  </motion.div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
@@ -311,7 +364,7 @@ export function SocialMedia() {
 
           <div className="relative min-w-0">
             <ShimmerGate minMs={500} skeleton={<SocialCardsSkeleton />}>
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:gap-4">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3.5 lg:gap-4">
                 {socials.map((social) => (
                   <div key={social.name} className="h-full min-w-0">
                     <SocialCard social={social} />

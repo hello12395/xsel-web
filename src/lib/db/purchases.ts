@@ -28,6 +28,17 @@ async function getActiveEnrollmentForBatch(
   return data;
 }
 
+/** Whether the user already has an active enrollment in this batch. */
+export async function isUserEnrolledInBatch(
+  userId: string,
+  batchId: string
+): Promise<boolean> {
+  if (!userId?.trim() || !batchId?.trim()) return false;
+  const supabase = await getPaymentDbClient();
+  const enrollment = await getActiveEnrollmentForBatch(userId, batchId, supabase);
+  return Boolean(enrollment);
+}
+
 export async function getUserPurchaseForCourse(
   userId: string,
   courseId: string,

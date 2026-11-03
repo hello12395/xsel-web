@@ -728,11 +728,11 @@ p {
   overflow: hidden;
   border-radius: 1.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(165deg, rgba(16, 24, 48, 0.98) 0%, rgba(8, 12, 28, 0.98) 100%);
+  background: linear-gradient(165deg, var(--color-primary) 0%, #1a3d35 52%, #0f2420 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 40px 100px -32px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(55, 204, 248, 0.06);
+    0 0 0 1px rgba(239, 170, 147, 0.08);
   backdrop-filter: blur(24px);
 }
 

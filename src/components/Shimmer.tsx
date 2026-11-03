@@ -55,7 +55,7 @@ export function CourseCardsSkeleton({
 
 export function SocialCardsSkeleton() {
   return (
-    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:gap-4">
+    <div className="grid grid-cols-3 gap-2 sm:gap-3.5 lg:gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
         <Shimmer key={i} className="min-h-[11.5rem] rounded-[18px] sm:min-h-[13.5rem] sm:rounded-[22px]" />
       ))}
@@ -66,10 +66,10 @@ export function SocialCardsSkeleton() {
 export function WhyCardsSkeleton() {
   return (
     <>
-      <div className="grid grid-cols-2 gap-2.5 sm:hidden">
-        <Shimmer className="col-span-2 h-36 rounded-[16px]" />
-        <Shimmer className="h-40 rounded-[16px]" />
-        <Shimmer className="h-40 rounded-[16px]" />
+      <div className="flex flex-col gap-2 sm:hidden">
+        <Shimmer className="h-24 rounded-[14px]" />
+        <Shimmer className="h-24 rounded-[14px]" />
+        <Shimmer className="h-24 rounded-[14px]" />
       </div>
       <div className="hidden grid-cols-1 gap-4 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (

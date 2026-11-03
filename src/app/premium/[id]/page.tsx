@@ -162,12 +162,6 @@ export default async function PremiumCoursePage({ params }: PremiumCoursePagePro
                   Enroll
                   <ArrowIcon className="h-3.5 w-3.5" />
                 </Link>
-                <Link
-                  href="/#free-lessons"
-                  className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#152F29]/15 bg-white px-5 py-3 text-sm font-semibold text-[#152F29] transition hover:border-[#152F29]/30 hover:bg-[#F3F7F0] sm:mt-3 sm:px-6 sm:py-3.5"
-                >
-                  Browse free lessons
-                </Link>
               </div>
             </div>
           </aside>

@@ -15,6 +15,7 @@ import {
 import type { Course, CourseBatch, Purchase } from "@/types/course";
 
 const ACCEPTED_TYPES = Object.keys(RECEIPT_ACCEPT);
+const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=app.xsel";
 
 type PaymentTab = "bank" | "easypaisa" | "jazzcash";
 
@@ -281,13 +282,90 @@ function CourseSummaryBar({
   );
 }
 
-function StatusMessage({
-  purchase,
-  courseId,
+function EnrollmentConfirmedScreen({
+  course,
+  batchName,
 }: {
-  purchase: Purchase;
-  courseId?: string;
+  course: Course;
+  batchName?: string | null;
 }) {
+  return (
+    <div className="space-y-3 sm:space-y-6">
+      <div className="grid grid-cols-2 items-stretch gap-2 sm:gap-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:gap-5">
+        <div className="relative flex flex-col justify-center overflow-hidden rounded-[14px] border border-[#152F29]/10 bg-gradient-to-br from-[#152F29] via-[#1a3d35] to-[#234f44] px-3 py-3 shadow-[0_20px_40px_-24px_rgba(21,47,41,0.55)] sm:rounded-[24px] sm:px-6 sm:py-6">
+          <p className="relative text-[8px] font-semibold tracking-[0.16em] text-[#EFAA93] uppercase sm:text-[11px] sm:tracking-[0.24em]">
+            Enrollment status
+          </p>
+          <h2 className="font-display relative mt-1 text-[0.95rem] leading-tight tracking-tight text-white sm:mt-3 sm:text-[2rem]">
+            Enrollment confirmed
+          </h2>
+          <p className="relative mt-1 hidden max-w-md text-sm leading-6 text-white/65 sm:mt-3 sm:block">
+            Your seat is already secured. Continue learning in the app.
+          </p>
+        </div>
+        <aside className="flex flex-col justify-center rounded-[14px] border border-[#1D6B56]/30 bg-[#EAF1E6] px-3 py-3 shadow-[0_14px_28px_-20px_rgba(21,47,41,0.28)] sm:rounded-[24px] sm:px-5 sm:py-5">
+          <p className="text-[8px] font-bold tracking-[0.16em] text-[#1D6B56] uppercase sm:text-[10px] sm:tracking-[0.2em]">
+            Already enrolled
+          </p>
+          <p className="mt-1 text-[12px] leading-snug font-bold text-[#152F29] sm:mt-2 sm:text-sm sm:leading-relaxed">
+            You are already enrolled in this batch.
+          </p>
+        </aside>
+      </div>
+
+      <CourseSummaryBar course={course} batchName={batchName} />
+
+      <section className="card-surface rounded-[16px] p-4 sm:rounded-[24px] sm:p-8">
+        <div className="grid gap-4 sm:mx-auto sm:max-w-lg sm:gap-0 sm:text-center">
+          <div className="flex items-start gap-3 sm:flex-col sm:items-center">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest text-white sm:h-14 sm:w-14">
+              <CheckIcon className="h-5 w-5 sm:h-7 sm:w-7" />
+            </span>
+            <div className="min-w-0 sm:mt-5">
+              <h3 className="text-[15px] font-semibold text-ink sm:text-2xl">
+                You&apos;re all set
+              </h3>
+              <p className="mt-1 text-[12px] leading-relaxed text-ink/65 sm:mt-3 sm:text-[15px]">
+                Your enrollment is active. Open the course in the app and start learning.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-2.5 sm:mt-6 sm:gap-0">
+            <div className="flex flex-col items-center rounded-[14px] border border-forest/15 bg-forest/5 px-3 py-3.5 sm:rounded-[18px] sm:px-4 sm:py-5">
+              <p className="text-[10px] font-semibold tracking-[0.14em] text-forest/80 uppercase sm:text-[11px] sm:tracking-[0.16em]">
+                Download from Google Play
+              </p>
+              <a
+                href={GOOGLE_PLAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative mt-2.5 inline-flex h-[42px] w-[min(100%,170px)] shrink-0 overflow-hidden rounded-[7px] transition hover:-translate-y-0.5 sm:mt-3 sm:h-[52px] sm:w-[220px]"
+                aria-label="Get it on Google Play"
+              >
+                <Image
+                  src="/google-play-badge.png"
+                  alt="Get it on Google Play"
+                  width={646}
+                  height={250}
+                  className="absolute top-1/2 left-1/2 h-[92px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 sm:h-[114px]"
+                />
+              </a>
+            </div>
+            <Link
+              href={`/premium/${course.id}`}
+              className="inline-flex h-11 w-full items-center justify-center rounded-full bg-forest px-5 text-sm font-semibold text-white transition hover:bg-forest-deep sm:mt-6 sm:w-auto sm:min-w-[200px] sm:self-center"
+            >
+              Back to course
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function StatusMessage({ purchase }: { purchase: Purchase }) {
   if (purchase.status === "pending") {
     return (
       <div className="rounded-[22px] border border-[#c9a227]/35 bg-[#fbf6e8] p-5 sm:p-6">
@@ -311,32 +389,7 @@ function StatusMessage({
   }
 
   if (purchase.status === "approved") {
-    return (
-      <div className="rounded-[22px] border border-forest/25 bg-forest/5 p-5 sm:p-6">
-        <div className="flex items-start gap-3.5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-forest text-white">
-            <CheckIcon className="h-5 w-5" />
-          </span>
-          <div className="min-w-0">
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-forest uppercase">
-              Status · Approved
-            </p>
-            <h2 className="mt-1 text-lg font-semibold text-ink">Payment approved</h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink/65">
-              Your enrollment is active. You can open the course and start learning.
-            </p>
-            {courseId ? (
-              <Link
-                href={`/premium/${courseId}`}
-                className="mt-4 inline-flex h-10 items-center justify-center rounded-full bg-forest px-5 text-sm font-semibold text-white transition hover:bg-forest-deep"
-              >
-                View course
-              </Link>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -374,11 +427,13 @@ function ReceiptUploadForm({
   courseId,
   batchId,
   isResubmit = false,
+  onAlreadyEnrolled,
 }: {
   course: Course;
   courseId: string;
   batchId: string;
   isResubmit?: boolean;
+  onAlreadyEnrolled?: () => void;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -435,13 +490,24 @@ function ReceiptUploadForm({
       formData.set("file", file);
       const result = await submitPurchaseReceiptAction(formData);
       if (!result.ok) {
+        if (result.code === "already_enrolled") {
+          onAlreadyEnrolled?.();
+          router.refresh();
+          return;
+        }
         setError(result.message);
         return;
       }
       setSubmitted(true);
       router.refresh();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to submit payment");
+      const message = e instanceof Error ? e.message : "Failed to submit payment";
+      if (/already enrolled|already purchased/i.test(message)) {
+        onAlreadyEnrolled?.();
+        router.refresh();
+        return;
+      }
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -462,7 +528,6 @@ function ReceiptUploadForm({
           created_at: new Date().toISOString(),
           approved_at: null,
         }}
-        courseId={courseId}
       />
     );
   }
@@ -579,18 +644,23 @@ export function PaymentVerification({
   batches,
   selectedBatchId,
   existingPurchase,
+  alreadyEnrolled = false,
 }: {
   course: Course;
   batches: CourseBatch[];
   selectedBatchId: string;
   existingPurchase: Purchase | null;
+  alreadyEnrolled?: boolean;
 }) {
   const selectedBatch =
     batches.find((b) => b.id === selectedBatchId) ?? batches[0] ?? null;
   const batchId = selectedBatch?.id ?? selectedBatchId;
   const status = existingPurchase?.status ?? null;
-  const showPaymentSteps = !status || status === "rejected";
-  const showUpload = !existingPurchase || status === "rejected";
+  const [confirmedBySubmit, setConfirmedBySubmit] = useState(false);
+  const isConfirmed =
+    confirmedBySubmit || alreadyEnrolled || status === "approved";
+  const showPaymentSteps = !isConfirmed && (!status || status === "rejected");
+  const showUpload = !isConfirmed && (!existingPurchase || status === "rejected");
 
   if (!selectedBatch) {
     return (
@@ -610,14 +680,21 @@ export function PaymentVerification({
     );
   }
 
+  if (isConfirmed) {
+    return (
+      <EnrollmentConfirmedScreen
+        course={course}
+        batchName={selectedBatch.name}
+      />
+    );
+  }
+
   const heading =
-    status === "approved"
-      ? "Enrollment confirmed"
-      : status === "pending"
-        ? "Verification in progress"
-        : status === "rejected"
-          ? "Action needed"
-          : "Complete your enrollment";
+    status === "pending"
+      ? "Verification in progress"
+      : status === "rejected"
+        ? "Action needed"
+        : "Complete your enrollment";
 
   return (
     <div className="space-y-3 sm:space-y-6">
@@ -680,31 +757,19 @@ export function PaymentVerification({
         ) : (
           <aside
             className={`flex items-start rounded-[22px] border px-4 py-4 sm:rounded-[24px] sm:px-5 sm:py-5 ${
-              status === "approved"
-                ? "border-[#1D6B56]/30 bg-[#EAF1E6] shadow-[0_14px_28px_-20px_rgba(21,47,41,0.28)]"
-                : status === "pending"
-                  ? "border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)]"
-                  : "border-[#d06a55] bg-gradient-to-br from-[#F0A090] via-[#E88975] to-[#DE7460] shadow-[0_18px_36px_-16px_rgba(180,83,60,0.55)]"
+              status === "pending"
+                ? "border-[#d8896f] bg-gradient-to-br from-[#F2BAA1] via-[#EFAA93] to-[#E89B7F] shadow-[0_18px_36px_-16px_rgba(184,107,82,0.55)]"
+                : "border-[#d06a55] bg-gradient-to-br from-[#F0A090] via-[#E88975] to-[#DE7460] shadow-[0_18px_36px_-16px_rgba(180,83,60,0.55)]"
             }`}
           >
             <div className="min-w-0">
-              <p
-                className={`text-[10px] font-bold tracking-[0.2em] uppercase ${
-                  status === "approved" ? "text-[#1D6B56]" : "text-[#5C4033]"
-                }`}
-              >
-                {status === "approved"
-                  ? "Confirmed"
-                  : status === "pending"
-                    ? "Important note"
-                    : "Important · Action needed"}
+              <p className="text-[10px] font-bold tracking-[0.2em] text-[#5C4033] uppercase">
+                {status === "pending" ? "Important note" : "Important · Action needed"}
               </p>
               <p className="mt-2 text-sm leading-relaxed font-bold text-[#152F29]">
-                {status === "approved"
-                  ? "Your payment was approved and your seat is confirmed."
-                  : status === "pending"
-                    ? "Your receipt is with our team. Check back here for the decision."
-                    : "Your previous submission was rejected. Review the reason and upload a new receipt."}
+                {status === "pending"
+                  ? "Your receipt is with our team. Check back here for the decision."
+                  : "Your previous submission was rejected. Review the reason and upload a new receipt."}
               </p>
             </div>
           </aside>
@@ -713,9 +778,7 @@ export function PaymentVerification({
 
       <CourseSummaryBar course={course} batchName={selectedBatch.name} />
 
-      {existingPurchase ? (
-        <StatusMessage purchase={existingPurchase} courseId={course.id} />
-      ) : null}
+      {existingPurchase ? <StatusMessage purchase={existingPurchase} /> : null}
 
       {showPaymentSteps ? (
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-5 lg:gap-8">
@@ -729,6 +792,7 @@ export function PaymentVerification({
                 courseId={course.id}
                 batchId={batchId}
                 isResubmit={status === "rejected"}
+                onAlreadyEnrolled={() => setConfirmedBySubmit(true)}
               />
             ) : null}
           </div>

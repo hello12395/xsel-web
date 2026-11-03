@@ -5,14 +5,19 @@ import { getBatchForCourse } from "@/lib/db/batches";
 import { getPublishedCourseById } from "@/lib/db/courses";
 import {
   createPurchaseRequest,
+  isUserEnrolledInBatch,
   uploadPurchaseReceipt,
 } from "@/lib/db/purchases";
 import { RECEIPT_ACCEPT, RECEIPT_MAX_BYTES } from "@/lib/payment-config";
 import { createClient } from "@/lib/supabase/server";
 
+export type SubmitPurchaseResult =
+  | { ok: true }
+  | { ok: false; message: string; code?: "already_enrolled" };
+
 export async function submitPurchaseReceiptAction(
   formData: FormData
-): Promise<{ ok: true } | { ok: false; message: string }> {
+): Promise<SubmitPurchaseResult> {
   try {
     const supabase = await createClient();
     const {
@@ -55,6 +60,15 @@ export async function submitPurchaseReceiptAction(
       return { ok: false, message: "Batch not found for this course." };
     }
 
+    if (await isUserEnrolledInBatch(userId, batchId)) {
+      revalidatePath(`/premium/${courseId}/enroll`);
+      return {
+        ok: false,
+        code: "already_enrolled",
+        message: "You are already enrolled in this batch.",
+      };
+    }
+
     const receiptUrl = await uploadPurchaseReceipt(userId, courseId, file);
     await createPurchaseRequest(
       userId,
@@ -70,6 +84,12 @@ export async function submitPurchaseReceiptAction(
   } catch (e) {
     const message =
       e instanceof Error ? e.message : "Failed to submit payment receipt.";
-    return { ok: false, message };
+    const alreadyEnrolled =
+      /already enrolled/i.test(message) || /already purchased/i.test(message);
+    return {
+      ok: false,
+      message,
+      ...(alreadyEnrolled ? { code: "already_enrolled" as const } : {}),
+    };
   }
 }

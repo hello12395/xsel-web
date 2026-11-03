@@ -150,6 +150,14 @@ export function PremiumCourses({ courses }: { courses: PremiumCourse[] }) {
                       >
                         <span
                           aria-hidden="true"
+                          className="pointer-events-none absolute top-[12%] -right-[42%] h-[9rem] w-[9rem] rounded-full sm:hidden"
+                          style={{
+                            border: `1px solid ${theme.ring}`,
+                            boxShadow: `0 0 0 1rem ${theme.ringSoft}, 0 0 0 2.15rem ${theme.ringFaint}`,
+                          }}
+                        />
+                        <span
+                          aria-hidden="true"
                           className="pointer-events-none absolute top-[18%] -right-[28%] hidden h-[14rem] w-[14rem] rounded-full sm:block sm:h-[16rem] sm:w-[16rem]"
                           style={{
                             border: `1px solid ${theme.ring}`,

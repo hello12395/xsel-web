@@ -227,7 +227,7 @@ export function Footer() {
             <p className="mb-3.5 text-[10px] font-bold tracking-[0.18em] text-[#EFAA93] uppercase sm:mb-4">
               Connect
             </p>
-            <div className="flex flex-row flex-wrap gap-2.5 sm:flex-col sm:gap-3">
+            <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-col sm:gap-3">
               {socials.map((social) => (
                 <FooterSocialItem key={social.name} social={social} />
               ))}
