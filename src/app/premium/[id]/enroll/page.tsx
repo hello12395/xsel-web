@@ -6,7 +6,10 @@ import {
   getOpenBatchesForCourse,
   pickLatestBatchByCreatedAt,
 } from "@/lib/db/batches";
-import { getUserPurchaseForCourse } from "@/lib/db/purchases";
+import {
+  getUserPurchaseForCourse,
+  isUserEnrolledInBatch,
+} from "@/lib/db/purchases";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowIcon } from "@/components/Icons";
 import { PaymentVerification } from "@/components/payment/PaymentVerification";
@@ -78,6 +81,7 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
   const selectedBatchId = selectedBatch?.id ?? "";
 
   let existingPurchase: Purchase | null = null;
+  let alreadyEnrolled = false;
   if (selectedBatchId) {
     try {
       existingPurchase = await getUserPurchaseForCourse(
@@ -87,6 +91,11 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
       );
     } catch {
       existingPurchase = null;
+    }
+    try {
+      alreadyEnrolled = await isUserEnrolledInBatch(user.id, selectedBatchId);
+    } catch {
+      alreadyEnrolled = false;
     }
   }
 
@@ -113,6 +122,7 @@ export default async function PremiumEnrollPage({ params }: EnrollPageProps) {
           batches={batches}
           selectedBatchId={selectedBatchId}
           existingPurchase={existingPurchase}
+          alreadyEnrolled={alreadyEnrolled}
         />
       </div>
     </main>

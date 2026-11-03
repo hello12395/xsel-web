@@ -50,24 +50,36 @@ const REVIEW_COLORS = [
   },
 ] as const;
 
+const SWIPE_OFFSET = 56;
+const SWIPE_VELOCITY = 450;
+
 export function Reviews() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [direction, setDirection] = useState(0);
   const review = reviews[active];
   const count = reviews.length;
   const color = REVIEW_COLORS[active % REVIEW_COLORS.length];
 
   const goTo = useCallback(
-    (index: number) => {
-      setActive((index + count) % count);
+    (index: number, dir?: number) => {
+      const next = (index + count) % count;
+      if (next === active) return;
+
+      if (dir !== undefined) {
+        setDirection(dir);
+      } else {
+        setDirection(next === (active + 1) % count ? 1 : -1);
+      }
+      setActive(next);
     },
-    [count],
+    [active, count],
   );
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") goTo(active + 1);
-      if (event.key === "ArrowLeft") goTo(active - 1);
+      if (event.key === "ArrowRight") goTo(active + 1, 1);
+      if (event.key === "ArrowLeft") goTo(active - 1, -1);
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -81,6 +93,7 @@ export function Reviews() {
     if (reducedMotion) return;
 
     const id = window.setInterval(() => {
+      setDirection(1);
       setActive((current) => (current + 1) % count);
     }, AUTOPLAY_MS);
 
@@ -95,103 +108,129 @@ export function Reviews() {
       <div className="pointer-events-none absolute -left-24 top-1/4 hidden h-72 w-72 rounded-full bg-white/5 blur-3xl sm:block" />
       <div className="pointer-events-none absolute -right-16 bottom-0 hidden h-80 w-80 rounded-full bg-[#3d5a52]/40 blur-3xl sm:block" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
-        {/* —— Mobile layout (matches xsel-mobile-preview) —— */}
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        {/* —— Mobile layout —— */}
         <div className="sm:hidden">
           <Reveal>
-            <p className="text-[11px] font-extrabold tracking-[0.18em] text-[#EFAA93] uppercase">
+            <p className="text-[10px] font-extrabold tracking-[0.18em] text-[#EFAA93] uppercase">
               Reviews
             </p>
-            <h2 className="font-display mt-2.5 text-[1.75rem] leading-[1.08] tracking-[-0.055em] text-white">
+            <h2 className="font-display mt-1.5 text-[1.55rem] leading-[1.08] tracking-[-0.055em] text-white">
               What{" "}
               <span className="em-serif italic text-[#EFAA93]">learners</span>{" "}
               say.
             </h2>
-            <p className="mt-2.5 max-w-[36ch] text-[14px] leading-relaxed text-white/65">
+            <p className="mt-1.5 max-w-[36ch] text-[13px] leading-snug text-white/65">
               Real notes from people who marked pages, spoke in the lab, and came back the next week.
             </p>
           </Reveal>
 
           <div
-            className="mt-7"
+            className="mt-4 touch-pan-y"
             onTouchStart={() => setPaused(true)}
             onTouchEnd={() => setPaused(false)}
           >
             <ShimmerGate minMs={500} skeleton={<ReviewPanelSkeleton />}>
               <Reveal delay={0.06}>
-                <AnimatePresence mode="wait">
-                  <motion.article
-                    key={review.name}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4, ease }}
-                    style={{ backgroundColor: color.bg }}
-                    className={`relative min-h-[260px] overflow-hidden rounded-[20px] p-5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.25)] ${color.text}`}
-                  >
-                    <div className={`flex gap-0.5 ${color.star}`}>
-                      {Array.from({ length: 5 }).map((_, index) => (
-                        <StarIcon key={index} className="h-4 w-4" />
-                      ))}
-                    </div>
+                <div className="overflow-hidden">
+                  <AnimatePresence mode="wait" custom={direction}>
+                    <motion.article
+                      key={review.name}
+                      custom={direction}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.18}
+                      dragDirectionLock
+                      onDragStart={() => setPaused(true)}
+                      onDragEnd={(_, info) => {
+                        const swipedLeft =
+                          info.offset.x < -SWIPE_OFFSET || info.velocity.x < -SWIPE_VELOCITY;
+                        const swipedRight =
+                          info.offset.x > SWIPE_OFFSET || info.velocity.x > SWIPE_VELOCITY;
 
-                    <blockquote
-                      className={`mt-3.5 text-[1.05rem] leading-[1.4] font-semibold tracking-[-0.03em] ${color.quote}`}
+                        if (swipedLeft) goTo(active + 1, 1);
+                        else if (swipedRight) goTo(active - 1, -1);
+
+                        window.setTimeout(() => setPaused(false), 400);
+                      }}
+                      initial={{ opacity: 0, x: direction >= 0 ? 56 : -56 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: direction >= 0 ? -56 : 56 }}
+                      transition={{ duration: 0.32, ease }}
+                      style={{ backgroundColor: color.bg }}
+                      className={`relative flex cursor-grab flex-col overflow-hidden rounded-[18px] p-4 shadow-[0_14px_32px_-20px_rgba(0,0,0,0.25)] active:cursor-grabbing ${color.text}`}
                     >
-                      {review.quote}
-                    </blockquote>
-
-                    <footer className="mt-6 flex items-center gap-3">
-                      <span
-                        className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full"
-                        style={
-                          isDefaultAvatar(review.avatar)
-                            ? { backgroundColor: DEFAULT_AVATAR_BG }
-                            : undefined
-                        }
-                      >
-                        <Image
-                          src={review.avatar}
-                          alt=""
-                          fill
-                          sizes="44px"
-                          className="object-cover object-center"
-                          unoptimized={isDefaultAvatar(review.avatar)}
-                        />
-                      </span>
-                      <div className="min-w-0">
-                        <cite className={`block text-sm font-extrabold tracking-[-0.02em] not-italic ${color.text}`}>
-                          {review.name}
-                        </cite>
-                        <p className={`mt-0.5 text-xs ${color.muted}`}>{review.role}</p>
+                      <div className={`flex gap-0.5 ${color.star}`}>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <StarIcon key={index} className="h-3.5 w-3.5" />
+                        ))}
                       </div>
-                    </footer>
 
-                    <div
-                      className="mt-5 flex justify-center gap-2"
-                      role="tablist"
-                      aria-label="Select a review"
-                    >
-                      {reviews.map((item, index) => (
-                        <button
-                          key={item.name}
-                          type="button"
-                          role="tab"
-                          aria-selected={index === active}
-                          aria-label={`Review from ${item.name}`}
-                          onClick={() => setActive(index)}
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            index === active
-                              ? `w-[22px] ${color.dotsActive}`
-                              : `w-2 ${color.dots}`
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </motion.article>
-                </AnimatePresence>
+                      <blockquote
+                        className={`mt-2.5 text-[0.95rem] leading-[1.4] font-semibold tracking-[-0.03em] ${color.quote}`}
+                      >
+                        {review.quote}
+                      </blockquote>
+
+                      <footer className="mt-3.5 flex items-center gap-2.5 border-t border-black/10 pt-3">
+                        <span
+                          className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-black/5"
+                          style={
+                            isDefaultAvatar(review.avatar)
+                              ? { backgroundColor: DEFAULT_AVATAR_BG }
+                              : undefined
+                          }
+                        >
+                          <Image
+                            src={review.avatar}
+                            alt=""
+                            fill
+                            sizes="36px"
+                            className="object-cover object-center"
+                            unoptimized={isDefaultAvatar(review.avatar)}
+                          />
+                        </span>
+                        <div className="min-w-0">
+                          <cite className={`block text-[13px] font-extrabold tracking-[-0.02em] not-italic ${color.text}`}>
+                            {review.name}
+                          </cite>
+                          <p className={`mt-0.5 text-[11px] ${color.muted}`}>{review.role}</p>
+                        </div>
+                      </footer>
+
+                      <div
+                        className="mt-3 flex justify-center gap-1.5"
+                        role="tablist"
+                        aria-label="Select a review"
+                      >
+                        {reviews.map((item, index) => (
+                          <button
+                            key={item.name}
+                            type="button"
+                            role="tab"
+                            aria-selected={index === active}
+                            aria-label={`Review from ${item.name}`}
+                            onClick={() => goTo(index, index > active ? 1 : -1)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              index === active
+                                ? `w-5 ${color.dotsActive}`
+                                : `w-1.5 ${color.dots}`
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </motion.article>
+                  </AnimatePresence>
+                </div>
               </Reveal>
             </ShimmerGate>
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <p className="inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-3.5 py-2 text-center text-[10px] font-semibold tracking-[0.12em] text-[#152F29] uppercase">
+              <span aria-hidden>*</span>
+              Good teaching leaves a mark
+            </p>
           </div>
         </div>
 
@@ -395,7 +434,7 @@ export function Reviews() {
         </div>
       </div>
 
-      <p className="absolute bottom-4 left-1/2 z-10 inline-flex w-max max-w-[calc(100%-2rem)] -translate-x-1/2 items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-4 py-2 text-center text-[10px] font-semibold tracking-[0.12em] text-[#152F29] uppercase sm:bottom-5 sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.14em] md:bottom-6 lg:bottom-8">
+      <p className="absolute bottom-5 left-1/2 z-10 hidden w-max max-w-[calc(100%-2rem)] -translate-x-1/2 items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-5 py-2.5 text-center text-[11px] font-semibold tracking-[0.14em] text-[#152F29] uppercase sm:inline-flex md:bottom-6 lg:bottom-8">
         <span aria-hidden>*</span>
         Good teaching leaves a mark
       </p>

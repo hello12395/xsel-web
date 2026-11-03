@@ -174,57 +174,33 @@ function MethodCard3D({
 
 function MethodListMobile() {
   return (
-    <Stagger className="grid grid-cols-2 gap-2.5 sm:hidden">
+    <Stagger className="flex flex-col gap-2 sm:hidden">
       {whyCards.map((card, index) => {
         const accent = cardAccents[index % cardAccents.length];
-        const featured = index === 0;
 
         return (
-          <StaggerItem
-            key={card.number}
-            className={featured ? "col-span-2" : "min-w-0"}
-          >
-            <article
-              className={`relative flex h-full flex-col overflow-hidden rounded-[16px] border border-ink/10 bg-white shadow-[0_8px_22px_-16px_rgba(21,47,41,0.22)] ${
-                featured ? "p-3.5" : "p-3"
-              }`}
-            >
+          <StaggerItem key={card.number} className="min-w-0">
+            <article className="relative flex h-full flex-col overflow-hidden rounded-[14px] border border-ink/10 bg-white p-2.5 shadow-[0_8px_22px_-16px_rgba(21,47,41,0.22)]">
               <span
-                className={`pointer-events-none absolute -right-1 -bottom-2 font-display leading-none text-ink/[0.04] select-none ${
-                  featured ? "text-[4.5rem]" : "text-[3.25rem]"
-                }`}
+                className="pointer-events-none absolute -right-1 -bottom-2 font-display text-[2.5rem] leading-none text-ink/[0.04] select-none"
                 aria-hidden
               >
                 {card.number}
               </span>
 
-              <div className="relative flex items-center gap-2">
+              <div className="relative flex items-center gap-1.5">
                 <span
-                  className={`font-display leading-none tabular-nums ${accent.numberClass} ${
-                    featured ? "text-[1.35rem]" : "text-[1.15rem]"
-                  }`}
+                  className={`font-display text-[1rem] leading-none tabular-nums ${accent.numberClass}`}
                 >
                   {card.number}
                 </span>
                 <span className={`h-px flex-1 bg-gradient-to-r ${accent.accentBar}`} />
               </div>
 
-              <h3
-                className={`font-display relative mt-2.5 tracking-[-0.03em] text-heading ${
-                  featured
-                    ? "text-[1.05rem] leading-[1.25]"
-                    : "text-[0.92rem] leading-snug"
-                }`}
-              >
+              <h3 className="font-display relative mt-1.5 text-[0.82rem] leading-snug tracking-[-0.03em] text-heading">
                 {card.title}
               </h3>
-              <p
-                className={`relative mt-1.5 text-muted ${
-                  featured
-                    ? "text-[13px] leading-5"
-                    : "line-clamp-4 text-[11px] leading-4"
-                }`}
-              >
+              <p className="relative mt-1 line-clamp-3 text-[10px] leading-[1.35] text-muted">
                 {card.body}
               </p>
             </article>
@@ -238,11 +214,11 @@ function MethodListMobile() {
 export function WhySarwarLab() {
   return (
     <section id="why" className="relative section-anchor overflow-hidden border-b border-ink/8 bg-method-section">
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
-        <div className="grid items-start gap-7 sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
-          <div className="method-intro-panel min-w-0">
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-20 md:px-8 md:py-24 lg:px-12 lg:py-32">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] items-center gap-3 sm:grid-cols-1 sm:items-start sm:gap-10 md:gap-12 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] xl:gap-16">
+          <div className="method-intro-panel flex min-w-0 self-stretch flex-col justify-center sm:block">
             <SectionHeader
-              className="max-w-none"
+              className="max-w-none h-full sm:h-auto [&_h2]:text-[clamp(1.75rem,7.5vw,2.25rem)] sm:[&_h2]:text-[clamp(1.75rem,5.5vw,4rem)] [&_p]:mt-4 [&_p]:text-[17px] [&_p]:leading-[1.65] sm:[&_p]:mt-4 sm:[&_p]:text-base sm:[&_p]:leading-[1.75]"
               title="Why xSEL?"
               copy="English isn't something you memorize in a lecture. It's something you work on, like a lab — until it becomes second nature."
             />
@@ -250,7 +226,9 @@ export function WhySarwarLab() {
 
           <ShimmerGate minMs={450} skeleton={<WhyCardsSkeleton />}>
             <>
-              <MethodListMobile />
+              <div className="min-w-0 sm:hidden">
+                <MethodListMobile />
+              </div>
               <Stagger className="hidden min-w-0 grid-cols-1 gap-3.5 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-4 xl:gap-5">
                 {whyCards.map((card, index) => (
                   <StaggerItem key={card.number} className="h-full">
@@ -266,9 +244,16 @@ export function WhySarwarLab() {
             </>
           </ShimmerGate>
         </div>
+
+        <div className="mt-4 flex justify-center sm:hidden">
+          <p className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-3.5 py-2 text-center text-[10px] font-semibold tracking-[0.1em] text-[#152F29] uppercase">
+            <span aria-hidden>*</span>
+            Good English is built, not borrowed
+          </p>
+        </div>
       </div>
 
-      <p className="absolute right-4 bottom-4 inline-flex max-w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-4 py-2 text-center text-[10px] font-semibold tracking-[0.12em] text-[#152F29] uppercase sm:right-5 sm:bottom-5 sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.14em] md:right-8 md:bottom-6 lg:right-12 lg:bottom-8">
+      <p className="absolute right-5 bottom-5 hidden max-w-[calc(100%-2rem)] items-center justify-center gap-2 rounded-full border border-[#EFAA93]/40 bg-[#EFAA93] px-5 py-2.5 text-center text-[11px] font-semibold tracking-[0.14em] text-[#152F29] uppercase sm:inline-flex md:right-8 md:bottom-6 lg:right-12 lg:bottom-8">
         <span aria-hidden>*</span>
         Good English is built, not borrowed
       </p>
