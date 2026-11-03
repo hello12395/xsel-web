@@ -313,7 +313,7 @@ function EnrollmentConfirmedScreen({
         </aside>
       </div>
 
-      <CourseSummaryBar course={course} batchName={batchName} />
+      <CourseSummaryBar course={course} batchName={batchName ?? undefined} />
 
       <section className="card-surface rounded-[16px] p-4 sm:rounded-[24px] sm:p-8">
         <div className="grid gap-4 sm:mx-auto sm:max-w-lg sm:gap-0 sm:text-center">
